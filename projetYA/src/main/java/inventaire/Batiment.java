@@ -1,7 +1,7 @@
 package inventaire;
 
 public enum Batiment {
-	ROUTE(0),COLONIE(0),VILLE(0);
+	ROUTE(2),COLONIE(2),VILLE(0);
 	private int quantite;
 	
 	private Batiment(int quantite) {
