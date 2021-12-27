@@ -1,9 +1,12 @@
 package plateau;
 
+import java.awt.Color;
+
 public abstract class Tuile {
 	private int x;
 	private int y;
 	private int numero;
+	private Color couleur;
 	
 	public Tuile(int x, int y, int num) {
 		this.x = x;
@@ -43,5 +46,13 @@ public abstract class Tuile {
 	
 	public String toString() {
 		return this.getNumero()+"";
+	}
+
+	public Color getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(Color couleur) {
+		this.couleur = couleur;
 	}
 }

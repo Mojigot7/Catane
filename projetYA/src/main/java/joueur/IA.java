@@ -1,10 +1,12 @@
 package joueur;
 
+import java.awt.Color;
+
 import plateau.Plateau;
 
 public class IA extends Joueur {
-	public IA(String nom) {
-		super(nom);
+	public IA(String nom, Color couleur) {
+		super(nom,couleur);
 	}
 
 	@Override

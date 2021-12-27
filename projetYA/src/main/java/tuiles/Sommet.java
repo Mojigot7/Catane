@@ -2,16 +2,17 @@ package tuiles;
 
 import plateau.Tuile;
 
+import java.awt.Color;
+
 public class Sommet extends Tuile {
 	private boolean colonie;
 	private boolean ville;
-	private String occupation;
 	
 	public Sommet(int x, int y) {
 		super(x, y,-1);
 		this.colonie = false;
 		this.ville = false;
-		this.occupation = "";
+		this.setCouleur(null);
 	}
 
 	@Override
@@ -42,14 +43,6 @@ public class Sommet extends Tuile {
 	public boolean peutEtreVoleur() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	public String getOccupation() {
-		return occupation;
-	}
-
-	public void setOccupation(String occupation) {
-		this.occupation = occupation;
 	}
 
 	public boolean isColonie() {

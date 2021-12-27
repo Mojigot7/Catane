@@ -1,67 +1,66 @@
 package joueur;
 
+import java.awt.Color;
 import java.util.Scanner;
 
 import plateau.Plateau;
 
 public class Humain extends Joueur {
-	public Humain(String nom) {
-		super(nom);
+	private Scanner sc;
+	
+	public Humain(String nom, Color couleur) {
+		super(nom, couleur);
+		this.sc = new Scanner(System.in);
 	}
 
 	@Override
 	public void poserRoute(Plateau p) {
 		int x, y;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée)");
+		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre route ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
-		System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée)");
+		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre route ? (Saisissez la seconde coordonnée de 0 à 10)");
 		y = sc .nextInt();
-		while(!p.poserRoute(x, y)) {
-			System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée)");
+		while(!p.poserRoute(x, y, this)) {
+			System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre route ? (Saisissez la première coordonnée de 0 à 8)");
 			x = sc.nextInt();
-			System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée)");
+			System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre route ? (Saisissez la seconde coordonnée de 0 à 10)");
 			y = sc .nextInt();
 		}
-		sc.close();
+		//sc.close();
 		this.utiliserRoute();
 	}
 
 	@Override
 	public void poserColonie(Plateau p) {
-		//TODO: Vérifier qu'il n'y a pas de colonie n'appartenant pas au joueur courant
 		int x, y;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée)");
+		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
-		System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée)");
-		y = sc .nextInt();
-		while(!p.poserColonie(x, y)) {
-			System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée)");
+		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée de 0 à 10)");
+		y = sc.nextInt();
+		while(!p.poserColonie(x, y, this)) {
+			System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée de 0 à 8)");
 			x = sc.nextInt();
-			System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée)");
+			System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée de 0 à 10)");
 			y = sc .nextInt();
 		}
-		sc.close();
+		//sc.close();
 		this.utiliserColonie();
 	}
 
 	@Override
 	public void poserVille(Plateau p) {
-		//TODO: verifier que la colonie où poser la ville appartient au joueur courant
 		int x, y;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée)");
+		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre ville ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
-		System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée)");
+		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre ville ? (Saisissez la seconde coordonnée de 0 à 10)");
 		y = sc .nextInt();
-		while(!p.poserVille(x, y)) {
-			System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée)");
+		while(!p.poserVille(x, y, this)) {
+			System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre ville ? (Saisissez la première coordonnée de 0 à 8)");
 			x = sc.nextInt();
-			System.out.println("Où voulez-vous posez votre colonie ? (Saisissez la seconde coordonnée)");
+			System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre ville ? (Saisissez la seconde coordonnée de 0 à 10)");
 			y = sc .nextInt();
 		}
-		sc.close();
+		//sc.close();
 		this.utiliserVille();
 	}
 }

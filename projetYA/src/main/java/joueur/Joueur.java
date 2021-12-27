@@ -1,17 +1,21 @@
 package joueur;
 
+import java.awt.Color;
+
 import inventaire.*;
 import plateau.Plateau;
 
 public abstract class Joueur {
-	private int score = 2;
-	private String nom;
-	private Ressource ressource;
-	private Batiment batiment;
+	protected int score = 2;
+	protected String nom;
+	protected Ressource ressource;
+	protected Batiment batiment;
+	protected Color couleur;
 	// private developpement;
 	
-	public Joueur(String nom) {
+	public Joueur(String nom, Color couleur) {
 		this.nom = nom;
+		this.couleur = couleur;
 	}
 	
 	public Batiment getBatiment() {
@@ -147,4 +151,8 @@ public abstract class Joueur {
 	public abstract void poserRoute(Plateau p);
 	public abstract void poserColonie(Plateau p);
 	public abstract void poserVille(Plateau p);
+
+	public Color getCouleur() {
+		return couleur;
+	}
 }
