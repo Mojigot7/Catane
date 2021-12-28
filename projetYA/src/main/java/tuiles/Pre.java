@@ -5,8 +5,8 @@ import plateau.Tuile;
 public class Pre extends Tuile {
 	private boolean voleur;
 	
-	public Pre(int x, int y, int num) {
-		super(x, y, num);
+	public Pre(int num) {
+		super(num,"LAINE");
 		this.voleur = false;
 	}
 	

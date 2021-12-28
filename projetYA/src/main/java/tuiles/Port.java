@@ -4,8 +4,8 @@ import plateau.Tuile;
 
 public class Port extends Tuile {
 
-	public Port(int x, int y) {
-		super(x, y, -1);
+	public Port() {
+		super(-1,"");
 	}
 
 	@Override

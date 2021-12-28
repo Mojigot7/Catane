@@ -2,15 +2,16 @@ package tuiles;
 
 import java.awt.Color;
 
+import colors.ConsoleColors;
 import plateau.Tuile;
 
 public class Croisement extends Tuile {
 	private boolean route;
+	private Color couleur;
 	
-	public Croisement(int x, int y) {
-		super(x, y,-1);
+	public Croisement() {
+		super(-1,"");
 		this.route = false;
-		this.setCouleur(null);
 	}
 
 	@Override
@@ -53,10 +54,28 @@ public class Croisement extends Tuile {
 	
 	public String toString() {
 		if(this.isRoute()) {
-			return "R";
-		} else {
-			return " ";
+			if(this.couleur.getRGB() == Color.BLUE.getRGB()) {
+				return ConsoleColors.BLUE+"R"+ConsoleColors.RESET;
+			}
+			if(this.couleur.getRGB() == Color.RED.getRGB()) {
+				return ConsoleColors.RED+"R"+ConsoleColors.RESET;
+			}
+			if(this.couleur.getRGB() == Color.GREEN.getRGB()) {
+				return ConsoleColors.GREEN+"R"+ConsoleColors.RESET;
+			}
+			if(this.couleur.getRGB() == Color.YELLOW.getRGB()) {
+				return ConsoleColors.YELLOW+"R"+ConsoleColors.RESET;
+			}
 		}
+		return " ";
+	}
+
+	public Color getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(Color couleur) {
+		this.couleur = couleur;
 	}
 
 }

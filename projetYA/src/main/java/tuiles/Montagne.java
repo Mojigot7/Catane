@@ -5,8 +5,8 @@ import plateau.Tuile;
 public class Montagne extends Tuile {
 	private boolean voleur;
 	
-	public Montagne(int x, int y, int num) {
-		super(x, y, num);
+	public Montagne(int num) {
+		super(num, "MINERAI");
 		this.voleur = false;
 	}
 	

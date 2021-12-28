@@ -2,17 +2,18 @@ package tuiles;
 
 import plateau.Tuile;
 
+import colors.ConsoleColors;
 import java.awt.Color;
 
 public class Sommet extends Tuile {
 	private boolean colonie;
 	private boolean ville;
+	private Color couleur;
 	
-	public Sommet(int x, int y) {
-		super(x, y,-1);
+	public Sommet() {
+		super(-1,"");
 		this.colonie = false;
 		this.ville = false;
-		this.setCouleur(null);
 	}
 
 	@Override
@@ -63,13 +64,43 @@ public class Sommet extends Tuile {
 	
 	public String toString() {
 		if(this.isColonie()) {
-			return "C";
+			if(this.couleur.getRGB() == Color.BLUE.getRGB()) {
+				return ConsoleColors.BLUE+"C"+ConsoleColors.RESET;
+			}
+			if(this.couleur.getRGB() == Color.RED.getRGB()) {
+				return ConsoleColors.RED+"C"+ConsoleColors.RESET;
+			}
+			if(this.couleur.getRGB() == Color.GREEN.getRGB()) {
+				return ConsoleColors.GREEN+"C"+ConsoleColors.RESET;
+			}
+			if(this.couleur.getRGB() == Color.YELLOW.getRGB()) {
+				return ConsoleColors.YELLOW+"C"+ConsoleColors.RESET;
+			}
 		} else {
 			if(this.isVille()) {
-				return "V";
+				if(this.couleur.getRGB() == Color.BLUE.getRGB()) {
+					return ConsoleColors.BLUE+"V"+ConsoleColors.RESET;
+				}
+				if(this.couleur.getRGB() == Color.RED.getRGB()) {
+					return ConsoleColors.RED+"V"+ConsoleColors.RESET;
+				}
+				if(this.couleur.getRGB() == Color.GREEN.getRGB()) {
+					return ConsoleColors.GREEN+"V"+ConsoleColors.RESET;
+				}
+				if(this.couleur.getRGB() == Color.YELLOW.getRGB()) {
+					return ConsoleColors.YELLOW+"V"+ConsoleColors.RESET;
+				}
 			}
 		}
 		return " ";
+	}
+	
+	public Color getCouleur() {
+		return this.couleur;
+	}
+	
+	public void setCouleur(Color c) {
+		this.couleur = c;
 	}
 
 }

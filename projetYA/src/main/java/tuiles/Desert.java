@@ -5,8 +5,8 @@ import plateau.Tuile;
 public class Desert extends Tuile {
 	private boolean voleur;
 	
-	public Desert(int x, int y) {
-		super(x, y, 0);
+	public Desert() {
+		super(0,"");
 		this.voleur = true;
 	}
 

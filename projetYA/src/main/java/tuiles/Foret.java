@@ -5,8 +5,8 @@ import plateau.Tuile;
 public class Foret extends Tuile {
 	private boolean voleur;
 	
-	public Foret(int x, int y, int num) {
-		super(x, y, num);
+	public Foret(int num) {
+		super(num,"BOIS");
 		this.voleur = false;
 	}
 	

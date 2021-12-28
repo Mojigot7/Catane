@@ -3,18 +3,19 @@ package plateau;
 import java.awt.Color;
 
 public abstract class Tuile {
-	private int x;
-	private int y;
+	/*private int x;
+	private int y;*/
 	private int numero;
-	private Color couleur;
+	private String type;
 	
-	public Tuile(int x, int y, int num) {
-		this.x = x;
-		this.y = y;
+	public Tuile(int num, String type) {
+		/*this.x = x;
+		this.y = y;*/
 		this.numero = num;
+		this.type = type;
 	}
 	
-	public int getX() {
+	/*public int getX() {
 		return x;
 	}
 	
@@ -28,7 +29,7 @@ public abstract class Tuile {
 	
 	public void setY(int y) {
 		this.y = y;
-	}
+	}*/
 	
 	public abstract boolean estCroisement();
 	public abstract boolean estSommet();
@@ -48,11 +49,7 @@ public abstract class Tuile {
 		return this.getNumero()+"";
 	}
 
-	public Color getCouleur() {
-		return couleur;
-	}
-
-	public void setCouleur(Color couleur) {
-		this.couleur = couleur;
+	public String getType() {
+		return type;
 	}
 }

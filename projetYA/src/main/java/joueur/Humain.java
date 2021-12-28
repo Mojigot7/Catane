@@ -14,7 +14,7 @@ public class Humain extends Joueur {
 	}
 
 	@Override
-	public void poserRoute(Plateau p) {
+	public void poserRoute(Plateau p) { //TODO: route la plus longue
 		int x, y;
 		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre route ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
@@ -31,7 +31,7 @@ public class Humain extends Joueur {
 	}
 
 	@Override
-	public void poserColonie(Plateau p) {
+	public void poserColonie(Plateau p) { //TODO: ajouter les points de victoire
 		int x, y;
 		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
@@ -48,7 +48,7 @@ public class Humain extends Joueur {
 	}
 
 	@Override
-	public void poserVille(Plateau p) {
+	public void poserVille(Plateau p) { //TODO: ajouter les points de victoire
 		int x, y;
 		System.out.println("Joueur : "+super.nom+" Où voulez-vous posez votre ville ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
