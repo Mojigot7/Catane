@@ -1,6 +1,7 @@
 package joueur;
 
 import java.awt.Color;
+import java.util.LinkedList;
 import java.util.Map;
 
 import inventaire.*;
@@ -12,11 +13,12 @@ public abstract class Joueur {
 	protected String nom;
 	protected Inventaire inventaire;
 	protected Color couleur;
-	// private developpement;
+	protected Developpement dev;
 	
 	public Joueur(String nom, Color couleur) {
 		this.nom = nom;
 		this.couleur = couleur;
+		dev = new Developpement(new LinkedList<Developpement>());
 		this.inventaire = new Inventaire();
 	}
 	
