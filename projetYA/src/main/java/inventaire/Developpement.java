@@ -17,7 +17,7 @@ public class Developpement {
     }
 
     public void creationCarteDev(LinkedList<Developpement>stock){
-        int aleatoire = (int)(Math.random()*2);
+        int aleatoire = (int)(Math.random()*3);
         if(aleatoire == 0){
             Developpement tmp = new Developpement("Point de Victoire",stock);
             stock.add(tmp);
@@ -27,7 +27,7 @@ public class Developpement {
             stock.add(tmp);
         }
         if(aleatoire == 2){
-            int aleaprogres = (int)(Math.random()*2);
+            int aleaprogres = (int)(Math.random()*3);
             if(aleaprogres == 0){
                 Developpement tmp = new Developpement("Construction de route",stock);
                 stock.add(tmp);
