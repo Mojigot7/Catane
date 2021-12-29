@@ -205,16 +205,16 @@ public class Plateau implements PlateauFunction{
 	}
 	
 	public boolean pasDeColonieAdjacente(int x, int y) { // Vérifie qu'il n y a pas de colonie proche pour poserColonie
-		if(!this.horsPlateau(x, y-2) && !this.estVide(x, y) && ((Sommet)this.plateau[x][y-2]).isColonie()) {
+		if(!this.horsPlateau(x, y-2) && !this.estVide(x, y-2) && ((Sommet)this.plateau[x][y-2]).isColonie()) {
 			return false;
 		}
-		if(!this.horsPlateau(x-2, y) && !this.estVide(x, y) && ((Sommet)this.plateau[x-2][y]).isColonie()) {
+		if(!this.horsPlateau(x-2, y) && !this.estVide(x-2, y) && ((Sommet)this.plateau[x-2][y]).isColonie()) {
 			return false;
 		}
-		if(!this.horsPlateau(x, y+2) && !this.estVide(x, y) && ((Sommet)this.plateau[x][y+2]).isColonie()) {
+		if(!this.horsPlateau(x, y+2) && !this.estVide(x, y+2) && ((Sommet)this.plateau[x][y+2]).isColonie()) {
 			return false;
 		}
-		if(!this.horsPlateau(x+2, y) && !this.estVide(x, y) && ((Sommet)this.plateau[x+2][y]).isColonie()) {
+		if(!this.horsPlateau(x+2, y) && !this.estVide(x+2, y) && ((Sommet)this.plateau[x+2][y]).isColonie()) {
 			return false;
 		}
 		return true;
