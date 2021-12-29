@@ -3,17 +3,21 @@ package tuiles;
 import plateau.Tuile;
 
 import colors.ConsoleColors;
+import joueur.Joueur;
+
 import java.awt.Color;
 
 public class Sommet extends Tuile {
 	private boolean colonie;
 	private boolean ville;
 	private Color couleur;
+	private Joueur occupation;
 	
 	public Sommet() {
-		super(-1,"");
+		super(-1,"",false);
 		this.colonie = false;
 		this.ville = false;
+		this.occupation = null;
 	}
 
 	@Override
@@ -101,6 +105,14 @@ public class Sommet extends Tuile {
 	
 	public void setCouleur(Color c) {
 		this.couleur = c;
+	}
+
+	public Joueur getOccupation() {
+		return occupation;
+	}
+
+	public void setOccupation(Joueur occupation) {
+		this.occupation = occupation;
 	}
 
 }

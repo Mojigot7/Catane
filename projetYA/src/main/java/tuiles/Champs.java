@@ -3,11 +3,9 @@ package tuiles;
 import plateau.Tuile;
 
 public class Champs extends Tuile {
-	private boolean voleur;
 	
 	public Champs(int num) {
-		super(num, "BLE");
-		this.voleur = false;
+		super(num, "BLE",false);
 	}
 	
 	@Override
@@ -33,14 +31,6 @@ public class Champs extends Tuile {
 	@Override
 	public boolean peutEtreVoleur() {
 		return true;
-	}
-	
-	public boolean isVoleur() {
-		return voleur;
-	}
-	
-	public void setVoleur(boolean voleur) {
-		this.voleur = voleur;
 	}
 
 }

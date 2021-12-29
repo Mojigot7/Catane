@@ -1,11 +1,12 @@
 package tuiles;
 
+import colors.ConsoleColors;
 import plateau.Tuile;
 
 public class Port extends Tuile {
 
 	public Port() {
-		super(-1,"");
+		super(-1,"",false);
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class Port extends Tuile {
 	}
 	
 	public String toString() {
-		return " ";
+		return ConsoleColors.PURPLE+"P"+ConsoleColors.RESET;
 	}
 
 }

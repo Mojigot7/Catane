@@ -26,4 +26,22 @@ public class IA extends Joueur {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void deplacerVoleur(Plateau p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void jetterSesRessources() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String donnerRessource() {
+		// TODO Auto-generated method stub
+		return "";
+	}
 }

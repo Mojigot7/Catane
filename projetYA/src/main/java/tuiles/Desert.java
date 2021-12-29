@@ -3,11 +3,9 @@ package tuiles;
 import plateau.Tuile;
 
 public class Desert extends Tuile {
-	private boolean voleur;
 	
 	public Desert() {
-		super(0,"");
-		this.voleur = true;
+		super(0,"",true);
 	}
 
 	@Override
@@ -38,14 +36,6 @@ public class Desert extends Tuile {
 	public boolean peutEtreVoleur() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-
-	public boolean isVoleur() {
-		return voleur;
-	}
-
-	public void setVoleur(boolean voleur) {
-		this.voleur = voleur;
 	}
 
 }

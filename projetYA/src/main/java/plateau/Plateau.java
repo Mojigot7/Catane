@@ -3,6 +3,7 @@ package plateau;
 import java.util.ArrayList;
 import java.util.Random;
 
+import joueur.Humain;
 import joueur.Joueur;
 import tuiles.*;
 
@@ -19,7 +20,7 @@ public class Plateau implements PlateauFunction{
 	}
 	
 	public boolean horsPlateau(int x, int y) { // Vérifie que la case n'est pas hors du plateau
-		return x < 0 || x > 8 || y < 0 || y > 8;
+		return x < 0 || x > 8 || y < 0 || y > 10;
 	}
 	
 	public boolean estVide(int x, int y) { // Vérifie que la case n'est pas null
@@ -168,6 +169,7 @@ public class Plateau implements PlateauFunction{
 			if(!((Sommet)this.getPlateau()[x][y]).isColonie() && !((Sommet)this.getPlateau()[x][y]).isVille() && this.pasDeColonieAdjacente(x, y)) {
 				((Sommet)this.getPlateau()[x][y]).setColonie(true);
 				((Sommet)this.getPlateau()[x][y]).setCouleur(j.getCouleur());
+				((Sommet)this.getPlateau()[x][y]).setOccupation(j);
 				return true;
 			} else {
 				System.out.println("Il y a déjà une colonie ou une ville proche d'ici !");
@@ -252,20 +254,20 @@ public class Plateau implements PlateauFunction{
 		return change;
 	}
 	
-	public void recolte(int alea, Joueur joueur) { //Vérifie qu'un joueur a une colonie ou ville proche des tuiles, donnant des ressources et égal aux nombre du dée.
+	public void recolte(int alea, Joueur joueur) { //Vérifie qu'un joueur a une colonie ou ville proche des tuiles, donnant des ressources et égal aux nombre du dée + gère le cas du voleur
 		for(int i = 0; i < this.plateau.length; i = i+2) {
 			for(int j = 0 ; j < this.plateau[i].length; j = j+2) {
 				if(!this.estVide(i, j) && ((Sommet)this.plateau[i][j]).getCouleur() != null && ((Sommet)this.plateau[i][j]).getCouleur().getRGB() == joueur.getCouleur().getRGB()) {
-					if(!this.horsPlateau(i-1, j-1) && this.plateau[i-1][j-1].getNumero() == alea) {
+					if(!this.horsPlateau(i-1, j-1) && !this.plateau[i-1][j-1].isVoleur() && this.plateau[i-1][j-1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i-1][j-1].getType(),((Sommet)this.plateau[i][j]).isVille());
 					}
-					if(!this.horsPlateau(i-1, j+1) && this.plateau[i-1][j+1].getNumero() == alea) {
+					if(!this.horsPlateau(i-1, j+1) && !this.plateau[i-1][j+1].isVoleur() && this.plateau[i-1][j+1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i-1][j+1].getType(),((Sommet)this.plateau[i][j]).isVille());
 					}
-					if(!this.horsPlateau(i+1, j-1) && this.plateau[i+1][j-1].getNumero() == alea) {
+					if(!this.horsPlateau(i+1, j-1) && !this.plateau[i+1][j-1].isVoleur() && this.plateau[i+1][j-1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i+1][j-1].getType(),((Sommet)this.plateau[i][j]).isVille());
 					}
-					if(!this.horsPlateau(i+1, j+1) && this.plateau[i+1][j+1].getNumero() == alea) {
+					if(!this.horsPlateau(i+1, j+1) && !this.plateau[i+1][j+1].isVoleur() && this.plateau[i+1][j+1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i+1][j+1].getType(),((Sommet)this.plateau[i][j]).isVille());
 					}
 				}
@@ -278,4 +280,46 @@ public class Plateau implements PlateauFunction{
 			this.recolte(alea, joueur);
 		}
 	}
+	
+	public boolean deplacerVoleur(int x, int y, Joueur j) {
+		if(!this.horsPlateau(x, y) && !this.estVide(x, y) && this.getPlateau()[x][y].peutEtreVoleur()) {
+			this.plateau[voleur[0]][voleur[1]].setVoleur(false);
+			this.plateau[voleur[0]][voleur[1]].setEstVoleur(null);
+			this.plateau[x][y].setVoleur(true);;
+			this.plateau[x][y].setEstVoleur(j);
+			this.changerVoleur(x, y);
+			return true;
+		} else {
+			System.out.println("Vous ne pouvez pas mettre le voleur ici !");
+		}
+		return false;
+	}
+	
+	public void estSurTuileDuVoleur(Joueur estVoleur){ // A tester
+		ArrayList<Joueur> j = new ArrayList<>();
+		ArrayList<String> s = new ArrayList<>();
+		if(!this.estVide(voleur[0]-1, voleur[1]-1) && ((Sommet)this.plateau[voleur[0]-1][voleur[1]-1]).getCouleur() != null && ((Sommet)this.plateau[voleur[0]-1][voleur[1]-1]).getCouleur().getRGB() != this.plateau[voleur[0]][voleur[1]].getEstVoleur().getCouleur().getRGB()) {
+			j.add(((Sommet)this.plateau[voleur[0]-1][voleur[1]-1]).getOccupation());
+		}
+		if(!this.estVide(voleur[0]-1, voleur[1]+1) && ((Sommet)this.plateau[voleur[0]-1][voleur[1]+1]).getCouleur() != null && ((Sommet)this.plateau[voleur[0]-1][voleur[1]+1]).getCouleur().getRGB() != this.plateau[voleur[0]][voleur[1]].getEstVoleur().getCouleur().getRGB() && !j.contains(((Sommet)this.plateau[voleur[0]-1][voleur[1]+1]).getOccupation())) {
+			j.add(((Sommet)this.plateau[voleur[0]-1][voleur[1]+1]).getOccupation());
+		}
+		if(!this.estVide(voleur[0]+1, voleur[1]-1) && ((Sommet)this.plateau[voleur[0]+1][voleur[1]-1]).getCouleur() != null && ((Sommet)this.plateau[voleur[0]+1][voleur[1]-1]).getCouleur().getRGB() != this.plateau[voleur[0]][voleur[1]].getEstVoleur().getCouleur().getRGB() && !j.contains(((Sommet)this.plateau[voleur[0]+1][voleur[1]-1]).getOccupation())) {
+			j.add(((Sommet)this.plateau[voleur[0]+1][voleur[1]-1]).getOccupation());
+		}
+		if(!this.estVide(voleur[0]+1, voleur[1]+1) && ((Sommet)this.plateau[voleur[0]+1][voleur[1]+1]).getCouleur() != null && ((Sommet)this.plateau[voleur[0]+1][voleur[1]+1]).getCouleur().getRGB() != this.plateau[voleur[0]][voleur[1]].getEstVoleur().getCouleur().getRGB() && !j.contains(((Sommet)this.plateau[voleur[0]+1][voleur[1]+1]).getOccupation())) {
+			j.add(((Sommet)this.plateau[voleur[0]+1][voleur[1]+1]).getOccupation());
+		}
+		if(j.size() > 0) {
+			for(Joueur joueur : j) {
+				if(joueur instanceof Humain) {
+					s.add(((Humain)joueur).donnerRessource());
+				}
+			}
+		}
+		if(s.size() > 0) {
+			estVoleur.recupRessourceDonnee(s);
+		}
+	}
+	
 }

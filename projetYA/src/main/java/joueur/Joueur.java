@@ -1,9 +1,9 @@
 package joueur;
 
 import java.awt.Color;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
+import colors.ConsoleColors;
 import inventaire.*;
 import plateau.Plateau;
 
@@ -22,164 +22,209 @@ public abstract class Joueur {
 		this.inventaire = new Inventaire();
 	}
 	
-	public int getNbArgile() {
-		return this.inventaire.getRessource().get("ARGILE");
-	}
-	
-	public int getNbBois() {
-		return this.inventaire.getRessource().get("BOIS");
-	}
-	
-	public int getNbBle() {
-		return this.inventaire.getRessource().get("BLE");
-	}
-	
-	public int getNbLaine() {
-		return this.inventaire.getRessource().get("LAINE");
-	}
-	
-	public int getNbMinerai() {
-		return this.inventaire.getRessource().get("MINERAI");
-	}
-	
-	public int getNbColonie() {
-		return this.inventaire.getBatiment().get("COLONIE");
-	}
-	
-	public int getNbRoute() {
-		return this.inventaire.getBatiment().get("ROUTE");
-	}
-	
-	public int getNbVille() {
-		return this.inventaire.getBatiment().get("VILLE");
-	}
-	
-	public void voirInventaire() {
-		System.out.println("Inventaire de "+this.nom+" :");
-		for(Map.Entry<String, Integer> inv : this.inventaire.getBatiment().entrySet()) {
-			System.out.println(inv.getKey()+" : "+inv.getValue());
+	public String toString() {
+		if(this.couleur.getRGB() == Color.BLUE.getRGB()) {
+			return ConsoleColors.BLUE+this.nom+ConsoleColors.RESET;
 		}
-		for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
-			System.out.println(inv.getKey()+" : "+inv.getValue());
+		if(this.couleur.getRGB() == Color.RED.getRGB()) {
+			return ConsoleColors.RED+this.nom+ConsoleColors.RESET;
 		}
-	}
-	
-	public boolean possedeColonie() {
-		if(this.inventaire.getBatiment().get("COLONIE") > 0) {
-			return true;
+		if(this.couleur.getRGB() == Color.GREEN.getRGB()) {
+			return ConsoleColors.GREEN+this.nom+ConsoleColors.RESET;
 		}
-		return false;
-	}
-	
-	public boolean possedeRoute() {
-		if(this.inventaire.getBatiment().get("ROUTE") > 0) {
-			return true;
+		return ConsoleColors.YELLOW+this.nom+ConsoleColors.RESET;
 		}
-		return false;
-	}
-	
-	public boolean possedeVille() {
-		if(this.inventaire.getBatiment().get("VILLE") > 0) {
-			return true;
+		
+		public int getNbArgile() {
+			return this.inventaire.getRessource().get("ARGILE");
 		}
-		return false;
-	}
-	
-	public void utiliserColonie() {
-		this.inventaire.getBatiment().replace("COLONIE", this.inventaire.getBatiment().get("COLONIE")-1);
-	}
-	
-	public void utiliserRoute() {
-		this.inventaire.getBatiment().replace("ROUTE", this.inventaire.getBatiment().get("ROUTE")-1);
-	}
-	
-	public void utiliserVille() {
-		this.inventaire.getBatiment().replace("VILLE", this.inventaire.getBatiment().get("VILLE")-1);
-		this.inventaire.getBatiment().replace("COLONIE", this.inventaire.getBatiment().get("COLONIE")+1);
-	}
-	
-	public boolean peutAcheterColonie() {
-		if(this.inventaire.getRessource().get("ARGILE") < 1) {
-			return false;
+		
+		public int getNbBois() {
+			return this.inventaire.getRessource().get("BOIS");
 		}
-		if(this.inventaire.getRessource().get("BOIS") < 1) {
-			return false;
+		
+		public int getNbBle() {
+			return this.inventaire.getRessource().get("BLE");
 		}
-		if(this.inventaire.getRessource().get("LAINE") < 1) {
-			return false;
+		
+		public int getNbLaine() {
+			return this.inventaire.getRessource().get("LAINE");
 		}
-		if(this.inventaire.getRessource().get("BLE") < 1) {
-			return false;
+		
+		public int getNbMinerai() {
+			return this.inventaire.getRessource().get("MINERAI");
 		}
-		return true;
-	}
-	
-	public boolean peutAcheterRoute() {
-		if(this.inventaire.getRessource().get("ARGILE") < 1) {
-			return false;
+		
+		public int getNbColonie() {
+			return this.inventaire.getBatiment().get("COLONIE");
 		}
-		if(this.inventaire.getRessource().get("BOIS") < 1) {
-			return false;
+		
+		public int getNbRoute() {
+			return this.inventaire.getBatiment().get("ROUTE");
 		}
-		return true;
-	}
-	
-	public boolean peutAcheterVille() {
-		if(this.inventaire.getRessource().get("MINERAI") < 3) {
-			return false;
+		
+		public int getNbVille() {
+			return this.inventaire.getBatiment().get("VILLE");
 		}
-		if(this.inventaire.getRessource().get("BLE") < 2) {
-			return false;
-		}
-		return true;
-	}
-	
-	public void acheterColonie() {
-		this.inventaire.getBatiment().replace("COLONIE", this.inventaire.getBatiment().get("COLONIE")+1);
-		this.inventaire.getRessource().replace("ARGILE", this.inventaire.getRessource().get("ARGILE")-1);
-		this.inventaire.getRessource().replace("BOIS", this.inventaire.getRessource().get("BOIS")-1);
-		this.inventaire.getRessource().replace("LAINE", this.inventaire.getRessource().get("LAINE")-1);
-		this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-1);
-	}
-	
-	public void acheterRoute() {
-		this.inventaire.getBatiment().replace("ROUTE", this.inventaire.getBatiment().get("ROUTE")+1);
-		this.inventaire.getRessource().replace("ARGILE", this.inventaire.getRessource().get("ARGILE")-1);
-		this.inventaire.getRessource().replace("BOIS", this.inventaire.getRessource().get("BOIS")-1);
-	}
-	
-	public void acheterVille() {
-		this.inventaire.getBatiment().replace("VILLE", this.inventaire.getBatiment().get("VILLE")+1);
-		this.inventaire.getRessource().replace("MINERAI", this.inventaire.getRessource().get("MINERAI")-3);
-		this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-2);
-	}
-	
-	public int sommeDesRessources() { // Pour l'implémentation du Voleur
-		int somme = 0;
-		for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
-			somme += inv.getValue();
-		}
-		return somme;
-	}
-	
-	public void ressourceAleatoire(String typeDeRessource, boolean estVille) { // Compare le type de la tuile à la ressource associé. Donne 2 ressources pour les villes et 1 pour les colonies
-		for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
-			if(inv.getKey().equals(typeDeRessource)) {
-				if(estVille) {
-					this.inventaire.getRessource().replace(inv.getKey(), this.inventaire.getRessource().get(inv.getKey())+2);
-				}else {
-					this.inventaire.getRessource().replace(inv.getKey(), this.inventaire.getRessource().get(inv.getKey())+1);
-				}
-				return;
+		
+		public void voirInventaire() {
+			System.out.println("Inventaire de "+this.nom+" :");
+			for(Map.Entry<String, Integer> inv : this.inventaire.getBatiment().entrySet()) {
+				System.out.println(inv.getKey()+" : "+inv.getValue());
+			}
+			for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
+				System.out.println(inv.getKey()+" : "+inv.getValue());
 			}
 		}
-	}
-	
-	public abstract void poserRoute(Plateau p);
-	public abstract void poserColonie(Plateau p);
-	public abstract void poserVille(Plateau p);
+		
+		public boolean possedeColonie() {
+			if(this.inventaire.getBatiment().get("COLONIE") > 0) {
+				return true;
+			}
+			return false;
+		}
+		
+		public boolean possedeRoute() {
+			if(this.inventaire.getBatiment().get("ROUTE") > 0) {
+				return true;
+			}
+			return false;
+		}
+		
+		public boolean possedeVille() {
+			if(this.inventaire.getBatiment().get("VILLE") > 0) {
+				return true;
+			}
+			return false;
+		}
+		
+		public void utiliserColonie() {
+			this.inventaire.getBatiment().replace("COLONIE", this.inventaire.getBatiment().get("COLONIE")-1);
+		}
+		
+		public void utiliserRoute() {
+			this.inventaire.getBatiment().replace("ROUTE", this.inventaire.getBatiment().get("ROUTE")-1);
+		}
+		
+		public void utiliserVille() {
+			this.inventaire.getBatiment().replace("VILLE", this.inventaire.getBatiment().get("VILLE")-1);
+			this.inventaire.getBatiment().replace("COLONIE", this.inventaire.getBatiment().get("COLONIE")+1);
+		}
+		
+		public boolean peutAcheterColonie() {
+			if(this.inventaire.getRessource().get("ARGILE") < 1) {
+				return false;
+			}
+			if(this.inventaire.getRessource().get("BOIS") < 1) {
+				return false;
+			}
+			if(this.inventaire.getRessource().get("LAINE") < 1) {
+				return false;
+			}
+			if(this.inventaire.getRessource().get("BLE") < 1) {
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean peutAcheterRoute() {
+			if(this.inventaire.getRessource().get("ARGILE") < 1) {
+				return false;
+			}
+			if(this.inventaire.getRessource().get("BOIS") < 1) {
+				return false;
+			}
+			return true;
+		}
+		
+		public boolean peutAcheterVille() {
+			if(this.inventaire.getRessource().get("MINERAI") < 3) {
+				return false;
+			}
+			if(this.inventaire.getRessource().get("BLE") < 2) {
+				return false;
+			}
+			return true;
+		}
+		
+		public void acheterColonie() {
+			this.inventaire.getBatiment().replace("COLONIE", this.inventaire.getBatiment().get("COLONIE")+1);
+			this.inventaire.getRessource().replace("ARGILE", this.inventaire.getRessource().get("ARGILE")-1);
+			this.inventaire.getRessource().replace("BOIS", this.inventaire.getRessource().get("BOIS")-1);
+			this.inventaire.getRessource().replace("LAINE", this.inventaire.getRessource().get("LAINE")-1);
+			this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-1);
+		}
+		
+		public void acheterRoute() {
+			this.inventaire.getBatiment().replace("ROUTE", this.inventaire.getBatiment().get("ROUTE")+1);
+			this.inventaire.getRessource().replace("ARGILE", this.inventaire.getRessource().get("ARGILE")-1);
+			this.inventaire.getRessource().replace("BOIS", this.inventaire.getRessource().get("BOIS")-1);
+		}
+		
+		public void acheterVille() {
+			this.inventaire.getBatiment().replace("VILLE", this.inventaire.getBatiment().get("VILLE")+1);
+			this.inventaire.getRessource().replace("MINERAI", this.inventaire.getRessource().get("MINERAI")-3);
+			this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-2);
+		}
+		
+		public int sommeDesRessources() { // Pour l'implémentation du Voleur
+			int somme = 0;
+			for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
+				somme += inv.getValue();
+			}
+			return somme;
+		}
+		
+		public void ressourceAleatoire(String typeDeRessource, boolean estVille) { // Compare le type de la tuile à la ressource associé. Donne 2 ressources pour les villes et 1 pour les colonies
+			for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
+				if(inv.getKey().equals(typeDeRessource)) {
+					if(estVille) {
+						this.inventaire.getRessource().replace(inv.getKey(), this.inventaire.getRessource().get(inv.getKey())+2);
+					}else {
+						this.inventaire.getRessource().replace(inv.getKey(), this.inventaire.getRessource().get(inv.getKey())+1);
+					}
+					return;
+				}
+			}
+		}
+		
+		public void recupRessourceDonnee(ArrayList<String> s){
+			for(String r : s) {
+				if(this.inventaire.getRessource().containsKey(r)) {
+					this.inventaire.getRessource().replace(r, this.inventaire.getRessource().get(r)+1);
+				}
+			}
+		}
+		
+		public int lancerDees() { // A tester
+			Random rand = new Random();
+			return rand.nextInt(11)+2;
+		}
+		
+		public abstract void poserRoute(Plateau p);
+		public abstract void poserColonie(Plateau p);
+		public abstract void poserVille(Plateau p);
+		public abstract void deplacerVoleur(Plateau p);
+		public abstract void jetterSesRessources();
+		public abstract String donnerRessource();
+		
+		public Color getCouleur() {
+			return couleur;
+		}
+		
+		public int getScore() {
+			return score;
+		}
+		
+		public void setScore(int score) {
+			this.score = score;
+		}
 
-	public Color getCouleur() {
-		return couleur;
-	}
+		public Inventaire getInventaire() {
+			return inventaire;
+		}
+
+		public void setInventaire(Inventaire inventaire) {
+			this.inventaire = inventaire;
+		}
 }

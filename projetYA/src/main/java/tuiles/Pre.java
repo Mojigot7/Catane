@@ -3,11 +3,9 @@ package tuiles;
 import plateau.Tuile;
 
 public class Pre extends Tuile {
-	private boolean voleur;
 	
 	public Pre(int num) {
-		super(num,"LAINE");
-		this.voleur = false;
+		super(num,"LAINE",false);
 	}
 	
 	@Override
@@ -34,12 +32,6 @@ public class Pre extends Tuile {
 	public boolean peutEtreVoleur() {
 		// TODO Auto-generated method stub
 		return true;
-	}
-	public boolean isVoleur() {
-		return voleur;
-	}
-	public void setVoleur(boolean voleur) {
-		this.voleur = voleur;
 	}
 
 }

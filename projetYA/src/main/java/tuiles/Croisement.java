@@ -10,7 +10,7 @@ public class Croisement extends Tuile {
 	private Color couleur;
 	
 	public Croisement() {
-		super(-1,"");
+		super(-1,"",false);
 		this.route = false;
 	}
 
