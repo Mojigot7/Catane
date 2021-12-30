@@ -251,12 +251,45 @@ public abstract class Joueur {
 			}
 		}
 
+		public void UtiliserMonopole(String r1,ArrayList<Joueur> j){
+			if(r1.equals("BOIS") || r1.equals("ARGILE") ||r1.equals("LAINE") || r1.equals("MINERAI")|| r1.equals("BLE")
+			&& dev.peutUtiliserMonopole()){
+				for(int i = 0 ; i < j.size() ; i++){
+					if(j.get(i).nom.equals(this.nom) == false){
+						if(r1.equals("BOIS"))
+						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBois());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBois());
+					}
+					if(j.get(i).nom.equals(this.nom) == false){
+						if(r1.equals("ARGILE"))
+						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbArgile());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbArgile());
+					}
+					if(j.get(i).nom.equals(this.nom) == false){
+						if(r1.equals("LAINE"))
+						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbLaine());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbLaine());
+					}
+					if(j.get(i).nom.equals(this.nom) == false){
+						if(r1.equals("MINERAI"))
+						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbMinerai());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbMinerai());
+					}
+					if(j.get(i).nom.equals(this.nom) == false){
+						if(r1.equals("BLE"))
+						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBle());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBle());
+					}
+				}
+			}
+		}
+
 		public int UtiliserPointDeVictoire(){
 			if(dev.peutUtiliserPDV())
 				return dev.compterPtsDeVictoire();
 			return 0;
 		}
-		
+
 		public abstract void poserRoute(Plateau p);
 		public abstract void poserColonie(Plateau p);
 		public abstract void poserVille(Plateau p);
