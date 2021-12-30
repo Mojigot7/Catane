@@ -205,6 +205,58 @@ public abstract class Joueur {
 			return rand.nextInt(11)+2;
 		}
 		
+		public boolean peutCreeCarteDev(){
+			if(inventaire.getRessource().get("MINERAI") > 1 
+			&& inventaire.getRessource().get("LAINE") > 1
+			&& inventaire.getRessource().get("BLE") > 1)
+			return true;
+
+			return false;
+		}
+
+		public void CreeCarteDev(){
+			if(peutCreeCarteDev()){
+				this.inventaire.getRessource().replace("MINERAI", this.inventaire.getRessource().get("MINERAI")-1);
+				this.inventaire.getRessource().replace("MINERAI", this.inventaire.getRessource().get("LAINE")-1);
+				this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-1);
+				dev.creationCarteDev(dev.getCarteDev());
+			}
+		}
+
+		public void UtiliserChevalier(Plateau p){
+			if(dev.peutUtiliserChevalier()){
+				deplacerVoleur(p);
+			}
+		}
+
+		public void UtiliserConstructionDeRoute(){
+			if(dev.peutUtiliserConstructionDeRoute()){
+				inventaire.getBatiment().replace("ROUTE", this.inventaire.getBatiment().get("ROUTE")+2);
+				dev.supprimer("Construction de route");
+			}
+		}
+
+		public void UtiliserInvention(String r1, String r2){
+			if(dev.peutUtiliserInvention()){
+				choisirRessource(r1, r2);
+				dev.supprimer("Invention");
+			}
+		}
+
+		public void choisirRessource(String r1, String r2){
+			if(r1.equals("BOIS") || r1.equals("ARGILE") ||r1.equals("LAINE") || r1.equals("MINERAI")|| r1.equals("BLE")
+			&& r2.equals("BOIS") || r2.equals("ARGILE") ||r2.equals("LAINE") || r2.equals("MINERAI")|| r2.equals("BLE")){
+				inventaire.getRessource().replace(r1, inventaire.getRessource().get(r1)+1);
+				inventaire.getRessource().replace(r2, inventaire.getRessource().get(r2)+1);
+			}
+		}
+
+		public int UtiliserPointDeVictoire(){
+			if(dev.peutUtiliserPDV())
+				return dev.compterPtsDeVictoire();
+			return 0;
+		}
+		
 		public abstract void poserRoute(Plateau p);
 		public abstract void poserColonie(Plateau p);
 		public abstract void poserVille(Plateau p);

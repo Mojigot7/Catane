@@ -54,6 +54,62 @@ public class Developpement {
         return this.stock;
     }
 
+    public boolean peutUtiliserChevalier(){
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Chevalier"))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean peutUtiliserPDV(){
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Point de Victoire"))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean peutUtiliserConstructionDeRoute(){
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Construction de route"))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean peutUtiliserInvention(){
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Invention"))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean peutUtiliserMonopole(){
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Monopole"))
+                return true;
+        }
+        return false;
+    }
+
+    public int compterPtsDeVictoire(){
+        int res = 0;
+        for(int i = 0 ; i < stock.size() ; i++){
+            if((stock.get(i).nom).equals("Point de Victoire"))
+                res++;
+        }
+        return res;
+    }
+    public void supprimer(String nom){
+        for(int i = 0 ; i < stock.size()-1 ; i++){
+            if((stock.get(i).nom).equals(nom)){
+                stock.remove(i);
+            }
+        }
+    }
+
     public void afficheCarteDev(){
         for(int i = 0 ; i < stock.size() ; i++){
             System.out.println(stock.get(i).nom);
