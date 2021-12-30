@@ -256,29 +256,28 @@ public abstract class Joueur {
 			&& dev.peutUtiliserMonopole()){
 				for(int i = 0 ; i < j.size() ; i++){
 					if(j.get(i).nom.equals(this.nom) == false){
-						if(r1.equals("BOIS"))
-						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBois());
-						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBois());
-					}
-					if(j.get(i).nom.equals(this.nom) == false){
-						if(r1.equals("ARGILE"))
-						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbArgile());
-						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbArgile());
-					}
-					if(j.get(i).nom.equals(this.nom) == false){
-						if(r1.equals("LAINE"))
-						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbLaine());
-						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbLaine());
-					}
-					if(j.get(i).nom.equals(this.nom) == false){
-						if(r1.equals("MINERAI"))
-						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbMinerai());
-						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbMinerai());
-					}
-					if(j.get(i).nom.equals(this.nom) == false){
-						if(r1.equals("BLE"))
-						inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBle());
-						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBle());
+						if(r1.equals("BOIS")){
+							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBois());
+							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBois());
+						}
+						
+						if(r1.equals("ARGILE")){
+							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbArgile());
+							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbArgile());
+						}
+						if(r1.equals("LAINE")){
+							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbLaine());
+							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbLaine());
+						}
+						
+						if(r1.equals("MINERAI")){
+							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbMinerai());
+							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbMinerai());
+						}
+						if(r1.equals("BLE")){
+							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBle());
+							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBle());
+						}
 					}
 				}
 			}
