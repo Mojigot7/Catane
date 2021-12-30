@@ -11,7 +11,6 @@ public class IA extends Joueur {
 
 	@Override
 	public void poserRoute(Plateau p) {
-		// TODO Auto-generated method stub
 		
 	}
 

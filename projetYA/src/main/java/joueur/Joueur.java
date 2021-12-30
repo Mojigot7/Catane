@@ -153,6 +153,8 @@ public abstract class Joueur {
 			this.inventaire.getRessource().replace("BOIS", this.inventaire.getRessource().get("BOIS")-1);
 			this.inventaire.getRessource().replace("LAINE", this.inventaire.getRessource().get("LAINE")-1);
 			this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-1);
+			this.score += 1;
+			System.out.println("Joueur ["+this.toString()+"] a gagné 1 points de victoire !");
 		}
 		
 		public void acheterRoute() {
@@ -165,6 +167,8 @@ public abstract class Joueur {
 			this.inventaire.getBatiment().replace("VILLE", this.inventaire.getBatiment().get("VILLE")+1);
 			this.inventaire.getRessource().replace("MINERAI", this.inventaire.getRessource().get("MINERAI")-3);
 			this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-2);
+			this.score += 2;
+			System.out.println("Joueur ["+this.toString()+"] a gagné 2 points de victoire !");
 		}
 		
 		public int sommeDesRessources() { // Pour l'implémentation du Voleur

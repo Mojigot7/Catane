@@ -47,8 +47,6 @@ public class Humain extends Joueur {
 		}
 		//sc.close();
 		this.utiliserColonie();
-		this.score += 1;
-		System.out.println("Joueur ["+super.toString()+"] a gagné 1 points de victoire !");
 		System.out.println();
 	}
 
@@ -67,8 +65,6 @@ public class Humain extends Joueur {
 		}
 		//sc.close();
 		this.utiliserVille();
-		this.score += 2;
-		System.out.println("Joueur ["+super.toString()+"] a gagné 2 points de victoire !");
 		System.out.println();
 	}
 	
@@ -137,7 +133,7 @@ public class Humain extends Joueur {
 	}
 	
 	@Override
-	public String donnerRessource() {
+	public String donnerRessource() { // Quand un joueur se fait voler une ressource
 		String ressource = "";
 		System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous donner ? \n"
 				+ "- Blé (Entrez BLE) \n"
@@ -147,6 +143,7 @@ public class Humain extends Joueur {
 				+ "- Laine (Entrez LAINE)");
 		ressource = sc.next().toUpperCase();
 		while( this.inventaire.getRessource().get(ressource) == null || this.inventaire.getRessource().get(ressource) <= 0) {
+			System.out.println("Ce n'est pas une ressource valable !");
 			System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous donner ? \n"
 					+ "- Blé (Entrez BLE) \n"
 					+ "- Bois (Entrez BOIS) \n"
@@ -159,5 +156,48 @@ public class Humain extends Joueur {
 		System.out.println("Joueur ["+super.toString()+"] a donné 1 "+ressource);
 		System.out.println();
 		return ressource;
+	}
+	
+	public void echangerRessource() { // commerce sans le port
+		String ressource = "", echange = "";
+		System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous avoir ? \n"
+				+ "- Blé (Entrez BLE) \n"
+				+ "- Bois (Entrez BOIS) \n"
+				+ "- Minerai (Entrez MINERAI) \n"
+				+ "- Argile (Entrez ARGILE) \n"
+				+ "- Laine (Entrez LAINE)");
+		ressource = sc.next().toUpperCase();
+		while(this.inventaire.getRessource().get(ressource) == null) {
+			System.out.println("Ce n'est pas une ressource valable !");
+			System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous avoir ? \n"
+					+ "- Blé (Entrez BLE) \n"
+					+ "- Bois (Entrez BOIS) \n"
+					+ "- Minerai (Entrez MINERAI) \n"
+					+ "- Argile (Entrez ARGILE) \n"
+					+ "- Laine (Entrez LAINE)");
+			ressource = sc.next().toUpperCase();
+		}
+		System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous échanger ? \n"
+				+ "- Blé (Entrez BLE) \n"
+				+ "- Bois (Entrez BOIS) \n"
+				+ "- Minerai (Entrez MINERAI) \n"
+				+ "- Argile (Entrez ARGILE) \n"
+				+ "- Laine (Entrez LAINE)");
+		echange = sc.next().toUpperCase();
+		// condition si la colonie est proche d'un port
+		while(this.inventaire.getRessource().get(echange) == null || this.inventaire.getRessource().get(echange) < 4 || echange.equals(ressource)) {
+			System.out.println("Ce n'est pas une ressource valable ! (vous n'en avez pas assez)");
+			System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous échanger ? \n"
+					+ "- Blé (Entrez BLE) \n"
+					+ "- Bois (Entrez BOIS) \n"
+					+ "- Minerai (Entrez MINERAI) \n"
+					+ "- Argile (Entrez ARGILE) \n"
+					+ "- Laine (Entrez LAINE)");
+			echange = sc.next().toUpperCase();
+		}
+		this.inventaire.getRessource().replace(ressource, this.inventaire.getRessource().get(ressource)+1);
+		this.inventaire.getRessource().replace(echange, this.inventaire.getRessource().get(echange)-4);
+		System.out.println("Joueur ["+super.toString()+"] a échangé 4 "+echange+" pour 1 "+ressource);
+		System.out.println();
 	}
 }
