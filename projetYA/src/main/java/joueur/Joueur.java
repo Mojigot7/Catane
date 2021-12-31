@@ -293,7 +293,7 @@ public abstract class Joueur {
 		public abstract void poserColonie(Plateau p);
 		public abstract void poserVille(Plateau p);
 		public abstract void deplacerVoleur(Plateau p);
-		public abstract void jetterSesRessources();
+		public abstract void jeterSesRessources();
 		public abstract String donnerRessource();
 		
 		public Color getCouleur() {

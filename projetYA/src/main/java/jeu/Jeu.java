@@ -8,6 +8,7 @@ import joueur.Joueur;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Jeu implements Runnable{
 	private ArrayList<Joueur> joueur;
@@ -130,9 +131,22 @@ public class Jeu implements Runnable{
 		}
 	}
 	
+	public void faireChoix(Joueur j, Plateau jeu) {
+		System.out.println("Joueur ["+j.toString()+"] que voulez vous faire :");
+		if(!jeu.coloniePleine()) { // peut poser Colonie
+			System.out.println("- poser une Colonie (Entrée pc)");
+		}
+		if(!jeu.coloniePleine()) { // peut poser Colonie
+			System.out.println("- poser une Route (Entrée pc)");
+		}
+		if(!jeu.coloniePleine()) { // peut poser Colonie
+			System.out.println("- poser une Ville (Entrée pc)");
+		}
+	}
+	
 	public void voleurAction(Joueur j) {
 		for(Joueur j1 : this.joueur) {
-			j1.jetterSesRessources();
+			j1.jeterSesRessources();
 		}
 		j.deplacerVoleur(jeu);
 		jeu.estSurTuileDuVoleur(j);
@@ -141,12 +155,29 @@ public class Jeu implements Runnable{
 	
 	public void tour1() {
 		for(Joueur j : joueur) {
-		
+			j.poserColonie(jeu);
+			jeu.affiche();
+			j.poserRoute(jeu);
+			jeu.affiche();
+			j.poserRoute(jeu);
+			jeu.affiche();
 		}
 	}
 	
 	public void tour2() {
-		
+		Stack<Joueur> pile = new Stack<>();
+		for(Joueur j : joueur) {
+			pile.add(j);
+		}
+		while(!pile.isEmpty()) {
+			Joueur j1 = pile.pop();
+			j1.poserColonie(jeu);
+			jeu.affiche();
+			j1.poserRoute(jeu);
+			jeu.affiche();
+			j1.poserRoute(jeu);
+			jeu.affiche();
+		}
 	}
 	
 	public void tourClassique() {

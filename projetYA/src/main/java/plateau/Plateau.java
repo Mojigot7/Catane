@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import joueur.Humain;
+import joueur.IA;
 import joueur.Joueur;
 import tuiles.*;
 
@@ -28,8 +29,6 @@ public class Plateau implements PlateauFunction{
 	}
 
 	public void remplirPlateau() { // Initialise le plateau
-		Random r = new Random();
-		
 		this.getPlateau()[0][1] = new Port();
 		this.getPlateau()[0][2] = new Sommet();
 		this.getPlateau()[0][3] = new Croisement();
@@ -149,19 +148,36 @@ public class Plateau implements PlateauFunction{
 		
 	}
 	
-	public boolean poserRoute(int x, int y, Joueur j) {
+	public boolean poserRoute(int x, int y, Joueur j) { // TO FIX: si la personne ne peut pas poser de route mais qu'il y a de la place
 		if(!this.horsPlateau(x, y) && !this.estVide(x, y) && this.getPlateau()[x][y].estCroisement()) {
 			if(!((Croisement)this.getPlateau()[x][y]).isRoute() && this.routeEstProcheDeColonie(x, y, j) || this.routeEstProcheDeRoute(x, y, j)) {
 				((Croisement)this.getPlateau()[x][y]).setRoute(true);
 				((Croisement)this.getPlateau()[x][y]).setCouleur(j.getCouleur());
 				return true;
 			} else {
-				System.out.println("Il y a déjà une route ici ou il n'y a pas de colonie proche !");
+				if(j instanceof Humain) {
+					System.out.println("Il y a déjà une route ici ou il n'y a pas de colonie proche !");
+				}
 			}
 		} else {
-			System.out.println("Vous ne pouvez pas poser de route ici !");
+			if(j instanceof Humain) {
+				System.out.println("Vous ne pouvez pas poser de route ici !");
+			}
 		}
 		return false;
+	}
+	
+	public boolean routePleine(Joueur joueur) { // Vérifie si toutes les routes sont occupées
+		for(int i = 0; i < this.plateau.length; i++) {
+			for(int j = 0; j < this.plateau[i].length; j++) {
+				if(!this.horsPlateau(i, j) && !this.estVide(i, j) && this.getPlateau()[i][j].estCroisement()) {
+					if(!((Croisement)this.getPlateau()[i][j]).isRoute() && this.routeEstProcheDeColonie(i, j, joueur) || this.routeEstProcheDeRoute(i, j, joueur)) {
+						return false;
+					}	
+				}
+			}
+		}
+		return true;
 	}
 	
 	public boolean poserColonie(int x, int y, Joueur j) {
@@ -172,12 +188,29 @@ public class Plateau implements PlateauFunction{
 				((Sommet)this.getPlateau()[x][y]).setOccupation(j);
 				return true;
 			} else {
-				System.out.println("Il y a déjà une colonie ou une ville proche d'ici !");
+				if(j instanceof Humain) {
+					System.out.println("Il y a déjà une colonie ou une ville proche d'ici !");
+				}
 			}
 		} else {
-			System.out.println("Vous ne pouvez pas poser de colonie ici !");
+			if(j instanceof Humain) {
+				System.out.println("Vous ne pouvez pas poser de colonie ici !");
+			}
 		}
 		return false;
+	}
+	
+	public boolean coloniePleine() { // Vérifie si toutes les colonies sont occupées
+		for(int i = 0; i < this.plateau.length; i = i+2) {
+			for(int j = 0; j < this.plateau[i].length; j = j+2) {
+				if(!this.horsPlateau(i, j) && !this.estVide(i, j) && this.getPlateau()[i][j].estSommet()) {
+					if(!((Sommet)this.getPlateau()[i][j]).isColonie() && !((Sommet)this.getPlateau()[i][j]).isVille() && this.pasDeColonieAdjacente(i, j)) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 	
 	public boolean poserVille(int x, int y, Joueur j) {
@@ -187,12 +220,25 @@ public class Plateau implements PlateauFunction{
 				((Sommet)this.getPlateau()[x][y]).setColonie(false);
 				return true;
 			} else {
-				System.out.println("Vous ne pouvez pas poser de ville ici ! (Il n'y a pas de colonie ou ce n'est pas votre colonie !)");
+				if(j instanceof Humain) System.out.println("Vous ne pouvez pas poser de ville ici ! (Il n'y a pas de colonie ou ce n'est pas votre colonie !)");
 			}
 		} else {
-			System.out.println("Vous ne pouvez pas poser de ville ici !");
+			if(j instanceof Humain) System.out.println("Vous ne pouvez pas poser de ville ici !");
 		}
 		return false;
+	}
+	
+	public boolean villePleine(Joueur joueur) { // Vérifie si toutes les villes sont occupées
+		for(int i = 0; i < this.plateau.length; i = i+2) {
+			for(int j = 0; j < this.plateau[i].length; j = j+2) {
+				if(!this.horsPlateau(i, j) && !this.estVide(i, j) && this.getPlateau()[i][j].estSommet()) {
+					if(((Sommet)this.getPlateau()[i][j]).isColonie() && ((Sommet)this.getPlateau()[i][j]).getCouleur() != null && joueur.getCouleur().getRGB() == ((Sommet)this.getPlateau()[i][j]).getCouleur().getRGB()) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 	
 	public void changerVoleur(int x, int y) {
@@ -290,12 +336,12 @@ public class Plateau implements PlateauFunction{
 			this.changerVoleur(x, y);
 			return true;
 		} else {
-			System.out.println("Vous ne pouvez pas mettre le voleur ici !");
+			if(j instanceof Humain) System.out.println("Vous ne pouvez pas mettre le voleur ici !");
 		}
 		return false;
 	}
 	
-	public void estSurTuileDuVoleur(Joueur estVoleur){ // A tester
+	public void estSurTuileDuVoleur(Joueur estVoleur){ // Recupère les joueurs qui ont une colonie proche de la tuile du voleur et leur volent leurs ressources
 		ArrayList<Joueur> j = new ArrayList<>();
 		ArrayList<String> s = new ArrayList<>();
 		if(!this.estVide(voleur[0]-1, voleur[1]-1) && ((Sommet)this.plateau[voleur[0]-1][voleur[1]-1]).getCouleur() != null && ((Sommet)this.plateau[voleur[0]-1][voleur[1]-1]).getCouleur().getRGB() != this.plateau[voleur[0]][voleur[1]].getEstVoleur().getCouleur().getRGB()) {
@@ -312,9 +358,7 @@ public class Plateau implements PlateauFunction{
 		}
 		if(j.size() > 0) {
 			for(Joueur joueur : j) {
-				if(joueur instanceof Humain) {
-					s.add(((Humain)joueur).donnerRessource());
-				}
+				s.add(joueur.donnerRessource());
 			}
 		}
 		if(s.size() > 0) {

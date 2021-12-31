@@ -16,7 +16,7 @@ class Joueur03Test {
 		j1.inventaire.getRessource().replace("BOIS", 4);
 		j1.inventaire.getRessource().replace("ARGILE", 5);
 		j1.voirInventaire();
-		j1.jetterSesRessources();
+		j1.jeterSesRessources();
 		j1.voirInventaire();
 	}
 	

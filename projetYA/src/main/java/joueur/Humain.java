@@ -33,7 +33,7 @@ public class Humain extends Joueur {
 	}
 
 	@Override
-	public void poserColonie(Plateau p) { //TODO: ajouter les points de victoire
+	public void poserColonie(Plateau p) { // Permet de poser une colonie sur les intersections des tuiles
 		int x, y;
 		System.out.println("Joueur ["+super.toString()+"] : Où voulez-vous posez votre colonie ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
@@ -51,7 +51,7 @@ public class Humain extends Joueur {
 	}
 
 	@Override
-	public void poserVille(Plateau p) { //TODO: ajouter les points de victoire
+	public void poserVille(Plateau p) { // Permet de poser une ville par dessus une colonie
 		int x, y;
 		System.out.println("Joueur ["+super.toString()+"] : Où voulez-vous posez votre ville ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
@@ -69,7 +69,7 @@ public class Humain extends Joueur {
 	}
 	
 	@Override
-	public void jetterSesRessources() { //A tester
+	public void jeterSesRessources() { // Quand un joueur fait 7 : permet de jetter la moitié de ses ressources si on en a plus de 7
 		int x=-1, moitie;
 		String ressource = "";
 		if(this.sommeDesRessources() > 7) {
@@ -80,7 +80,7 @@ public class Humain extends Joueur {
 			}
 			while(this.sommeDesRessources() > moitie) {
 				System.out.println("Il vous reste encore "+(this.sommeDesRessources()-moitie)+" à jeter.");
-				System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous jetter ? \n"
+				System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous jeter ? \n"
 						+ "- Blé (Entrez BLE) \n"
 						+ "- Bois (Entrez BOIS) \n"
 						+ "- Minerai (Entrez MINERAI) \n"
@@ -89,7 +89,7 @@ public class Humain extends Joueur {
 				ressource = sc.next().toUpperCase();
 				while( this.inventaire.getRessource().get(ressource) == null || this.inventaire.getRessource().get(ressource) <= 0) {
 					System.out.println("Vous n'avez pas de ressources de ce type !");
-					System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous jetter ? \n"
+					System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous jeter ? \n"
 							+ "- Blé (Entrez BLE) \n"
 							+ "- Bois (Entrez BOIS) \n"
 							+ "- Minerai (Entrez MINERAI) \n"
@@ -97,16 +97,16 @@ public class Humain extends Joueur {
 							+ "- Laine (Entrez LAINE)");
 					ressource = sc.next().toUpperCase();
 				}
-				System.out.println("Joueur ["+super.toString()+"] : Combien voulez-vous en jetter ? (Entrée un entier)");
+				System.out.println("Joueur ["+super.toString()+"] : Combien voulez-vous en jeter ? (Entrée un entier)");
 				x = sc.nextInt(); //TO FIX: si la personne met autre chose qu'un entier le programme s'arrête
 				while( this.inventaire.getRessource().get(ressource) < x || x < 0) {
-					System.out.println("Vous n'avez pas assez de ressources de ce type pour en jetter autant !");
-					System.out.println("Joueur ["+super.toString()+"] : Combien voulez-vous en jetter ? (Entrée un entier) /n"
+					System.out.println("Vous n'avez pas assez de ressources de ce type pour en jeter autant !");
+					System.out.println("Joueur ["+super.toString()+"] : Combien voulez-vous en jeter ? (Entrée un entier) /n"
 							+ "Ou revenez en arrière (Entrée 0)");
 					x = sc.nextInt();
 				}
 				if(x == 0) {
-					this.jetterSesRessources();
+					this.jeterSesRessources();
 					return;
 				}
 				this.inventaire.getRessource().replace(ressource, this.inventaire.getRessource().get(ressource)-x);
@@ -117,7 +117,7 @@ public class Humain extends Joueur {
 	}
 	
 	@Override
-	public void deplacerVoleur(Plateau p) { // A tester
+	public void deplacerVoleur(Plateau p) { // deplace le voleur
 		int x, y;
 		System.out.println("Joueur ["+super.toString()+"] : Où voulez-vous déplacer le voleur ? (Saisissez la première coordonnée de 0 à 8)");
 		x = sc.nextInt();
@@ -133,7 +133,7 @@ public class Humain extends Joueur {
 	}
 	
 	@Override
-	public String donnerRessource() { // Quand un joueur se fait voler une ressource
+	public String donnerRessource() { // Quand un joueur se fait voler une ressource il donne une ressource de son choix
 		String ressource = "";
 		System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous donner ? \n"
 				+ "- Blé (Entrez BLE) \n"
