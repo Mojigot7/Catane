@@ -2,6 +2,7 @@ package joueur;
 
 import java.awt.Color;
 import java.util.Random;
+import java.util.Scanner;
 
 import plateau.Plateau;
 
@@ -128,5 +129,11 @@ public class IA extends Joueur {
 			}
 		}
 		return ressource;
+	}
+	
+	@Override
+	public String faireChoix(Plateau p) {
+		
+		return null;
 	}
 }

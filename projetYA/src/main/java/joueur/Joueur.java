@@ -295,6 +295,7 @@ public abstract class Joueur {
 		public abstract void deplacerVoleur(Plateau p);
 		public abstract void jeterSesRessources();
 		public abstract String donnerRessource();
+		public abstract String faireChoix(Plateau p);
 		
 		public Color getCouleur() {
 			return couleur;

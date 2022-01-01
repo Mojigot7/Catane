@@ -200,4 +200,22 @@ public class Humain extends Joueur {
 		System.out.println("Joueur ["+super.toString()+"] a échangé 4 "+echange+" pour 1 "+ressource);
 		System.out.println();
 	}
+
+	@Override
+	public String faireChoix(Plateau p) {
+		System.out.println("Joueur ["+this.toString()+"] que voulez vous faire :");
+		if(!p.coloniePleine()) { // peut poser Colonie
+			System.out.println("- poser une Colonie (Entrée pc)");
+			return sc.next();
+		}
+		if(!p.coloniePleine()) { // peut poser Colonie
+			System.out.println("- poser une Route (Entrée pc)");
+			return sc.next();
+		}
+		if(!p.coloniePleine()) { // peut poser Colonie
+			System.out.println("- poser une Ville (Entrée pc)");
+			return sc.next();
+		}
+		return null;
+	}
 }

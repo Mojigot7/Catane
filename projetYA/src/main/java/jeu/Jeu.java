@@ -21,6 +21,25 @@ public class Jeu implements Runnable{
 		config = new Scanner(System.in);
 	}
 	
+	public Joueur getJoueur1() {
+		return joueur.get(0);
+	}
+	
+	public Joueur getJoueur2() {
+		return joueur.get(1);
+	}
+	
+	public Joueur getJoueur3() {
+		return joueur.get(2);
+	}
+	
+	public Joueur getJoueur4() {
+		if(joueur.size() < 4) {
+			return null;
+		}
+		return joueur.get(3);
+	}
+	
 	public boolean victoire() {
 		for(Joueur j : joueur) {
 			if(j.getScore() >= 10) {
@@ -123,24 +142,10 @@ public class Jeu implements Runnable{
 			}
 			i++;
 		}
-		config.close();
 		System.out.println();
 		System.out.println("Voici les joueurs :");
 		for(Joueur j : joueur) {
 			System.out.println(j.toString());
-		}
-	}
-	
-	public void faireChoix(Joueur j, Plateau jeu) {
-		System.out.println("Joueur ["+j.toString()+"] que voulez vous faire :");
-		if(!jeu.coloniePleine()) { // peut poser Colonie
-			System.out.println("- poser une Colonie (Entrée pc)");
-		}
-		if(!jeu.coloniePleine()) { // peut poser Colonie
-			System.out.println("- poser une Route (Entrée pc)");
-		}
-		if(!jeu.coloniePleine()) { // peut poser Colonie
-			System.out.println("- poser une Ville (Entrée pc)");
 		}
 	}
 	
@@ -159,8 +164,6 @@ public class Jeu implements Runnable{
 			jeu.affiche();
 			j.poserRoute(jeu);
 			jeu.affiche();
-			j.poserRoute(jeu);
-			jeu.affiche();
 		}
 	}
 	
@@ -175,8 +178,6 @@ public class Jeu implements Runnable{
 			jeu.affiche();
 			j1.poserRoute(jeu);
 			jeu.affiche();
-			j1.poserRoute(jeu);
-			jeu.affiche();
 		}
 	}
 	
@@ -188,6 +189,18 @@ public class Jeu implements Runnable{
 	public void run() {
 		Jeu j = new Jeu();
 		j.creationDesJoueurs();
+		while(!this.victoire()) {
+			
+		}
+		System.out.println("Voulez-vous rejouer ? O : oui, N : non");
+		String rejouer = config.next().toUpperCase();
+		while(!rejouer.equals("O") && !rejouer.equals("N")) {
+			System.out.println("Voulez-vous rejouer ? O : oui, N : non");
+			rejouer = config.next().toUpperCase();
+		}
+		if(rejouer.equals("O")) {
+			this.run();
+		}
 	}
 	
 }

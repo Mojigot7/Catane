@@ -1,12 +1,18 @@
 package plateau;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import joueur.Humain;
-import joueur.IA;
 import joueur.Joueur;
-import tuiles.*;
+import tuiles.Champs;
+import tuiles.Colline;
+import tuiles.Croisement;
+import tuiles.Desert;
+import tuiles.Foret;
+import tuiles.Montagne;
+import tuiles.Port;
+import tuiles.Pre;
+import tuiles.Sommet;
 
 public class Plateau implements PlateauFunction{
 	private Tuile[][] plateau;
@@ -135,7 +141,15 @@ public class Plateau implements PlateauFunction{
 	}
 
 	public void affiche() {
+		
 		for(int i = 0 ; i < this.getPlateau().length; i++) {
+			if(i == 0) {
+				for(int j = 0; j < this.plateau[i].length; j++) {
+					System.out.print("   "+j);
+				}
+				System.out.println();
+			}
+			System.out.print(i+" ");	
 			for(int j = 0 ; j < this.getPlateau()[i].length; j++) {
 				if(this.getPlateau()[i][j] != null) {
 					System.out.print("["+this.getPlateau()[i][j]+"] ");
