@@ -171,7 +171,7 @@ public class Humain extends Joueur {
 		} else {
 			x = 4;
 		}
-		System.out.println("Joueur ["+super.toString()+"] : Vous pouvez échanger "+x+" pour 1 ressource");
+		System.out.println("Joueur ["+super.toString()+"] : Vous pouvez échanger "+x+"ressources pour 1 ressource");
 		System.out.println("Joueur ["+super.toString()+"] : Quelle ressource voulez-vous avoir ? \n"
 				+ "- Blé (Entrez BLE) \n"
 				+ "- Bois (Entrez BOIS) \n"

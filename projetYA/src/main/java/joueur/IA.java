@@ -1,6 +1,7 @@
 package joueur;
 
 import java.awt.Color;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -135,9 +136,103 @@ public class IA extends Joueur {
 		return ressource;
 	}
 	
+	public boolean echangerRessource(Plateau p) { // commerce avec le port
+		Random r = new Random();
+		int x = 0, rand = r.nextInt(3);
+		String ressource = "",echange = "";
+		if(p.estProcheDePort(this)) {
+			x = 2;
+		} else {
+			x = 4;
+		}
+		if(rand == 0) {
+			ressource = "BOIS";
+			echange = "MINERAI";
+		}
+		if(rand == 1) {
+			ressource = "LAINE";
+			echange = "MINERAI";
+		}
+		if(rand == 2) {
+			ressource = "ARGILE";
+			echange = "MINERAI";
+		}
+		System.out.println(this.inventaire.getRessource().get(echange));
+		if(this.inventaire.getRessource().get(echange) < x) {
+			return false;
+		}
+		this.inventaire.getRessource().replace(ressource, this.inventaire.getRessource().get(ressource)+1);
+		this.inventaire.getRessource().replace(echange, this.inventaire.getRessource().get(echange)-x);
+		System.out.println("Joueur ["+super.toString()+"] a échangé "+x+" "+echange+" pour 1 "+ressource);
+		System.out.println();
+		return true;
+	}
+	
 	@Override
 	public void faireChoix(Plateau p) {
-		
-		return ;
+		Random r = new Random();
+		int rand = r.nextInt(9);
+		while(rand == 0) {
+			while(this.peutAcheterColonie()) {
+				this.acheterColonie();
+			}
+			rand = r.nextInt(9);
+		}
+		while(rand == 1) {
+			while(this.peutAcheterRoute()) {
+				this.acheterRoute();
+			}
+			rand = r.nextInt(9);
+		}
+		while(rand == 2) {
+			while(this.peutAcheterVille()) {
+				this.acheterVille();
+			}
+			rand = r.nextInt(9);
+		}
+		while(rand == 3) {
+			while(!p.coloniePleine() && this.possedeColonie()) {
+				this.poserColonie(p);
+			}
+			rand = r.nextInt(9);
+		}
+		while(rand == 4) {
+			while(!p.routePleine(this) && this.possedeRoute()) {
+				this.poserRoute(p);
+			}
+			rand = r.nextInt(9);
+		}
+		while(rand == 5) {
+			while(!p.villePleine(this) && this.possedeVille()) {
+				this.poserVille(p);
+			}
+			rand = r.nextInt(9);
+		}
+		if(rand == 6) {
+			this.echangerRessource(p);
+			rand = r.nextInt(9);
+		}
+		while(rand == 7) {
+			while(!p.coloniePleine() && this.possedeColonie()) {
+				this.poserColonie(p);
+			}
+			rand = r.nextInt(9);
+		}
+		while(rand == 8) {
+			while(this.peutAcheterColonie()) {
+				this.acheterColonie();
+			}
+			rand = r.nextInt(9);
+		}
+	}
+	
+	public void voirInventaire() {
+		System.out.println("Inventaire de "+this.nom+" :");
+		for(Map.Entry<String, Integer> inv : this.inventaire.getBatiment().entrySet()) {
+			System.out.println(inv.getKey()+" : "+inv.getValue());
+		}
+		for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
+			System.out.println(inv.getKey()+" : "+inv.getValue());
+		}
 	}
 }

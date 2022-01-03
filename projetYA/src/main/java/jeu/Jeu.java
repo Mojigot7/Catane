@@ -177,9 +177,7 @@ public class Jeu implements Runnable{
 	public void tour1() {
 		for(Joueur j : joueur) {
 			j.poserColonie(jeu);
-			jeu.affiche();
 			j.poserRoute(jeu);
-			jeu.affiche();
 		}
 	}
 	
@@ -191,9 +189,7 @@ public class Jeu implements Runnable{
 		while(!pile.isEmpty()) {
 			Joueur j1 = pile.pop();
 			j1.poserColonie(jeu);
-			jeu.affiche();
 			j1.poserRoute(jeu);
-			jeu.affiche();
 		}
 	}
 	
@@ -226,15 +222,16 @@ public class Jeu implements Runnable{
 			rejouer = config.next().toUpperCase();
 		}
 		if(rejouer.equals("O")) {
-			this.jeu = new Plateau();
-			this.run();
+			Jeu j = new Jeu();
+			j.run();
 		} else {
 			System.exit(0);
 		}
 	}
 	
 	public static void main(String[] args) {
-		
+		Jeu j = new Jeu();
+		j.run();
 	}
 	
 }

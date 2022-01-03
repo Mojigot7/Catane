@@ -166,9 +166,9 @@ public class Plateau implements PlateauFunction{
 		System.out.println();
 	}
 	
-	public boolean poserRoute(int x, int y, Joueur j) { // TO FIX: si la personne ne peut pas poser de route mais qu'il y a de la place
+	public boolean poserRoute(int x, int y, Joueur j) { 
 		if(!this.horsPlateau(x, y) && !this.estVide(x, y) && this.getPlateau()[x][y].estCroisement()) {
-			if(!((Croisement)this.getPlateau()[x][y]).isRoute() && this.routeEstProcheDeColonie(x, y, j) || this.routeEstProcheDeRoute(x, y, j)) {
+			if(!((Croisement)this.getPlateau()[x][y]).isRoute() && (this.routeEstProcheDeColonie(x, y, j) || this.routeEstProcheDeRoute(x, y, j))) {
 				((Croisement)this.getPlateau()[x][y]).setRoute(true);
 				((Croisement)this.getPlateau()[x][y]).setCouleur(j.getCouleur());
 				return true;
@@ -189,7 +189,7 @@ public class Plateau implements PlateauFunction{
 		for(int i = 0; i < this.plateau.length; i++) {
 			for(int j = 0; j < this.plateau[i].length; j++) {
 				if(!this.horsPlateau(i, j) && !this.estVide(i, j) && this.getPlateau()[i][j].estCroisement()) {
-					if(!((Croisement)this.getPlateau()[i][j]).isRoute() && this.routeEstProcheDeColonie(i, j, joueur) || this.routeEstProcheDeRoute(i, j, joueur)) {
+					if(!((Croisement)this.getPlateau()[i][j]).isRoute() && (this.routeEstProcheDeColonie(i, j, joueur) || this.routeEstProcheDeRoute(i, j, joueur))) {
 						return false;
 					}	
 				}
@@ -199,7 +199,7 @@ public class Plateau implements PlateauFunction{
 	}
 	
 	public boolean poserColonie(int x, int y, Joueur j) {
-		if(!this.horsPlateau(x, y) && !this.estVide(x, y) && this.getPlateau()[x][y].estSommet()) {
+		if(!this.horsPlateau(x, y) && !this.estVide(x, y) && this.getPlateau()[x][y].estSommet() && ((Sommet)this.plateau[x][y]).getCouleur() == null) {
 			if(!((Sommet)this.getPlateau()[x][y]).isColonie() && !((Sommet)this.getPlateau()[x][y]).isVille() && this.pasDeColonieAdjacente(x, y)) {
 				((Sommet)this.getPlateau()[x][y]).setColonie(true);
 				((Sommet)this.getPlateau()[x][y]).setCouleur(j.getCouleur());
@@ -233,7 +233,7 @@ public class Plateau implements PlateauFunction{
 	
 	public boolean poserVille(int x, int y, Joueur j) {
 		if(!this.horsPlateau(x, y) && !this.estVide(x, y) && this.getPlateau()[x][y].estSommet()) {
-			if(((Sommet)this.getPlateau()[x][y]).isColonie() && ((Sommet)this.getPlateau()[x][y]).getCouleur() != null && j.getCouleur().getRGB() == ((Sommet)this.getPlateau()[x][y]).getCouleur().getRGB()) {
+			if(((Sommet)this.getPlateau()[x][y]).isColonie() && !((Sommet)this.getPlateau()[x][y]).isVille() && ((Sommet)this.getPlateau()[x][y]).getCouleur() != null && j.getCouleur().getRGB() == ((Sommet)this.getPlateau()[x][y]).getCouleur().getRGB()) {
 				((Sommet)this.getPlateau()[x][y]).setVille(true);
 				((Sommet)this.getPlateau()[x][y]).setColonie(false);
 				return true;
@@ -250,7 +250,7 @@ public class Plateau implements PlateauFunction{
 		for(int i = 0; i < this.plateau.length; i = i+2) {
 			for(int j = 0; j < this.plateau[i].length; j = j+2) {
 				if(!this.horsPlateau(i, j) && !this.estVide(i, j) && this.getPlateau()[i][j].estSommet()) {
-					if(((Sommet)this.getPlateau()[i][j]).isColonie() && ((Sommet)this.getPlateau()[i][j]).getCouleur() != null && joueur.getCouleur().getRGB() == ((Sommet)this.getPlateau()[i][j]).getCouleur().getRGB()) {
+					if((((Sommet)this.getPlateau()[i][j]).isColonie() || !((Sommet)this.getPlateau()[i][j]).isVille())) {
 						return false;
 					}
 				}
@@ -269,16 +269,16 @@ public class Plateau implements PlateauFunction{
 	}
 	
 	public boolean pasDeColonieAdjacente(int x, int y) { // Vérifie qu'il n y a pas de colonie proche pour poserColonie
-		if(!this.horsPlateau(x, y-2) && !this.estVide(x, y-2) && ((Sommet)this.plateau[x][y-2]).isColonie()) {
+		if(!this.horsPlateau(x, y-2) && !this.estVide(x, y-2) && (((Sommet)this.plateau[x][y-2]).isColonie() || ((Sommet)this.plateau[x][y-2]).isVille())) {
 			return false;
 		}
-		if(!this.horsPlateau(x-2, y) && !this.estVide(x-2, y) && ((Sommet)this.plateau[x-2][y]).isColonie()) {
+		if(!this.horsPlateau(x-2, y) && !this.estVide(x-2, y) && (((Sommet)this.plateau[x-2][y]).isColonie() || ((Sommet)this.plateau[x-2][y]).isVille())) {
 			return false;
 		}
-		if(!this.horsPlateau(x, y+2) && !this.estVide(x, y+2) && ((Sommet)this.plateau[x][y+2]).isColonie()) {
+		if(!this.horsPlateau(x, y+2) && !this.estVide(x, y+2) && (((Sommet)this.plateau[x][y+2]).isColonie() || ((Sommet)this.plateau[x][y+2]).isVille())) {
 			return false;
 		}
-		if(!this.horsPlateau(x+2, y) && !this.estVide(x+2, y) && ((Sommet)this.plateau[x+2][y]).isColonie()) {
+		if(!this.horsPlateau(x+2, y) && !this.estVide(x+2, y) && (((Sommet)this.plateau[x+2][y]).isColonie() || ((Sommet)this.plateau[x+2][y]).isVille())) {
 			return false;
 		}
 		return true;
