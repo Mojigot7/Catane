@@ -21,6 +21,5 @@ class Jeu01Test {
 		assertEquals(0, jeu.getJoueur1().getNbColonie());
 		assertEquals(0, jeu.getJoueur2().getNbColonie());
 		assertEquals(0, jeu.getJoueur3().getNbColonie());
-		assertEquals(0, jeu.getJoueur4().getNbColonie());
 	}
 }

@@ -2,6 +2,7 @@ package joueur;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 import plateau.Plateau;
@@ -30,6 +31,7 @@ public class Humain extends Joueur {
 		//sc.close();
 		this.utiliserRoute();
 		System.out.println();
+		p.affiche();
 	}
 
 	@Override
@@ -48,6 +50,7 @@ public class Humain extends Joueur {
 		//sc.close();
 		this.utiliserColonie();
 		System.out.println();
+		p.affiche();
 	}
 
 	@Override
@@ -66,6 +69,7 @@ public class Humain extends Joueur {
 		//sc.close();
 		this.utiliserVille();
 		System.out.println();
+		p.affiche();
 	}
 	
 	@Override
@@ -130,6 +134,7 @@ public class Humain extends Joueur {
 			y = sc .nextInt();
 		}
 		System.out.println();
+		p.affiche();
 	}
 	
 	@Override
@@ -158,9 +163,16 @@ public class Humain extends Joueur {
 		return ressource;
 	}
 	
-	public void echangerRessource() { // commerce sans le port
+	public void echangerRessource(Plateau p) { // commerce avec le port
 		String ressource = "", echange = "";
-		System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous avoir ? \n"
+		int x = 0;
+		if(p.estProcheDePort(this)) {
+			x = 2;
+		} else {
+			x = 4;
+		}
+		System.out.println("Joueur ["+super.toString()+"] : Vous pouvez échanger "+x+" pour 1 ressource");
+		System.out.println("Joueur ["+super.toString()+"] : Quelle ressource voulez-vous avoir ? \n"
 				+ "- Blé (Entrez BLE) \n"
 				+ "- Bois (Entrez BOIS) \n"
 				+ "- Minerai (Entrez MINERAI) \n"
@@ -169,7 +181,7 @@ public class Humain extends Joueur {
 		ressource = sc.next().toUpperCase();
 		while(this.inventaire.getRessource().get(ressource) == null) {
 			System.out.println("Ce n'est pas une ressource valable !");
-			System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous avoir ? \n"
+			System.out.println("Joueur ["+super.toString()+"] : Quelle ressource voulez-vous avoir ? \n"
 					+ "- Blé (Entrez BLE) \n"
 					+ "- Bois (Entrez BOIS) \n"
 					+ "- Minerai (Entrez MINERAI) \n"
@@ -177,17 +189,16 @@ public class Humain extends Joueur {
 					+ "- Laine (Entrez LAINE)");
 			ressource = sc.next().toUpperCase();
 		}
-		System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous échanger ? \n"
+		System.out.println("Joueur ["+super.toString()+"] : Quelle ressource voulez-vous échanger ? \n"
 				+ "- Blé (Entrez BLE) \n"
 				+ "- Bois (Entrez BOIS) \n"
 				+ "- Minerai (Entrez MINERAI) \n"
 				+ "- Argile (Entrez ARGILE) \n"
 				+ "- Laine (Entrez LAINE)");
 		echange = sc.next().toUpperCase();
-		// condition si la colonie est proche d'un port
-		while(this.inventaire.getRessource().get(echange) == null || this.inventaire.getRessource().get(echange) < 4 || echange.equals(ressource)) {
+		while(this.inventaire.getRessource().get(echange) == null || this.inventaire.getRessource().get(echange) < x || echange.equals(ressource)) {
 			System.out.println("Ce n'est pas une ressource valable ! (vous n'en avez pas assez)");
-			System.out.println("Joueur ["+super.toString()+"] : Quelle(s) ressource(s) voulez-vous échanger ? \n"
+			System.out.println("Joueur ["+super.toString()+"] : Quelle ressource voulez-vous échanger ? \n"
 					+ "- Blé (Entrez BLE) \n"
 					+ "- Bois (Entrez BOIS) \n"
 					+ "- Minerai (Entrez MINERAI) \n"
@@ -196,26 +207,127 @@ public class Humain extends Joueur {
 			echange = sc.next().toUpperCase();
 		}
 		this.inventaire.getRessource().replace(ressource, this.inventaire.getRessource().get(ressource)+1);
-		this.inventaire.getRessource().replace(echange, this.inventaire.getRessource().get(echange)-4);
-		System.out.println("Joueur ["+super.toString()+"] a échangé 4 "+echange+" pour 1 "+ressource);
+		this.inventaire.getRessource().replace(echange, this.inventaire.getRessource().get(echange)-x);
+		System.out.println("Joueur ["+super.toString()+"] a échangé "+x+" "+echange+" pour 1 "+ressource);
 		System.out.println();
 	}
 
 	@Override
-	public String faireChoix(Plateau p) {
+	public void faireChoix(Plateau p) {
+		String reponse = null;
 		System.out.println("Joueur ["+this.toString()+"] que voulez vous faire :");
-		if(!p.coloniePleine()) { // peut poser Colonie
+		
+		if(!p.coloniePleine() && this.possedeColonie()) { // peut poser Colonie
 			System.out.println("- poser une Colonie (Entrée pc)");
-			return sc.next();
 		}
-		if(!p.coloniePleine()) { // peut poser Colonie
-			System.out.println("- poser une Route (Entrée pc)");
-			return sc.next();
+		if(!p.routePleine(this) && this.possedeRoute()) { // peut poser Colonie
+			System.out.println("- poser une Route (Entrée pr)");
+		}	
+		if(!p.villePleine(this) && this.possedeVille()) { // peut poser Colonie
+			System.out.println("- poser une Ville (Entrée pv)");
 		}
-		if(!p.coloniePleine()) { // peut poser Colonie
-			System.out.println("- poser une Ville (Entrée pc)");
-			return sc.next();
+		if(this.peutAcheterColonie()) {
+			System.out.println("- construire une Colonie (Entrée c)");
 		}
-		return null;
+		if(this.peutAcheterRoute()) {
+			System.out.println("- construire une Route (Entrée r)");
+		}
+		if(this.peutAcheterVille()) {
+			System.out.println("- construire une Ville (Entrée v)");
+		}
+		if(this.sommeDesRessources() > 4 || (p.estProcheDePort(this) && this.sommeDesRessources() > 2)) {
+			System.out.println("- faire du commerce (Entrée a)");
+		}
+		System.out.println("- consulter vos ressources (Entrée i)");
+		System.out.println("- passez votre tour (Entrée q)");
+		reponse = sc.next().toUpperCase();
+		
+		if(reponse.equals("I")) {
+			this.voirInventaire();
+			while(!reponse.equals("R")) {
+				System.out.println("- Revenez en arrière (Entrée r)");
+				reponse = sc.next().toUpperCase();
+			}
+			this.faireChoix(p);
+			return;
+		}
+		while(reponse.equals("A") && !(this.sommeDesRessources() > 4 || (p.estProcheDePort(this) && this.sommeDesRessources() > 2))) {
+			System.out.println("Cette action n'est pas possible si elle existe !");
+			reponse = sc.next().toUpperCase();
+		}
+		while(reponse.equals("PC") && (!this.possedeColonie() || p.coloniePleine())) {
+			System.out.println("Cette action n'est pas possible si elle existe !");
+			reponse = sc.next().toUpperCase();
+		}
+		while(reponse.equals("PR") && (!this.possedeRoute() || p.routePleine(this))) {
+			System.out.println("Cette action n'est pas possible si elle existe !");
+			reponse = sc.next().toUpperCase();
+		}
+		while(reponse.equals("PV") && (!this.possedeVille() || p.villePleine(this))) {
+			System.out.println("Cette action n'est pas possible si elle existe !");
+			reponse = sc.next().toUpperCase();
+		}
+		while(reponse.equals("C") && !this.peutAcheterColonie()) {
+			System.out.println("Cette action n'est pas possible si elle existe !");
+			reponse = sc.next().toUpperCase();
+		}
+		while(reponse.equals("R") && !this.peutAcheterRoute()) {
+			System.out.println("Cette action n'est pas possible si elle existe !");
+			reponse = sc.next().toUpperCase();
+		}
+		while(reponse.equals("V") && !this.peutAcheterVille()) {
+			System.out.println("Cette action n'est pas possible si elle existe !");
+			reponse = sc.next().toUpperCase();
+		}
+		if(reponse.equals("PC")) {
+			this.poserColonie(p);
+			this.faireChoix(p);
+			return;
+		}
+		if(reponse.equals("PR")) {
+			this.poserRoute(p);
+			this.faireChoix(p);
+			return;
+		}
+		if(reponse.equals("PV")) {
+			this.poserVille(p);
+			this.faireChoix(p);
+			return;
+		}
+		if(reponse.equals("C")) {
+			this.acheterColonie();
+			this.faireChoix(p);
+			return;
+		}
+		if(reponse.equals("R")) {
+			this.acheterRoute();
+			this.faireChoix(p);
+			return;
+		}
+		if(reponse.equals("V")) {
+			this.acheterVille();
+			this.faireChoix(p);
+			return;
+		}
+		if(reponse.equals("A")) {
+			this.echangerRessource(p);
+			this.faireChoix(p);
+			return;
+		}
+		if(reponse.equals("Q")) {
+			return;
+		} else {
+			this.faireChoix(p);
+		}
+	}
+	
+	public void voirInventaire() {
+		System.out.println("Inventaire de "+this.nom+" :");
+		for(Map.Entry<String, Integer> inv : this.inventaire.getBatiment().entrySet()) {
+			System.out.println(inv.getKey()+" : "+inv.getValue());
+		}
+		for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
+			System.out.println(inv.getKey()+" : "+inv.getValue());
+		}
 	}
 }

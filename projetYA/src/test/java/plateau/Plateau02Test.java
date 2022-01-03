@@ -23,7 +23,7 @@ class Plateau02Test {
 		p.poserColonie(4, 4, j);
 		p.recolte(10, j);
 		assertEquals(1,j.getNbArgile());
-		j.voirInventaire();
+		((Humain)j).voirInventaire();
 	}
 	
 	@Test
@@ -44,8 +44,8 @@ class Plateau02Test {
 		assertEquals(1,j2.getNbArgile());
 		assertEquals(0,j1.getNbBois());
 		assertEquals(1,j2.getNbBois());
-		j1.voirInventaire();
-		j2.voirInventaire();
+		((Humain)j1).voirInventaire();
+		((Humain)j2).voirInventaire();
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ class Plateau02Test {
 		p.affiche();
 		assertEquals(1,j.getNbArgile());
 		assertEquals(1,j.getNbBois());
-		j.voirInventaire();
+		((Humain)j).voirInventaire();
 		assertEquals(false,p.poserColonie(2, 4, j));
 	}
 

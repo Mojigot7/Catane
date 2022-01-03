@@ -15,6 +15,10 @@ public abstract class Joueur {
 	protected Color couleur;
 	protected Developpement dev;
 	
+	public int getCptChevalier() {
+		return cptChevalier;
+	}
+
 	public Joueur(String nom, Color couleur) {
 		this.nom = nom;
 		this.couleur = couleur;
@@ -65,16 +69,6 @@ public abstract class Joueur {
 		
 		public int getNbVille() {
 			return this.inventaire.getBatiment().get("VILLE");
-		}
-		
-		public void voirInventaire() {
-			System.out.println("Inventaire de "+this.nom+" :");
-			for(Map.Entry<String, Integer> inv : this.inventaire.getBatiment().entrySet()) {
-				System.out.println(inv.getKey()+" : "+inv.getValue());
-			}
-			for(Map.Entry<String, Integer> inv : this.inventaire.getRessource().entrySet()) {
-				System.out.println(inv.getKey()+" : "+inv.getValue());
-			}
 		}
 		
 		public boolean possedeColonie() {
@@ -200,7 +194,7 @@ public abstract class Joueur {
 			}
 		}
 		
-		public int lancerDees() { // A tester
+		public int lancerDees() {
 			Random rand = new Random();
 			return rand.nextInt(11)+2;
 		}
@@ -226,6 +220,7 @@ public abstract class Joueur {
 		public void UtiliserChevalier(Plateau p){
 			if(dev.peutUtiliserChevalier()){
 				deplacerVoleur(p);
+				this.cptChevalier++;
 			}
 		}
 
@@ -295,7 +290,7 @@ public abstract class Joueur {
 		public abstract void deplacerVoleur(Plateau p);
 		public abstract void jeterSesRessources();
 		public abstract String donnerRessource();
-		public abstract String faireChoix(Plateau p);
+		public abstract void faireChoix(Plateau p);
 		
 		public Color getCouleur() {
 			return couleur;

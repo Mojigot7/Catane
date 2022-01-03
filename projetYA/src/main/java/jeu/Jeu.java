@@ -14,6 +14,7 @@ public class Jeu implements Runnable{
 	private ArrayList<Joueur> joueur;
 	private Plateau jeu;
 	private Scanner config;
+	private Joueur maxChevalier = null;
 	
 	public Jeu() {
 		this.jeu = new Plateau();
@@ -158,6 +159,21 @@ public class Jeu implements Runnable{
 		
 	}
 	
+	public void lePlusDeChevalier() {
+		int max = 2;
+		for(Joueur j : joueur) {
+			if(j.getCptChevalier() > max) {
+				if(this.maxChevalier != null) {
+					this.maxChevalier.setScore(this.maxChevalier.getScore()-2);
+				}
+				this.maxChevalier = j;
+				max = j.getCptChevalier();
+			}
+		}
+		this.maxChevalier.setScore(this.maxChevalier.getScore()+2);
+		System.out.println("Joueur ["+this.maxChevalier.toString()+"] a l'armée la plus puissante !");
+	}
+	
 	public void tour1() {
 		for(Joueur j : joueur) {
 			j.poserColonie(jeu);
@@ -182,15 +198,26 @@ public class Jeu implements Runnable{
 	}
 	
 	public void tourClassique() {
-		
+		for(Joueur j : joueur) {
+			int dees = j.lancerDees();
+			System.out.println("Joueur ["+j.toString()+"] a fait un "+dees);
+			jeu.affiche();
+			if(dees == 7) {
+				this.voleurAction(j);
+			} else {
+				jeu.recolte(dees, joueur);
+				j.faireChoix(jeu);
+			}
+		}
 	}
 
 	@Override
 	public void run() {
-		Jeu j = new Jeu();
-		j.creationDesJoueurs();
+		this.creationDesJoueurs();
+		this.tour1();
+		this.tour2();
 		while(!this.victoire()) {
-			
+			this.tourClassique();
 		}
 		System.out.println("Voulez-vous rejouer ? O : oui, N : non");
 		String rejouer = config.next().toUpperCase();
@@ -199,8 +226,15 @@ public class Jeu implements Runnable{
 			rejouer = config.next().toUpperCase();
 		}
 		if(rejouer.equals("O")) {
+			this.jeu = new Plateau();
 			this.run();
+		} else {
+			System.exit(0);
 		}
+	}
+	
+	public static void main(String[] args) {
+		
 	}
 	
 }

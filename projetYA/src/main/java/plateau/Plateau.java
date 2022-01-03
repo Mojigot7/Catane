@@ -145,21 +145,25 @@ public class Plateau implements PlateauFunction{
 		for(int i = 0 ; i < this.getPlateau().length; i++) {
 			if(i == 0) {
 				for(int j = 0; j < this.plateau[i].length; j++) {
-					System.out.print("   "+j);
+					System.out.print("    "+j);
 				}
 				System.out.println();
 			}
 			System.out.print(i+" ");	
 			for(int j = 0 ; j < this.getPlateau()[i].length; j++) {
 				if(this.getPlateau()[i][j] != null) {
-					System.out.print("["+this.getPlateau()[i][j]+"] ");
+					if(this.getPlateau()[i][j].estTuile() && this.getPlateau()[i][j].getNumero()/10 > 0) {
+						System.out.print("["+this.getPlateau()[i][j]+"] ");
+					} else {
+						System.out.print("["+this.getPlateau()[i][j]+" ] ");
+					}
 				} else {
-					System.out.print("    ");
+					System.out.print("     ");
 				}	
 			}
 			System.out.println();
 		}
-		
+		System.out.println();
 	}
 	
 	public boolean poserRoute(int x, int y, Joueur j) { // TO FIX: si la personne ne peut pas poser de route mais qu'il y a de la place
@@ -320,15 +324,19 @@ public class Plateau implements PlateauFunction{
 				if(!this.estVide(i, j) && ((Sommet)this.plateau[i][j]).getCouleur() != null && ((Sommet)this.plateau[i][j]).getCouleur().getRGB() == joueur.getCouleur().getRGB()) {
 					if(!this.horsPlateau(i-1, j-1) && !this.plateau[i-1][j-1].isVoleur() && this.plateau[i-1][j-1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i-1][j-1].getType(),((Sommet)this.plateau[i][j]).isVille());
+						System.out.println("Joueur ["+joueur.toString()+"] a reçu 1 "+this.plateau[i-1][j-1].getType());
 					}
 					if(!this.horsPlateau(i-1, j+1) && !this.plateau[i-1][j+1].isVoleur() && this.plateau[i-1][j+1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i-1][j+1].getType(),((Sommet)this.plateau[i][j]).isVille());
+						System.out.println("Joueur ["+joueur.toString()+"] a reçu 1 "+this.plateau[i-1][j+1].getType());
 					}
 					if(!this.horsPlateau(i+1, j-1) && !this.plateau[i+1][j-1].isVoleur() && this.plateau[i+1][j-1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i+1][j-1].getType(),((Sommet)this.plateau[i][j]).isVille());
+						System.out.println("Joueur ["+joueur.toString()+"] a reçu 1 "+this.plateau[i+1][j-1].getType());
 					}
 					if(!this.horsPlateau(i+1, j+1) && !this.plateau[i+1][j+1].isVoleur() && this.plateau[i+1][j+1].getNumero() == alea) {
 						joueur.ressourceAleatoire(this.plateau[i+1][j+1].getType(),((Sommet)this.plateau[i][j]).isVille());
+						System.out.println("Joueur ["+joueur.toString()+"] a reçu 1 "+this.plateau[i+1][j+1].getType());
 					}
 				}
 			}
@@ -378,6 +386,28 @@ public class Plateau implements PlateauFunction{
 		if(s.size() > 0) {
 			estVoleur.recupRessourceDonnee(s);
 		}
+	}
+	
+	public boolean estProcheDePort(Joueur joueur) {
+		for(int i = 0; i < this.plateau.length; i = i+2) {
+			for(int j = 0; j < this.plateau[i].length; j = j+2) {
+				if(!this.estVide(i, j) && ((Sommet)this.plateau[i][j]).getCouleur() != null && ((Sommet)this.plateau[i][j]).getCouleur().getRGB() == joueur.getCouleur().getRGB()) {
+					if(!this.horsPlateau(i-1,j) && this.plateau[i-1][j].estPort()) {
+						return true;
+					}
+					if(!this.horsPlateau(i+1,j) && this.plateau[i+1][j].estPort()) {
+						return true;
+					}
+					if(!this.horsPlateau(i,j-1) && this.plateau[i][j-1].estPort()) {
+						return true;
+					}
+					if(!this.horsPlateau(i,j+1) && this.plateau[i][j+1].estPort()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 }

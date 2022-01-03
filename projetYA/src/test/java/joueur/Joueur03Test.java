@@ -15,9 +15,9 @@ class Joueur03Test {
 		Joueur j1 = new Humain("Billy", Color.RED);
 		j1.inventaire.getRessource().replace("BOIS", 4);
 		j1.inventaire.getRessource().replace("ARGILE", 5);
-		j1.voirInventaire();
+		((Humain)j1).voirInventaire();
 		j1.jeterSesRessources();
-		j1.voirInventaire();
+		((Humain)j1).voirInventaire();
 	}
 	
 	@Test

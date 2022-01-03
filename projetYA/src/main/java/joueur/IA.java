@@ -22,6 +22,7 @@ public class IA extends Joueur {
 			y = rand.nextInt(11);
 		}
 		this.utiliserRoute();
+		p.affiche();
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class IA extends Joueur {
 			y = rand.nextInt(11);
 		}
 		this.utiliserColonie();
+		p.affiche();
 	}
 
 	@Override
@@ -48,6 +50,7 @@ public class IA extends Joueur {
 			y = rand.nextInt(11);
 		}
 		this.utiliserVille();
+		p.affiche();
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class IA extends Joueur {
 			x = rand.nextInt(9);
 			y = rand.nextInt(11);
 		}
+		p.affiche();
 	}
 
 	@Override
@@ -132,8 +136,8 @@ public class IA extends Joueur {
 	}
 	
 	@Override
-	public String faireChoix(Plateau p) {
+	public void faireChoix(Plateau p) {
 		
-		return null;
+		return ;
 	}
 }
