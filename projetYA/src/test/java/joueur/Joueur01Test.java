@@ -14,7 +14,7 @@ import plateau.Plateau;
 
 class Joueur01Test {
 	
-	@Test
+	/*@Test
 	void possedeBatiment() {
 		Joueur j1 = new Humain("Jean",Color.BLUE);
 		assertEquals(true, j1.possedeColonie());
@@ -37,7 +37,7 @@ class Joueur01Test {
 		assertEquals(false,j3.peutAcheterVille());
 	}
 
-	@Test
+	*/@Test
 	void developpement(){
         LinkedList<Developpement> test = new LinkedList<>();
         Developpement tmp = new Developpement(test);

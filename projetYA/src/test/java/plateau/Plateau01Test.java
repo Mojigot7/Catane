@@ -10,13 +10,16 @@ import joueur.*;
 
 class Plateau01Test {
 
-	/*@Test
+	@Test
 	void affichePlateau() {
 		Plateau p = new Plateau();
-		p.affiche();
+		Humain j = new Humain("g",Color.RED);
+		j.getDev().creationCarteDev(j.getDev().getStock());
+		j.voirInventaire();
+		assertEquals(4,9/2);
 	}
 	
-	@Test
+	/*@Test
 	void poserRoute() {
 		Plateau p = new Plateau();
 		Joueur j = new Humain("Jean", Color.BLUE);

@@ -21,28 +21,32 @@ public class Developpement {
         if(aleatoire == 0){ // On choisit arbitrairement le chiffre tire au sort 
             Developpement tmp = new Developpement("Point de Victoire",stock); // Le premier cree une carte point de victoire
             stock.add(tmp);
+            System.out.println("Vous avez reçu la carte Point de Victoire !");
         }
         if(aleatoire == 1){
             Developpement tmp = new Developpement("Chevalier",stock); // Le deuxieme cree une carte chevalier
             stock.add(tmp);
+            System.out.println("Vous avez reçu la carte Chevalier !");
         }
         if(aleatoire == 2){ // Ici on cree les cartes progres
             int aleaprogres = (int)(Math.random()*3); // On recree un objet aleatoire pour que ca corresponde mieux au probabilite
             if(aleaprogres == 0){
                 Developpement tmp = new Developpement("Construction de route",stock);  // Le premier cree une carte Construction de route
                 stock.add(tmp);
+                System.out.println("Vous avez reçu la carte Construction de route !");
             }
             if(aleaprogres == 1){
                 Developpement tmp = new Developpement("Invention",stock); // Le deuxieme une carte Invention
                 stock.add(tmp);
+                System.out.println("Vous avez reçu la carte Invention !");
             }
             if(aleaprogres == 2){
                 Developpement tmp = new Developpement("Monopole",stock); // Le troisieme une carte Monopole
                 stock.add(tmp);
+                System.out.println("Vous avez reçu la carte Monopole !");
             }
-        }
-        else{
-            System.out.println("BUG Developpement constructor !"); // Cas pour detecter les erreur qui ne devrait pas arriver en temps normal
+        }else{
+           // System.out.println("BUG Developpement constructor !"); // Cas pour detecter les erreur qui ne devrait pas arriver en temps normal
         }
     }
 
@@ -115,6 +119,10 @@ public class Developpement {
             System.out.println(stock.get(i).nom);
         }
     }
+
+	public LinkedList<Developpement> getStock() {
+		return stock;
+	}
 }
 
 

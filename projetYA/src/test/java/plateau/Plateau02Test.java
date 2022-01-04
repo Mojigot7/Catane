@@ -16,7 +16,7 @@ import joueur.Joueur;
 
 class Plateau02Test {
 
-	@Test
+	/*@Test
 	void recolte() {
 		Joueur j = new Humain("Mia", Color.RED);
 		Plateau p = new Plateau();
@@ -60,6 +60,6 @@ class Plateau02Test {
 		assertEquals(1,j.getNbBois());
 		((Humain)j).voirInventaire();
 		assertEquals(false,p.poserColonie(2, 4, j));
-	}
+	}*/
 
 }
