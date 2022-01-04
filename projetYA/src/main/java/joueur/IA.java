@@ -1,6 +1,7 @@
 package joueur;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -77,25 +78,30 @@ public class IA extends Joueur {
 				moitie = this.sommeDesRessources()/2+1;
 			}
 			while(this.sommeDesRessources() > moitie) {
-				if(this.getNbArgile() > 1) {
+				if(this.getNbArgile() > 0 && this.sommeDesRessources() > moitie) {
 					this.inventaire.getRessource().replace("ARGILE",this.inventaire.getRessource().get("ARGILE")-1);
 					System.out.println("Joueur ["+this.toString()+"] a jeté 1 ARGILE");
+					System.out.println("Joueur ["+this.toString()+"] a "+this.inventaire.getRessource().get("ARGILE")+" argile");
 				}
-				if(this.getNbBle() > 1) {
+				if(this.getNbBle() > 0 && this.sommeDesRessources() > moitie) {
 					this.inventaire.getRessource().replace("BLE",this.inventaire.getRessource().get("BLE")-1);
 					System.out.println("Joueur ["+this.toString()+"] a jeté 1 BLE");
+					System.out.println("Joueur ["+this.toString()+"] a "+this.inventaire.getRessource().get("BLE")+" blé");
 				}
-				if(this.getNbBois() > 1) {
+				if(this.getNbBois() > 0 && this.sommeDesRessources() > moitie) {
 					this.inventaire.getRessource().replace("BOIS",this.inventaire.getRessource().get("BOIS")-1);
 					System.out.println("Joueur ["+this.toString()+"] a jeté 1 BOIS");
+					System.out.println("Joueur ["+this.toString()+"] a "+this.inventaire.getRessource().get("BOIS")+" bois");
 				}
-				if(this.getNbLaine() > 1) {
+				if(this.getNbLaine() > 0 && this.sommeDesRessources() > moitie) {
 					this.inventaire.getRessource().replace("LAINE",this.inventaire.getRessource().get("LAINE")-1);
 					System.out.println("Joueur ["+this.toString()+"] a jeté 1 LAINE");
+					System.out.println("Joueur ["+this.toString()+"] a "+this.inventaire.getRessource().get("LAINE")+" laine");
 				}
-				if(this.getNbMinerai() > 1) {
+				if(this.getNbMinerai() > 0 && this.sommeDesRessources() > moitie) {
 					this.inventaire.getRessource().replace("MINERAI",this.inventaire.getRessource().get("MINERAI")-1);
 					System.out.println("Joueur ["+this.toString()+"] a jeté 1 MINERAI");
+					System.out.println("Joueur ["+this.toString()+"] a "+this.inventaire.getRessource().get("MINERAI")+" minerai");
 				}
 			}
 		}
@@ -169,7 +175,7 @@ public class IA extends Joueur {
 	}
 	
 	@Override
-	public void faireChoix(Plateau p) {
+	public void faireChoix(Plateau p,ArrayList<Joueur> j) {
 		Random r = new Random();
 		int rand = r.nextInt(9);
 		while(rand == 0) {

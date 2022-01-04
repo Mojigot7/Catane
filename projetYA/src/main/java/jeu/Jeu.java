@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
+import colors.ConsoleColors;
+
 public class Jeu implements Runnable{
 	private ArrayList<Joueur> joueur;
 	private Plateau jeu;
@@ -39,6 +41,22 @@ public class Jeu implements Runnable{
 			return null;
 		}
 		return joueur.get(3);
+	}
+	
+	public void jouer() {
+		System.out.println(ConsoleColors.LIGHT_PINK+"Voulez-vous jouer ? oui : (O) / non : (N)"+ConsoleColors.RESET);
+		String res = config.next().toUpperCase();
+		while(!res.equals("O") && !res.equals("N")) {
+			System.out.println(ConsoleColors.LIGHT_PINK+"Voulez-vous jouer ? oui : (O) / non : (N)"+ConsoleColors.RESET);
+			res = config.next().toUpperCase();
+		}
+		if(res.equals("O")) {
+			this.run();
+		}
+		if(res.equals("N")) {
+			System.out.println(ConsoleColors.LIGHT_PINK+"A bientot !"+ConsoleColors.RESET);
+			System.exit(0);
+		}
 	}
 	
 	public boolean victoire() {
@@ -170,8 +188,10 @@ public class Jeu implements Runnable{
 				max = j.getCptChevalier();
 			}
 		}
-		this.maxChevalier.setScore(this.maxChevalier.getScore()+2);
-		System.out.println("Joueur ["+this.maxChevalier.toString()+"] a l'armée la plus puissante !");
+		if(this.maxChevalier != null) {
+			this.maxChevalier.setScore(this.maxChevalier.getScore()+2);
+			System.out.println("Joueur ["+this.maxChevalier.toString()+"] a l'armée la plus puissante et gagne 2 points de victoire !");
+		}
 	}
 	
 	public void tour1() {
@@ -202,8 +222,9 @@ public class Jeu implements Runnable{
 				this.voleurAction(j);
 			} else {
 				jeu.recolte(dees, joueur);
-				j.faireChoix(jeu);
+				j.faireChoix(jeu,joueur);
 			}
+			this.lePlusDeChevalier();
 		}
 	}
 
@@ -225,6 +246,7 @@ public class Jeu implements Runnable{
 			Jeu j = new Jeu();
 			j.run();
 		} else {
+			System.out.println(ConsoleColors.LIGHT_PINK+"A bientot !"+ConsoleColors.RESET);
 			System.exit(0);
 		}
 	}

@@ -220,6 +220,7 @@ public abstract class Joueur {
 		public void UtiliserChevalier(Plateau p){
 			if(dev.peutUtiliserChevalier()){
 				deplacerVoleur(p);
+				dev.supprimer("Chevalier");
 				this.cptChevalier++;
 			}
 		}
@@ -231,57 +232,23 @@ public abstract class Joueur {
 			}
 		}
 
-		public void UtiliserInvention(String r1, String r2){
-			if(dev.peutUtiliserInvention()){
-				choisirRessource(r1, r2);
-				dev.supprimer("Invention");
-			}
-		}
-
 		public void choisirRessource(String r1, String r2){
 			if(r1.equals("BOIS") || r1.equals("ARGILE") ||r1.equals("LAINE") || r1.equals("MINERAI")|| r1.equals("BLE")
 			&& r2.equals("BOIS") || r2.equals("ARGILE") ||r2.equals("LAINE") || r2.equals("MINERAI")|| r2.equals("BLE")){
-				inventaire.getRessource().replace(r1, inventaire.getRessource().get(r1)+1);
+				inventaire.getRessource().replace(r1, inventaire.getRessource().get(r1)-1);
 				inventaire.getRessource().replace(r2, inventaire.getRessource().get(r2)+1);
 			}
 		}
 
-		public void UtiliserMonopole(String r1,ArrayList<Joueur> j){
-			if(r1.equals("BOIS") || r1.equals("ARGILE") ||r1.equals("LAINE") || r1.equals("MINERAI")|| r1.equals("BLE")
-			&& dev.peutUtiliserMonopole()){
-				for(int i = 0 ; i < j.size() ; i++){
-					if(j.get(i).nom.equals(this.nom) == false){
-						if(r1.equals("BOIS")){
-							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBois());
-							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBois());
-						}
-						
-						if(r1.equals("ARGILE")){
-							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbArgile());
-							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbArgile());
-						}
-						if(r1.equals("LAINE")){
-							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbLaine());
-							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbLaine());
-						}
-						
-						if(r1.equals("MINERAI")){
-							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbMinerai());
-							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbMinerai());
-						}
-						if(r1.equals("BLE")){
-							inventaire.getRessource().replace(r1,inventaire.getRessource().get(r1)+j.get(i).getNbBle());
-							j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBle());
-						}
-					}
+		public int UtiliserPointDeVictoire(){
+			int i = dev.compterPtsDeVictoire();
+			if(dev.peutUtiliserPDV()) {
+				for(int j = 0; j < i; j++) {
+					System.out.println("Joueur ["+this.toString()+"] a gagné 1 point de victoire !");
+					dev.supprimer("Point de Victoire");
 				}
 			}
-		}
-
-		public int UtiliserPointDeVictoire(){
-			if(dev.peutUtiliserPDV())
-				return dev.compterPtsDeVictoire();
-			return 0;
+			return i;
 		}
 
 		public abstract void poserRoute(Plateau p);
@@ -290,7 +257,7 @@ public abstract class Joueur {
 		public abstract void deplacerVoleur(Plateau p);
 		public abstract void jeterSesRessources();
 		public abstract String donnerRessource();
-		public abstract void faireChoix(Plateau p);
+		public abstract void faireChoix(Plateau p,ArrayList<Joueur> j);
 		
 		public Color getCouleur() {
 			return couleur;
@@ -310,5 +277,9 @@ public abstract class Joueur {
 
 		public void setInventaire(Inventaire inventaire) {
 			this.inventaire = inventaire;
+		}
+
+		public Developpement getDev() {
+			return dev;
 		}
 }
