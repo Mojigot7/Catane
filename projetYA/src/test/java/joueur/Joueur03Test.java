@@ -10,7 +10,7 @@ import plateau.Plateau;
 
 class Joueur03Test {
 
-	@Test
+	/*@Test
 	void jetterSesRessources() {
 		Joueur j1 = new Humain("Billy", Color.RED);
 		j1.inventaire.getRessource().replace("BOIS", 4);
@@ -27,6 +27,6 @@ class Joueur03Test {
 		p.affiche();
 		j.deplacerVoleur(p);
 		p.affiche();
-	}
+	}*/
 
 }

@@ -11,7 +11,7 @@ import joueur.Joueur;
 
 class Plateau03Test {
 
-	@Test
+	/*@Test
 	void estSurTuileDuVoleur() {
 		Plateau p = new Plateau();
 		Joueur j1 = new Humain("J",Color.RED);
@@ -28,6 +28,6 @@ class Plateau03Test {
 		assertEquals(0,j3.getInventaire().getRessource().get("BOIS"));
 		assertEquals(1,j1.getInventaire().getRessource().get("BOIS"));
 		assertEquals(1,j1.getInventaire().getRessource().get("ARGILE"));
-	}
+	}*/
 
 }

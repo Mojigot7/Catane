@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 class Jeu02Test {
 
-	@Test
+	/*@Test
 	void tourClassique() {
 		Jeu jeu = new Jeu();
 		jeu.creationDesJoueurs();
 		jeu.tourClassique();
-	}
+	}*/
 
 }

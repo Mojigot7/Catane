@@ -10,7 +10,7 @@ import plateau.Plateau;
 
 class IA01Test {
 
-	@Test
+	/*@Test
 	void poserRoute() {
 		Plateau p = new Plateau();
 		Joueur j = new IA("BOT1",Color.BLUE);
@@ -81,5 +81,5 @@ class IA01Test {
 		assertEquals(true,p.coloniePleine());
 		p.affiche();
 		System.out.println();
-	}
+	}*/
 }

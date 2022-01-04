@@ -12,7 +12,7 @@ class Jeu01Test {
 		jeu.creationDesJoueurs();
 	}*/
 	
-	@Test
+	/*@Test
 	void tour1et2() {
 		Jeu jeu = new Jeu();
 		jeu.creationDesJoueurs();
@@ -21,5 +21,5 @@ class Jeu01Test {
 		assertEquals(0, jeu.getJoueur1().getNbColonie());
 		assertEquals(0, jeu.getJoueur2().getNbColonie());
 		assertEquals(0, jeu.getJoueur3().getNbColonie());
-	}
+	}*/
 }

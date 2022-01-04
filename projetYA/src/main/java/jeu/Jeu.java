@@ -228,10 +228,4 @@ public class Jeu implements Runnable{
 			System.exit(0);
 		}
 	}
-	
-	public static void main(String[] args) {
-		Jeu j = new Jeu();
-		j.run();
-	}
-	
 }

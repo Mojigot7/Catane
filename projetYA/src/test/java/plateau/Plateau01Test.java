@@ -10,7 +10,7 @@ import joueur.*;
 
 class Plateau01Test {
 
-	@Test
+	/*@Test
 	void affichePlateau() {
 		Plateau p = new Plateau();
 		p.affiche();
@@ -41,6 +41,6 @@ class Plateau01Test {
 		assertEquals(true, p.poserVille(6, 4, j2));
 		assertEquals(false, p.poserVille(6, 6, j2));
 		p.affiche();
-	}
+	}*/
 
 }

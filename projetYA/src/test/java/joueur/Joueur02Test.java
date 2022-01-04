@@ -11,7 +11,7 @@ import tuiles.Sommet;
 
 class Joueur02Test {
 
-	@Test
+	/*@Test
 	void poserColonie() {
 		Joueur j4 = new Humain("François",Color.BLUE);
 		Joueur j5 = new Humain("Gilles", Color.RED);
@@ -45,6 +45,6 @@ class Joueur02Test {
 		j.poserColonie(p);
 		j.poserVille(p);
 		p.affiche();
-	}
+	}*/
 
 }

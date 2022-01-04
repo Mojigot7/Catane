@@ -10,7 +10,7 @@ import plateau.Plateau;
 
 class IA02Test {
 
-	@Test
+	/*@Test
 	void faireChoix() {
 		Plateau p = new Plateau();
 		Joueur j = new IA("gil",Color.BLUE);
@@ -21,6 +21,6 @@ class IA02Test {
 		}
 		((IA)j).voirInventaire();
 		((IA)j2).voirInventaire();
-	}
+	}*/
 
 }
