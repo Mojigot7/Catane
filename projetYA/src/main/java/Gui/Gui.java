@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
 import plateau.*;
 
@@ -22,7 +23,7 @@ public class Gui extends JFrame implements MouseListener {
     public Gui() {
         plateau = new Plateau();
         setTitle("Jeu");
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000,600);
         this.setLocationRelativeTo(null);
         top = new InformationJoueur();
@@ -78,6 +79,7 @@ public class Gui extends JFrame implements MouseListener {
                     temp2.setText("Desert 7");
                     temp.addMouseListener(this);
                     temp.add(temp2);
+                    temp.add(new Voleur().getContentPane());
                 }
                 else{
                     temp.setBackground(new Color(255,127,0));
@@ -126,14 +128,73 @@ public class Gui extends JFrame implements MouseListener {
 
     }
 
+    public class Voleur extends JFrame implements MouseInputListener{
+        
+        public Voleur(){
+            this.setSize(20,20);
+            this.setBackground(new Color(0,0,0));
+            this.addMouseListener(this);
+            this.addMouseMotionListener(this);
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+        }
+        public void mouseClicked(MouseEvent e , String c){
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseExited(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mousePressed(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent arg0) {
+            // TODO Auto-generated method stub
+            
+        }
+    }
+
     public static void main(String []agrs) {
         Gui test = new Gui();
         test.setVisible(true);
-
+        for(int i = 0 ; i< 99 ;i++)
+        System.out.println(test.p.getComponent(i).getX() + " y : "+ test.p.getComponent(i).getY());
     }
+
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        System.out.println(" e.x.onscreen"+ e.getXOnScreen() + "gui.x  "+ Gui.this.getX()+ " "+ e.getX() + " et " + e.getY());
         System.out.println("click");
 
     }
