@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import plateau.*;
 
 public class Gui extends JFrame implements MouseListener {
-
+    private InformationJoueur top;
     private JPanel p;
     private Plateau plateau;
 
@@ -25,117 +25,11 @@ public class Gui extends JFrame implements MouseListener {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(1000,600);
         this.setLocationRelativeTo(null);
-
-        JPanel J1 = new JPanel();
-        J1.setLayout(new GridLayout(1,6));
-        JLabel Joueur1 = new JLabel();
-        Joueur1.setText("Joueur1 Point de victoire");
-        J1.add(Joueur1,new FlowLayout());
-
-        JPanel ressource = new JPanel();
-        ressource.setLayout(new GridLayout(5,1));
-        JLabel minerai = new JLabel();
-        minerai.setText("Minerai");
-        ressource.add(minerai);
-
-        JLabel argile = new JLabel();
-        argile.setText("Argile");
-        ressource.add(argile);
-
-        JLabel bois = new JLabel();
-        bois.setText("Bois");
-        ressource.add(bois);
-
-        JLabel ble = new JLabel();
-        ble.setText("Ble");
-        ressource.add(ble);
-
-        JLabel laine = new JLabel();
-        laine.setText("Laine");
-        ressource.add(laine);
-
-        J1.add(ressource);
+        top = new InformationJoueur();
+        
 
 
-        JPanel batiment = new JPanel();
-        batiment.setLayout(new GridLayout(3,1));
-        JLabel route = new JLabel("Route");
-        route.setText("Route : ");
-        batiment.add(route);
-
-        JLabel colonie = new JLabel("Colonie");
-        colonie.setText("Colonie : ");
-        batiment.add(colonie);
-
-        JLabel ville = new JLabel("Ville");
-        ville.setText("Ville : ");
-        batiment.add(ville);
-
-        J1.add(batiment);
-
-
-        JPanel dev = new JPanel();
-        dev.setLayout(new GridLayout(5,1));
-
-        JLabel chevalier = new JLabel();
-        chevalier.setText("Chevalier : ");
-        dev.add(chevalier);
-
-        JLabel invention = new JLabel();
-        invention.setText("Invention : ");
-        dev.add(invention);
-
-        JLabel monopole = new JLabel();
-        monopole.setText("Monopole : ");
-        dev.add(monopole);
-
-        JLabel pdv = new JLabel();
-        pdv.setText("Point de victoire : ");
-        dev.add(pdv);
-
-        JLabel construction = new JLabel();
-        construction.setText("Construction de route : ");
-        dev.add(construction);
-
-        J1.add(dev);
-
-        JLabel vide = new JLabel();
-        J1.add(vide);
-        JPanel legendecouleur = new JPanel();
-        legendecouleur.setLayout(new GridLayout(6,1));
-
-        JLabel legend = new JLabel();
-        legend.setText("Legende : ");
-        legendecouleur.add(legend);
-
-        JPanel colline = new JPanel();
-        colline.setBackground(new Color(215,100,0));
-        colline.add(argile);
-        legendecouleur.add(colline);
-
-
-        JPanel champs = new JPanel();
-        champs.setBackground(new Color(255,255,0));
-        champs.add(ble);
-        legendecouleur.add(champs);
-
-        JPanel foret = new JPanel();
-        foret.setBackground(new Color(0,172,62));
-        foret.add(bois);
-        legendecouleur.add(foret);
-
-        JPanel pre = new JPanel();
-        pre.setBackground(new Color(0,215,78));
-        pre.add(laine);
-        legendecouleur.add(pre);
-
-        JPanel montagne = new JPanel();
-        montagne.setBackground(new Color(167,167,167));
-        montagne.add(minerai);
-        legendecouleur.add(montagne);
-        J1.add(legendecouleur);
-
-        this.getContentPane().add(J1,BorderLayout.NORTH);
+        this.getContentPane().add(top.getContentPane(),BorderLayout.NORTH);
         p = new JPanel();
 
         GridLayout size = new GridLayout(9,11);
