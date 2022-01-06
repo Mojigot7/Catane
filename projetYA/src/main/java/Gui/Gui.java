@@ -25,8 +25,4 @@ public class Gui extends JFrame {
         this.getContentPane().add(jeu.getContent(),BorderLayout.CENTER);
         this.getContentPane().add(actions.getContent(),BorderLayout.SOUTH);
     }
-    public static void main(String[] agrs) {
-        Gui test = new Gui();
-        test.setVisible(true);
-    }
 }
