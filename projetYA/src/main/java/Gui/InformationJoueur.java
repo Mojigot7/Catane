@@ -47,8 +47,9 @@ public class InformationJoueur extends JFrame{
         }
     }
 
-    public class Ressource{
-private JPanel content;
+    private class Ressource{
+
+        private JPanel content;
         private JLabel minerai;
         private JLabel argile;
         private JLabel bois;
@@ -84,7 +85,8 @@ private JPanel content;
         public JPanel getcontent() {
             return this.content;
         }
-
+        
+        @SuppressWarnings("unused")
         public void setQuantité(String ressource,int quantite) {
             if(ressource.equals("MINERAI")) {
                 minerai.setText("Minerai : " + quantite);
@@ -106,7 +108,8 @@ private JPanel content;
             }
         }
     }
-private class Batiment{
+
+    private class Batiment{
 
         private JPanel content;
         private JLabel route;
@@ -151,7 +154,7 @@ private class Batiment{
         }
 
     }
-private class Developpement{
+    private class Developpement{
         private JPanel content;
         private JLabel chevalier;
         private JLabel monopole;
@@ -189,6 +192,7 @@ private class Developpement{
             return this.content;
         }
 
+        @SuppressWarnings("unused")
         public void setQuantité(String ressource,int quantite) {
             if(ressource.equals("chevalier")) {
                 chevalier.setText(ressource + " : " + quantite);
@@ -210,7 +214,8 @@ private class Developpement{
             }
         }
     }
-public class Legende{
+
+    private class Legende{
         private JPanel content;
         private JLabel nom;
 
