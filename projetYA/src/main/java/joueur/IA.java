@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 import plateau.Plateau;
 
