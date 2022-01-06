@@ -3,13 +3,11 @@ package Gui;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import plateau.*;
 
 public class Gui extends JFrame {
     private InformationJoueur top;
-    private JPanel p;
     private Plateau plateau;
     private PlateauJeu jeu;
     private Actions actions;
