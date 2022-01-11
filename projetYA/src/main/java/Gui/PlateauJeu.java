@@ -15,9 +15,13 @@ import plateau.Plateau;
 
 public class PlateauJeu extends JFrame implements MouseListener {
 
+    private Gui fenetre;
+    private Plateau jeu;
     private JPanel plateau;
 
-    public PlateauJeu(Plateau p) {
+    public PlateauJeu(Plateau p, Gui f) {
+        jeu = p;
+        fenetre = f;
         plateau = new JPanel();
         GridLayout size = new GridLayout(9, 11);
         plateau.setLayout(size);
@@ -100,18 +104,18 @@ public class PlateauJeu extends JFrame implements MouseListener {
         }
     }
 
-    public JPanel getContent(){
+    public JPanel getContent() {
         return plateau;
     }
 
-    private class Conteneur extends JPanel{
+    private class Conteneur extends JPanel {
 
         private JPanel conteneur;
         private JPanel conteneurnom;
         private JLabel nom;
         private JPanel voleur;
 
-        public Conteneur(){
+        public Conteneur() {
 
             conteneur = new JPanel();
             conteneur.setLayout(new BorderLayout());
@@ -121,7 +125,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
             voleur.add(new Voleur());
         }
 
-        public JPanel getConteneur(){
+        public JPanel getConteneur() {
             return conteneur;
         }
 
@@ -129,11 +133,11 @@ public class PlateauJeu extends JFrame implements MouseListener {
             return conteneurnom;
         }
 
-        public JLabel getNom(){
+        public JLabel getNom() {
             return nom;
         }
-        
-        public JPanel getVoleur(){
+
+        public JPanel getVoleur() {
             return voleur;
         }
     }
@@ -149,7 +153,6 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            // TODO Auto-generated method stub
 
         }
 
@@ -192,9 +195,33 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
+        int x = e.getXOnScreen() - fenetre.getX();
+        int y = e.getYOnScreen() - fenetre.getY() -
+                fenetre.getContentPane().getComponent(1).getY() -
+                fenetre.getInsets().top;
+        int taillecasex = (plateau.getWidth()/11);
+        int taillecasey = (plateau.getHeight()/9);
+        if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0) {
+            plateau.remove(x/taillecasex + (y/taillecasey)*11);
+            plateau.add(new RouteHorizontal(), (x/taillecasex + (y/taillecasey)*11 ));
+            plateau.revalidate();
+        }
+        else if ((x/taillecasex)%2 == 0 && (y/taillecasey)%2 == 1){
+            plateau.remove(x/taillecasex + (y/taillecasey)*11);
+            plateau.add(new RouteVertical(), (x/taillecasex + (y/taillecasey)*11));
+            plateau.revalidate();
+        }
+        else {
 
+        }
     }
+    /*
+     * On recupere la position de la souris -
+     * la position de la fenetre par rapport à l'ecran la position de la fenetre par
+     * rapport à l'ecran
+     * - Le top(informationJoueur)
+     * - la barre d'inset de la fenetre
+     */
 
     @Override
     public void mouseEntered(MouseEvent e) {
@@ -218,5 +245,37 @@ public class PlateauJeu extends JFrame implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
 
+    }
+
+    public class RouteHorizontal extends JPanel {
+
+        public RouteHorizontal() {
+            this.setLayout(new GridLayout(3, 1));
+            JPanel r1 = new JPanel();
+            r1.setBackground(new Color(255, 127, 0));
+            JPanel r2 = new JPanel();
+            r2.setBackground(new Color(220, 220, 220));
+            JPanel r3 = new JPanel();
+            r3.setBackground(new Color(255, 127, 0));
+            this.add(r1);
+            this.add(r2);
+            this.add(r3);
+        }
+    }
+
+    public class RouteVertical extends JPanel {
+
+        public RouteVertical() {
+            this.setLayout(new GridLayout(1, 3));
+            JPanel r1 = new JPanel();
+            r1.setBackground(new Color(255, 127, 0));
+            JPanel r2 = new JPanel();
+            r2.setBackground(new Color(220, 220, 220));
+            JPanel r3 = new JPanel();
+            r3.setBackground(new Color(255, 127, 0));
+            this.add(r1);
+            this.add(r2);
+            this.add(r3);
+        }
     }
 }
