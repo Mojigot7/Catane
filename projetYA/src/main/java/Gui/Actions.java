@@ -22,6 +22,7 @@ public class Actions extends JFrame{
     private JPanel deeconteneur;
     private boolean creationunique = true;
     private Poser boutonposer;
+    private ChoixActions choixActions;
 
     private Gui principale;
 
@@ -57,7 +58,8 @@ public class Actions extends JFrame{
             lanceeDee.addActionListener( event -> {
                 deeconteneur.setVisible(true);
                 main.removeAll();
-                main.add(new ChoixActions().getChoixActionsContent());
+                choixActions = new ChoixActions();
+                main.add(choixActions.getChoixActionsContent());
                 main.revalidate();
             });
         }
@@ -402,4 +404,15 @@ public class Actions extends JFrame{
         return listjoueur.get(0);
     }
     
+    public Poser getPoser(){
+        return boutonposer;
+    }
+
+    public JPanel getMain(){
+        return main;
+    }
+
+    public ChoixActions getChoixActions(){
+        return choixActions;
+    }
 }

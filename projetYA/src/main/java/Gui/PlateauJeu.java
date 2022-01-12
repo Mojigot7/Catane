@@ -9,8 +9,10 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 
+import Gui.Actions.ChoixActions;
 import plateau.Plateau;
 
 public class PlateauJeu extends JFrame implements MouseListener {
@@ -22,7 +24,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
     public PlateauJeu(Plateau p, Gui principale) {
         jeu = p;
-        principale = principale;
+        this.principale = principale;
         plateau = new JPanel();
         GridLayout size = new GridLayout(9, 11);
         plateau.setLayout(size);
@@ -182,18 +184,34 @@ public class PlateauJeu extends JFrame implements MouseListener {
                 principale.getInsets().top;
         int taillecasex = (plateau.getWidth()/11);
         int taillecasey = (plateau.getHeight()/9);
-        if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0) {
+        if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0 && principale.getActions().getPoser().getPoserRoute().isEnabled()){
             plateau.remove(x/taillecasex + (y/taillecasey)*11);
             plateau.add(new RouteHorizontal(), (x/taillecasex + (y/taillecasey)*11 ));
             plateau.revalidate();
+            principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getNbRoute());
+            principale.getActions().getMain().removeAll();
+            principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
+            principale.getActions().getMain().revalidate();
         }
-        else if ((x/taillecasex)%2 == 0 && (y/taillecasey)%2 == 1){
+        else if ((x/taillecasex)%2 == 0 && (y/taillecasey)%2 == 1  && principale.getActions().getPoser().getPoserRoute().isEnabled()){
             plateau.remove(x/taillecasex + (y/taillecasey)*11);
             plateau.add(new RouteVertical(), (x/taillecasex + (y/taillecasey)*11));
             plateau.revalidate();
+            principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getNbRoute());
+            principale.getActions().getMain().removeAll();
+            principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
+            principale.getActions().getMain().revalidate();
         }
         else {
-
+            if(principale.getActions().getPoser().getPoserColonie().isEnabled()){
+                plateau.remove(x/taillecasex + (y/taillecasey)*11);
+                plateau.add(new Colonie(principale.getJoueurCourant().getCouleur()).getColoniePanel(), (x/taillecasex + (y/taillecasey)*11));
+                plateau.revalidate();
+                principale.getJoueurCourant().getInventaire().getBatiment().replace(("COLONIE"), principale.getJoueurCourant().getNbColonie());
+                principale.getActions().getMain().removeAll();
+                principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
+                principale.getActions().getMain().revalidate();
+            }
         }
     }
 
@@ -245,10 +263,14 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
         private JPanel content = new JPanel();
 
-        public Ville(){
+        public Ville(Color c){
             JLabel ville = new JLabel();
             ville.setText("VILLE");
-            content.add(ville);
+            ville.setForeground(c);
+            content.setBackground(new Color(255, 127, 0));
+            content.setLayout(new BorderLayout());
+            content.add(ville,BorderLayout.CENTER);
+            
         }
 
         public JPanel getVillePanel(){
@@ -260,10 +282,13 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
         private JPanel content = new JPanel();
 
-        public Colonie(){
+        public Colonie(Color c){
             JLabel colonie = new JLabel();
             colonie.setText("COLONIE");
-            content.add(colonie);
+            colonie.setForeground(c);
+            content.setBackground(new Color(255, 127, 0));
+            content.setLayout(new BorderLayout());
+            content.add(colonie,BorderLayout.CENTER);
         }
 
         public JPanel getColoniePanel(){

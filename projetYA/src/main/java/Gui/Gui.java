@@ -15,9 +15,11 @@ public class Gui extends JFrame {
     private PlateauJeu jeu;
     private Actions actions;
     private ArrayList<Joueur> listjoueur;
+    private Joueur courant;
 
     public Gui(ArrayList<Joueur> listjoueur,Joueur courant) {
         this.listjoueur = listjoueur;
+        this.courant = courant;
         plateau = new Plateau();
         setTitle("Jeu");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -42,6 +44,10 @@ public class Gui extends JFrame {
     }
     public Actions getActions(){
         return actions;
+    }
+
+    public Joueur getJoueurCourant(){
+        return courant;
     }
 
 }
