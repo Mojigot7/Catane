@@ -183,7 +183,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                 principale.getInsets().top;
         int taillecasex = (plateau.getWidth()/11);
         int taillecasey = (plateau.getHeight()/9);
-        if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0 && principale.getActions().getPoser().getPoserRoute().isEnabled()){
+        if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0 && principale.getActions().getPoser().getPoserRoute().isEnabled() && principale.getActions().getPoser().getPoserColonie().isEnabled() == false){
             plateau.remove(x/taillecasex + (y/taillecasey)*11);
             plateau.add(new RouteHorizontal(principale.getJoueurCourant().getCouleur()),  (x/taillecasex + (y/taillecasey)*11 ));
             plateau.revalidate();
@@ -192,7 +192,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
             principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
             principale.getActions().getMain().revalidate();
         }
-        else if ((x/taillecasex)%2 == 0 && (y/taillecasey)%2 == 1  && principale.getActions().getPoser().getPoserRoute().isEnabled()){
+        else if ((x/taillecasex)%2 == 0 && (y/taillecasey)%2 == 1  && principale.getActions().getPoser().getPoserRoute().isEnabled() && principale.getActions().getPoser().getPoserColonie().isEnabled() == false){
             plateau.remove(x/taillecasex + (y/taillecasey)*11);
             plateau.add(new RouteVertical(principale.getJoueurCourant().getCouleur()), (x/taillecasex + (y/taillecasey)*11));
             plateau.revalidate();

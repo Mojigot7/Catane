@@ -85,6 +85,7 @@ public class Actions extends JFrame{
             }
             return listjoueur.get(0);
         }
+        
     }
 
     public class ChoixActions{
@@ -345,6 +346,7 @@ public class Actions extends JFrame{
             JButton chevalier = new JButton(" Utiliser Chevalier ");
             JButton invention = new JButton(" Utiliser Invention ");
             JButton monopole = new JButton(" Utiliser Monopole");
+            JButton pdv = new JButton(" Utiliser Point de Victoire ");
             JButton consRoute = new JButton(" Utiliser Construction De Route ");
             JButton retour = new JButton(" Retour ");
 
@@ -355,7 +357,22 @@ public class Actions extends JFrame{
                 main.add(new InventionPanel().getcontent());
                 main.revalidate();
             });
+            pdv.setEnabled(principale.getJoueurCourant().getDev().compterPtsDeVictoire() > 0);
+            pdv.addActionListener(event -> {
+                principale.getJoueurCourant().setScore(principale.getJoueurCourant().getScore()+1);
+                principale.getInformationJoueur().getJoueurplateau().setpdv(principale.getJoueurCourant().getScore());
+                principale.getJoueurCourant().getDev().supprimer("Point de Victoire");
+                principale.getInformationJoueur().getDeveloppement().setQuantité("pdv", principale.getJoueurCourant().getDev().compterPtsDeVictoire());
+                main.removeAll();
+                main.add(new ChoixActions().getChoixActionsContent());
+                main.revalidate();
+            });
             monopole.setEnabled(principale.getJoueurCourant().getDev().getNbMonopole() > 0);
+            monopole.addActionListener(event -> {
+                main.removeAll();
+                main.add(new MonopolePanel().getcontent());
+                main.revalidate();
+            });
             consRoute.setEnabled(principale.getJoueurCourant().getDev().getNbConstructiondeRoute() > 0);
             consRoute.addActionListener(event -> {
                 principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE",  principale.getJoueurCourant().getInventaire().getBatiment().get("ROUTE")+2);
@@ -374,6 +391,7 @@ public class Actions extends JFrame{
             content.add(chevalier);
             content.add(invention);
             content.add(monopole);
+            content.add(pdv);
             content.add(consRoute);
             content.add(retour);
         }
@@ -381,6 +399,7 @@ public class Actions extends JFrame{
         public JPanel getContent(){
             return content;
         }
+
     }
 
     public class InventionPanel{
@@ -417,7 +436,6 @@ public class Actions extends JFrame{
             content.add(argile);
         }
 
-
         public void choixRessrouces(String s){
             if(count == 1){
                 principale.getJoueurCourant().getInventaire().getRessource().replace(s,  principale.getJoueurCourant().getInventaire().getRessource().get(s)+1);
@@ -435,6 +453,88 @@ public class Actions extends JFrame{
             }
         }
         
+        public JPanel getcontent(){
+            return content;
+        }
+    }
+
+    public class MonopolePanel{
+
+        private JPanel content;
+        private String ressource;
+
+        public MonopolePanel(){
+
+            JButton minerai = new JButton(" Minerai ");
+            JButton laine = new JButton (" Laine ");
+            JButton bois = new JButton (" Bois ");
+            JButton ble = new JButton (" Ble ");
+            JButton argile = new JButton(" Argile ");
+            minerai.addActionListener(event -> {
+                ressource = "MINERAI";
+                monopole(principale.getlistjoueur(), ressource);
+                principale.getJoueurCourant().getDev().supprimer("Monopole");
+            });
+            laine.addActionListener(event -> {
+                ressource = "LAINE";
+                monopole(principale.getlistjoueur(), ressource);
+                principale.getJoueurCourant().getDev().supprimer("Monopole");
+            });
+            bois.addActionListener(event -> {
+                ressource = "BOIS";
+                monopole(principale.getlistjoueur(), ressource);
+                principale.getJoueurCourant().getDev().supprimer("Monopole");
+            });
+            ble.addActionListener(event -> {
+                ressource = "BLE";
+                monopole(principale.getlistjoueur(), ressource);
+                principale.getJoueurCourant().getDev().supprimer("Monopole");
+            });
+            argile.addActionListener(event -> {
+                ressource = "ARGILE";
+                monopole(principale.getlistjoueur(), ressource);
+                principale.getJoueurCourant().getDev().supprimer("Monopole");
+            });
+            content.add(minerai);
+            content.add(laine);
+            content.add(ble);
+            content.add(bois);
+            content.add(argile);
+
+        }
+
+        public void monopole(ArrayList<Joueur>j , String r1){
+            for(int i = 0 ; i < j.size() ; i++){
+				if(j.get(i).getNom().equals(principale.getJoueurCourant().getNom())==false){
+					if(r1.equals("BOIS")){
+						principale.getJoueurCourant().getInventaire().getRessource().replace(r1,principale.getJoueurCourant().getInventaire().getRessource().get(r1)+j.get(i).getNbBois());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBois());
+					}
+					
+					if(r1.equals("ARGILE")){
+						principale.getJoueurCourant().getInventaire().getRessource().replace(r1,principale.getJoueurCourant().getInventaire().getRessource().get(r1)+j.get(i).getNbArgile());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbArgile());
+					}
+					if(r1.equals("LAINE")){
+						principale.getJoueurCourant().getInventaire().getRessource().replace(r1,principale.getJoueurCourant().getInventaire().getRessource().get(r1)+j.get(i).getNbLaine());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbLaine());
+					}
+					
+					if(r1.equals("MINERAI")){
+						principale.getJoueurCourant().getInventaire().getRessource().replace(r1,principale.getJoueurCourant().getInventaire().getRessource().get(r1)+j.get(i).getNbMinerai());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbMinerai());
+					}
+					if(r1.equals("BLE")){
+						principale.getJoueurCourant().getInventaire().getRessource().replace(r1,principale.getJoueurCourant().getInventaire().getRessource().get(r1)+j.get(i).getNbBle());
+						j.get(i).getInventaire().getRessource().replace(r1,j.get(i).getInventaire().getRessource().get(r1)-j.get(i).getNbBle());
+					}
+				}
+            }
+            main.removeAll();
+            main.add(new ChoixActions().getChoixActionsContent());
+            main.revalidate();
+        }
+
         public JPanel getcontent(){
             return content;
         }

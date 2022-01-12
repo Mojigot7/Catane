@@ -81,5 +81,9 @@ public class Gui extends JFrame {
         this.actions = actions;
     }
 
+    public Plateau getPlateau(){
+        return plateau;
+    }
+
 }
 
