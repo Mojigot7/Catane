@@ -2,21 +2,50 @@ package Gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+import joueur.Joueur;
 
 
 public class Actions extends JFrame{
 
     private JPanel main = new JPanel();
     private Debut debut;
+    private ArrayList<Joueur> listjoueur;
+    private Joueur courant;
+    private JPanel deeconteneur;
+    private JPanel suivantconteneur;
 
-    public Actions(){
+    public Actions(ArrayList<Joueur> list){
+        courant = list.get(0);
+        listjoueur = list;
         main.setLayout(new BorderLayout());
         debut = new Debut();
+
+        JLabel actions = new JLabel();
+        actions.setText("ACTIONS POSSBILES");
+        JPanel actionsconteneur = new JPanel();
+
+        JLabel dee = new JLabel();
+        dee.setText(courant.lancerDees()+"");
+        deeconteneur = new JPanel();
+        deeconteneur.setVisible(false);
+
+        JLabel suivant = new JLabel();
+        suivant.setText(listjoueur.get(1).getNom()+"");
+        suivantconteneur = new JPanel();
+
+        main.add(actionsconteneur,BorderLayout.NORTH);
         main.add(debut.getContent(),BorderLayout.CENTER);
+        main.add(deeconteneur,BorderLayout.WEST);
+        main.add(suivantconteneur,BorderLayout.EAST);
 
     }
 
@@ -32,8 +61,11 @@ public class Actions extends JFrame{
             content.add(lanceeDee);
             content.add(finDeTour);
             lanceeDee.addActionListener( event -> {
-                System.out.println("JLabel avec nombres obtenu");
-                main.removeAll();
+                /*JLabel dee = new JLabel();
+                dee.setText(courant.lancerDees()+"");
+                main.add(dee,BorderLayout.WEST);
+                */
+                main.remove(1);
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
             });
@@ -174,38 +206,4 @@ public class Actions extends JFrame{
     public JPanel getContent(){
         return main;
     }
-
-    /*
-    main.setLayout(new GridLayout(2,1));
-
-        JLabel Tour = new JLabel();
-
-        JPanel temp1 = new JPanel();
-
-        temp1.setLayout(new GridLayout(1,3));
-        Tour.setText("Tour");
-        temp1.add(Tour);
-
-        JLabel vide1 = new JLabel();
-        temp1.add(vide1);
-
-        JLabel suivant = new JLabel();
-        suivant.setText("Joueur Suivant : Joueur 2");
-        temp1.add(suivant);
-
-        main.add(temp1);
-
-        JPanel temp = new JPanel();
-
-        JButton dee = new JButton("Lancee les dees");
-        dee.setSize(200,200);
-        dee.addActionListener(null);
-        temp.add(dee);
-
-        JButton fin = new JButton("Fin de tour");
-        fin.setSize(200,200);
-        temp.add(fin);
-        fin.addActionListener(null);
-        main.add(temp);
-*/
 }

@@ -2,6 +2,7 @@ package jeu;
 
 import java.util.Scanner;
 
+import Gui.Config;
 import Gui.Gui;
 import colors.ConsoleColors;
 
@@ -30,7 +31,7 @@ public class Catane {
 			Jeu j = new Jeu();
 			j.jouer();
 		} else {
-		    Gui test = new Gui();
+			Config test = new Config();
 		    test.setVisible(true);
 		}
 	}

@@ -123,6 +123,43 @@ public class Developpement {
 	public LinkedList<Developpement> getStock() {
 		return stock;
 	}
+
+    public int getNbChevalier(){
+        int res = 0;
+        for(int i = 0 ; i<stock.size() ;i++){
+            if(stock.get(i).nom.equals("Chevalier"));{
+                res++;
+            }
+        } 
+        return res;
+    }
+
+    public int getNbConstructiondeRoute(){
+        int res = 0;
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Construction de route"))
+                res++;
+        }
+        return res;
+    }
+
+    public int getNbInvention(){
+        int res = 0;
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Invention"))
+                res++;
+        }
+        return res;
+    }
+
+    public int getNbMonopole(){
+        int res = 0;
+        for(int i = 0 ; i < stock.size(); i++){
+            if(stock.get(i).nom.equals("Monopole"))
+                res++;
+        }
+        return res;
+    }
 }
 
 

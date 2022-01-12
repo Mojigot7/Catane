@@ -282,4 +282,7 @@ public abstract class Joueur {
 		public Developpement getDev() {
 			return dev;
 		}
+		public String getNom(){
+			return nom;
+		}
 }

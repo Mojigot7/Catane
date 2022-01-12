@@ -3,37 +3,42 @@ package Gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import joueur.Joueur;
+
 public class InformationJoueur extends JFrame{
 
     private static final long serialVersionUID = 1L;
 
+    private ArrayList<Joueur> listjoueur;
+    private Joueur courant;
     private JPanel content;
-    private Joueur j;
+    private Joueurplateau j;
     private Ressource ressource;
     private Batiment batiment;
     private Developpement dev;
     private Legende leg;
 
-    public class Joueur{
+    public class Joueurplateau{
         private JPanel content;
         private JLabel nom;
         private JLabel pdv;
 
-        public Joueur() {
+        public Joueurplateau(Joueur j) {
             content = new JPanel();
             content.setLayout(new GridLayout(2,1));
             nom = new JLabel();
             pdv = new JLabel();
-
-            nom.setText(" Joueur 1");
+            nom.setText(j.getNom());
+            nom.setForeground(j.getCouleur());
             content.add(nom);
 
-            pdv.setText(" Point de Victoire : 0");
+            pdv.setText(" Point de Victoire : "+ j.getScore());
             content.add(pdv);
 
         }
@@ -56,28 +61,28 @@ public class InformationJoueur extends JFrame{
         private JLabel ble;
         private JLabel laine;
 
-        public Ressource() {
+        public Ressource(Joueur j) {
             content = new JPanel();
             content.setLayout(new GridLayout(5,1));
 
             minerai = new JLabel();
-            minerai.setText("Minerai : 0");
+            minerai.setText("Minerai : " + j.getNbMinerai());
             content.add(minerai);
 
             argile = new JLabel();
-            argile.setText("Argile : 0");
+            argile.setText("Argile : " + j.getNbArgile());
             content.add(argile);
 
             bois = new JLabel();
-            bois.setText("Bois : 0");
+            bois.setText("Bois : " + j.getNbBois());
             content.add(bois);
 
             ble = new JLabel();
-            ble.setText("Ble : 0");
+            ble.setText("Ble : " + j.getNbBle());
             content.add(ble);
 
             laine = new JLabel();
-            laine.setText("Laine : 0");
+            laine.setText("Laine : " + j.getNbLaine());
             content.add(laine);
 
         }
@@ -116,20 +121,20 @@ public class InformationJoueur extends JFrame{
         private JLabel colonie;
         private JLabel ville;
 
-        public Batiment() {
+        public Batiment(Joueur j) {
             content = new JPanel();
             content.setLayout(new GridLayout(3,1));
 
             route = new JLabel();
-            route.setText("Route : 2");
+            route.setText("Route : " + j.getNbRoute());
             content.add(route);
 
             colonie = new JLabel();
-            colonie.setText("Colonie : 2");
+            colonie.setText("Colonie : " + j.getNbColonie());
             content.add(colonie);
 
             ville = new JLabel();
-            ville.setText("Ville : 0");
+            ville.setText("Ville : " + j.getNbVille());
             content.add(ville);
         }
 
@@ -162,29 +167,29 @@ public class InformationJoueur extends JFrame{
         private JLabel construction;
         private JLabel pdv;
 
-        public Developpement() {
+        public Developpement(Joueur j) {
 
             content = new JPanel();
             content.setLayout(new GridLayout(5,1));
 
             chevalier = new JLabel();
-            chevalier.setText("Chevalier : 0");
+            chevalier.setText("Chevalier : "  + j.getDev().getNbChevalier());
             content.add(chevalier);
 
             invention = new JLabel();
-            invention.setText("Invention : 0");
+            invention.setText("Invention : " + j.getDev().getNbInvention());
             content.add(invention);
 
             monopole = new JLabel();
-            monopole.setText("Monopole : 0");
+            monopole.setText("Monopole : " + j.getDev().getNbMonopole());
             content.add(monopole);
 
             pdv = new JLabel();
-            pdv.setText("PdV : 0");
+            pdv.setText("PdV : " + j.getDev().compterPtsDeVictoire());
             content.add(pdv);
 
             construction = new JLabel();
-            construction.setText("Construction de route : 0");
+            construction.setText("Construction de route : " + j.getDev().getNbConstructiondeRoute());
             content.add(construction);
         }
 
@@ -271,14 +276,15 @@ public class InformationJoueur extends JFrame{
 
     }
 
-    public InformationJoueur() {
+    public InformationJoueur(ArrayList<Joueur> list) {
         this.setSize(1000,600);
         content = new JPanel();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        j = new Joueur();
-        ressource = new Ressource();
-        batiment = new Batiment();
-        dev = new Developpement();
+        courant = list.get(0);
+        j = new Joueurplateau(courant);
+        ressource = new Ressource(courant);
+        batiment = new Batiment(courant);
+        dev = new Developpement(courant);
         leg = new Legende();
         content.setLayout(new GridLayout(1,6));
 
@@ -297,9 +303,7 @@ public class InformationJoueur extends JFrame{
         return this.batiment;
     }
 
-    public static void main(String []agrs) {
-        InformationJoueur test = new InformationJoueur();
-        test.setVisible(true);
-        test.getBatiment().setQuantité("route",5);
+    public ArrayList<Joueur> getList(){
+        return listjoueur;
     }
 }
