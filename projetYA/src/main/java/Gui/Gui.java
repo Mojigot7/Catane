@@ -17,16 +17,31 @@ public class Gui extends JFrame {
     private ArrayList<Joueur> listjoueur;
     private Joueur courant;
 
-    public Gui(ArrayList<Joueur> listjoueur,Joueur courant) {
+    public Gui(ArrayList<Joueur> listjoueur,Joueur courant){
         this.listjoueur = listjoueur;
         this.courant = courant;
         plateau = new Plateau();
         setTitle("Jeu");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        top = new InformationJoueur(listjoueur);
+        top = new InformationJoueur(listjoueur,courant);
         jeu = new PlateauJeu(plateau,this);
-        actions = new Actions(listjoueur,this,courant);
+        actions = new Actions(listjoueur,this);
+        this.getContentPane().add(top.getContentPane(),BorderLayout.NORTH);
+        this.getContentPane().add(jeu.getContent(),BorderLayout.CENTER);
+        this.getContentPane().add(actions.getContent(),BorderLayout.SOUTH);
+        this.pack();
+        this.setVisible(true);
+        setSize(1000,600);
+    }
+
+    public Gui(ArrayList<Joueur> listjoueur,Joueur courant,InformationJoueur info,PlateauJeu pJeu,Actions act){
+        this.listjoueur = listjoueur;
+        System.out.println(courant.toString());
+        this.courant = courant;
+        this.jeu = pJeu;
+        this.top = info;
+        this.actions = act;
         this.getContentPane().add(top.getContentPane(),BorderLayout.NORTH);
         this.getContentPane().add(jeu.getContent(),BorderLayout.CENTER);
         this.getContentPane().add(actions.getContent(),BorderLayout.SOUTH);
@@ -48,6 +63,22 @@ public class Gui extends JFrame {
 
     public Joueur getJoueurCourant(){
         return courant;
+    }
+
+    public ArrayList<Joueur> getlistjoueur(){
+        return listjoueur;
+    }
+
+    public void setJoueurSuivant(Joueur suivant){
+        this.courant = suivant;
+    }
+
+    public void setInformationJoueur(InformationJoueur info){
+        this.top = info;
+    }
+
+    public void setActions(Actions actions){
+        this.actions = actions;
     }
 
 }

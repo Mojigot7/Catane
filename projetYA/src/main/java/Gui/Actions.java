@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import joueur.Joueur;
@@ -17,30 +16,20 @@ public class Actions extends JFrame{
     private JPanel main = new JPanel();
     
     private ArrayList<Joueur> listjoueur;
-    private Joueur courant;
 
-    private JPanel deeconteneur;
     private boolean creationunique = true;
     private Poser boutonposer;
     private ChoixActions choixActions;
 
     private Gui principale;
 
-    public Actions(ArrayList<Joueur> list,Gui principale,Joueur c){
+    public Actions(ArrayList<Joueur> list,Gui principale){
         listjoueur = list;
         this.principale = principale;
-        courant = c;
 
         main.setLayout(new BorderLayout());
 
-        JLabel dee = new JLabel();
-        dee.setText(" Dée obtenu : " + courant.lancerDees() );
-        deeconteneur = new JPanel();
-        deeconteneur.setVisible(false);
-        deeconteneur.add(dee);
-
         main.add(new Debut().getContent(),BorderLayout.CENTER);
-        main.add(deeconteneur,BorderLayout.WEST);
 
     }
 
@@ -56,16 +45,45 @@ public class Actions extends JFrame{
             content.add(lanceeDee);
             content.add(finDeTour);
             lanceeDee.addActionListener( event -> {
-                deeconteneur.setVisible(true);
+                principale.getInformationJoueur().setDee(" Dée obtenu : " + principale.getJoueurCourant().lancerDees());
+
                 main.removeAll();
                 choixActions = new ChoixActions();
                 main.add(choixActions.getChoixActionsContent());
+                main.revalidate();
+            });
+            finDeTour.addActionListener(event -> {
+                Joueur suivant = this.getSuivant(principale.getJoueurCourant(),principale.getlistjoueur());
+                principale.setJoueurSuivant(suivant);
+                principale.getInformationJoueur().getRessource().setQuantité("BOIS", suivant.getNbBois());
+                principale.getInformationJoueur().getRessource().setQuantité("ARGILE", suivant.getNbArgile());
+                principale.getInformationJoueur().getRessource().setQuantité("BLE", suivant.getNbBle());
+                principale.getInformationJoueur().getRessource().setQuantité("MINERAI", suivant.getNbMinerai());
+                principale.getInformationJoueur().getRessource().setQuantité("LAINE", suivant.getNbLaine());
+                principale.getInformationJoueur().getBatiment().setQuantité("route", suivant.getNbRoute());
+                principale.getInformationJoueur().getBatiment().setQuantité("colonie", suivant.getNbColonie());
+                principale.getInformationJoueur().getBatiment().setQuantité("ville", suivant.getNbVille());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("chevalier", suivant.getDev().getNbChevalier());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("invention", suivant.getDev().getNbInvention());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("monopole", suivant.getDev().getNbMonopole());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("pdv", suivant.getDev().compterPtsDeVictoire());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("construction", suivant.getDev().getNbConstructiondeRoute());
+                principale.getInformationJoueur().getJoueurplateau().setnom(suivant.getNom(),suivant.getCouleur());
+                main.removeAll();
+                main.add(new Debut().getContent());
                 main.revalidate();
             });
         }
 
         public JPanel getContent(){
             return content;
+        }
+        public Joueur getSuivant(Joueur courant, ArrayList<Joueur> listjoueur){
+            for(int i = 0 ; i < listjoueur.size() ;i++){
+                if(principale.getJoueurCourant().equals(listjoueur.get(i)) && i + 1 < listjoueur.size())
+                    return listjoueur.get(i+1);
+            }
+            return listjoueur.get(0);
         }
     }
 
@@ -79,9 +97,10 @@ public class Actions extends JFrame{
         
 
         public ChoixActions(){
-            poser.setEnabled(courant.possedeColonie() || courant.possedeRoute() || courant.possedeVille());
-            construire.setEnabled(courant.peutAcheterColonie() || courant.peutAcheterRoute() || courant.peutAcheterVille());
-            developpement.setEnabled(courant.peutCreeCarteDev() || courant.getDev().getStock().size()> 0);
+            poser.setEnabled(principale.getJoueurCourant().possedeColonie() || principale.getJoueurCourant().possedeRoute() || principale.getJoueurCourant().possedeVille());
+            poser.revalidate();
+            construire.setEnabled(principale.getJoueurCourant().peutAcheterColonie() || principale.getJoueurCourant().peutAcheterRoute() || principale.getJoueurCourant().peutAcheterVille());
+            developpement.setEnabled(principale.getJoueurCourant().peutCreeCarteDev() || principale.getJoueurCourant().getDev().getStock().size()> 0);
             poser.addActionListener(event -> {
                 main.removeAll();
                 boutonposer = new Poser();
@@ -98,6 +117,27 @@ public class Actions extends JFrame{
                 main.add(new Developpement().getContent());
                 main.revalidate();
             });
+            findeTour.addActionListener(event -> {
+                Joueur suivant = this.getSuivant(principale.getJoueurCourant(),principale.getlistjoueur());
+                principale.setJoueurSuivant(suivant);
+                principale.getInformationJoueur().getRessource().setQuantité("BOIS", suivant.getNbBois());
+                principale.getInformationJoueur().getRessource().setQuantité("ARGILE", suivant.getNbArgile());
+                principale.getInformationJoueur().getRessource().setQuantité("BLE", suivant.getNbBle());
+                principale.getInformationJoueur().getRessource().setQuantité("MINERAI", suivant.getNbMinerai());
+                principale.getInformationJoueur().getRessource().setQuantité("LAINE", suivant.getNbLaine());
+                principale.getInformationJoueur().getBatiment().setQuantité("route", suivant.getNbRoute());
+                principale.getInformationJoueur().getBatiment().setQuantité("colonie", suivant.getNbColonie());
+                principale.getInformationJoueur().getBatiment().setQuantité("ville", suivant.getNbVille());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("chevalier", suivant.getDev().getNbChevalier());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("invention", suivant.getDev().getNbInvention());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("monopole", suivant.getDev().getNbMonopole());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("pdv", suivant.getDev().compterPtsDeVictoire());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("construction", suivant.getDev().getNbConstructiondeRoute());
+                principale.getInformationJoueur().getJoueurplateau().setnom(suivant.getNom(),suivant.getCouleur());
+                main.removeAll();
+                main.add(new Debut().getContent());
+                main.revalidate();
+            });
             content.add(poser);
             content.add(construire);
             content.add(developpement);
@@ -106,6 +146,14 @@ public class Actions extends JFrame{
 
         public JPanel getChoixActionsContent(){
             return content;
+        }
+
+        public Joueur getSuivant(Joueur courant, ArrayList<Joueur> listjoueur){
+            for(int i = 0 ; i < listjoueur.size() ;i++){
+                if(principale.getJoueurCourant().equals(listjoueur.get(i)) && i + 1 < listjoueur.size())
+                    return listjoueur.get(i+1);
+            }
+            return listjoueur.get(0);
         }
     }
 
@@ -118,31 +166,31 @@ public class Actions extends JFrame{
         private JButton retour = new JButton(" Retour ");
 
         public Poser(){
-            route.setEnabled(courant.possedeRoute());
+            route.setEnabled(principale.getJoueurCourant().possedeRoute());
             route.addActionListener(event -> {
-                courant.getInventaire().getBatiment().replace("ROUTE", courant.getInventaire().getBatiment().get("ROUTE")-1);
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getInventaire().getBatiment().get("ROUTE")-1);
                 colonie.setEnabled(false);
                 ville.setEnabled(false);
                 retour.setEnabled(false);
-                principale.getInformationJoueur().getBatiment().setQuantité("route", courant.getNbRoute());
+                principale.getInformationJoueur().getBatiment().setQuantité("route", principale.getJoueurCourant().getNbRoute());
             });
-            colonie.setEnabled(courant.possedeColonie());
+            colonie.setEnabled(principale.getJoueurCourant().possedeColonie());
             colonie.addActionListener(event -> {
-                courant.getInventaire().getBatiment().replace("COLONIE", courant.getInventaire().getBatiment().get("COLONIE")-1);
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("COLONIE", principale.getJoueurCourant().getInventaire().getBatiment().get("COLONIE")-1);
                 route.setEnabled(false);
                 ville.setEnabled(false);
                 retour.setEnabled(false);
-                principale.getInformationJoueur().getBatiment().setQuantité("colonie", courant.getNbColonie());
+                principale.getInformationJoueur().getBatiment().setQuantité("colonie", principale.getJoueurCourant().getNbColonie());
             });
-            ville.setEnabled(courant.possedeVille());
+            ville.setEnabled(principale.getJoueurCourant().possedeVille());
             ville.addActionListener(event -> {
-                courant.getInventaire().getBatiment().replace("VILLE", courant.getInventaire().getBatiment().get("VILLE")-1);
-                courant.getInventaire().getBatiment().replace("COLONIE", courant.getInventaire().getBatiment().get("COLONIE")+1);
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("VILLE", principale.getJoueurCourant().getInventaire().getBatiment().get("VILLE")-1);
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("COLONIE", principale.getJoueurCourant().getInventaire().getBatiment().get("COLONIE")+1);
                 route.setEnabled(false);
                 colonie.setEnabled(false);
                 retour.setEnabled(false);
-                principale.getInformationJoueur().getBatiment().setQuantité("ville", courant.getNbVille());
-                principale.getInformationJoueur().getBatiment().setQuantité("colonie", courant.getNbColonie());
+                principale.getInformationJoueur().getBatiment().setQuantité("ville", principale.getJoueurCourant().getNbVille());
+                principale.getInformationJoueur().getBatiment().setQuantité("colonie", principale.getJoueurCourant().getNbColonie());
             });
             retour.addActionListener(event -> {
                 main.removeAll();
@@ -181,48 +229,48 @@ public class Actions extends JFrame{
         private JButton retour = new JButton(" Retour ");
         
         public Construire(){
-            route.setEnabled(courant.peutAcheterRoute());
+            route.setEnabled(principale.getJoueurCourant().peutAcheterRoute());
             content.add(route);
             route.addActionListener(event ->  {
-                courant.getInventaire().getBatiment().replace("ROUTE", courant.getInventaire().getBatiment().get("ROUTE")+1);
-                courant.getInventaire().getRessource().replace("ARGILE", courant.getInventaire().getRessource().get("ARGILE")-1);
-                courant.getInventaire().getRessource().replace("BOIS", courant.getInventaire().getRessource().get("BOIS")-1);
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getInventaire().getBatiment().get("ROUTE")+1);
+                principale.getJoueurCourant().getInventaire().getRessource().replace("ARGILE", principale.getJoueurCourant().getInventaire().getRessource().get("ARGILE")-1);
+                principale.getJoueurCourant().getInventaire().getRessource().replace("BOIS", principale.getJoueurCourant().getInventaire().getRessource().get("BOIS")-1);
                 main.removeAll();
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
-                principale.getInformationJoueur().getBatiment().setQuantité("route", courant.getNbRoute());
-                principale.getInformationJoueur().getRessource().setQuantité("ARGILE", courant.getNbArgile());
-                principale.getInformationJoueur().getRessource().setQuantité("BOIS", courant.getNbBois());
+                principale.getInformationJoueur().getBatiment().setQuantité("route", principale.getJoueurCourant().getNbRoute());
+                principale.getInformationJoueur().getRessource().setQuantité("ARGILE", principale.getJoueurCourant().getNbArgile());
+                principale.getInformationJoueur().getRessource().setQuantité("BOIS", principale.getJoueurCourant().getNbBois());
             });
-            colonie.setEnabled(courant.peutAcheterColonie());
+            colonie.setEnabled(principale.getJoueurCourant().peutAcheterColonie());
             content.add(colonie);
             colonie.addActionListener(event -> {
-                courant.getInventaire().getBatiment().replace("COLONIE", courant.getInventaire().getBatiment().get("COLONIE")+1);
-                courant.getInventaire().getRessource().replace("ARGILE", courant.getInventaire().getRessource().get("ARGILE")-1);
-                courant.getInventaire().getRessource().replace("BOIS", courant.getInventaire().getRessource().get("BOIS")-1);
-                courant.getInventaire().getRessource().replace("LAINE", courant.getInventaire().getRessource().get("LAINE")-1);
-                principale.getInformationJoueur().getRessource().setQuantité("BLE", courant.getNbBle());
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("COLONIE", principale.getJoueurCourant().getInventaire().getBatiment().get("COLONIE")+1);
+                principale.getJoueurCourant().getInventaire().getRessource().replace("ARGILE", principale.getJoueurCourant().getInventaire().getRessource().get("ARGILE")-1);
+                principale.getJoueurCourant().getInventaire().getRessource().replace("BOIS", principale.getJoueurCourant().getInventaire().getRessource().get("BOIS")-1);
+                principale.getJoueurCourant().getInventaire().getRessource().replace("LAINE", principale.getJoueurCourant().getInventaire().getRessource().get("LAINE")-1);
+                principale.getInformationJoueur().getRessource().setQuantité("BLE", principale.getJoueurCourant().getNbBle());
                 main.removeAll();
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
-                principale.getInformationJoueur().getBatiment().setQuantité("colonie", courant.getNbColonie());
-                principale.getInformationJoueur().getRessource().setQuantité("ARGILE", courant.getNbArgile());
-                principale.getInformationJoueur().getRessource().setQuantité("BOIS", courant.getNbBois());
-                principale.getInformationJoueur().getRessource().setQuantité("LAINE", courant.getNbLaine());
-                principale.getInformationJoueur().getRessource().setQuantité("BLE", courant.getNbBle());
+                principale.getInformationJoueur().getBatiment().setQuantité("colonie", principale.getJoueurCourant().getNbColonie());
+                principale.getInformationJoueur().getRessource().setQuantité("ARGILE", principale.getJoueurCourant().getNbArgile());
+                principale.getInformationJoueur().getRessource().setQuantité("BOIS", principale.getJoueurCourant().getNbBois());
+                principale.getInformationJoueur().getRessource().setQuantité("LAINE", principale.getJoueurCourant().getNbLaine());
+                principale.getInformationJoueur().getRessource().setQuantité("BLE", principale.getJoueurCourant().getNbBle());
             });
-            ville.setEnabled(courant.peutAcheterVille());
+            ville.setEnabled(principale.getJoueurCourant().peutAcheterVille());
             content.add(ville);
             ville.addActionListener(event -> {
-                courant.getInventaire().getBatiment().replace("VILLE", courant.getInventaire().getBatiment().get("VILLE")+1);
-                courant.getInventaire().getRessource().replace("MINERAI", courant.getInventaire().getRessource().get("MINERAI")-3);
-                courant.getInventaire().getRessource().replace("BLE", courant.getInventaire().getRessource().get("BLE")-2);
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("VILLE", principale.getJoueurCourant().getInventaire().getBatiment().get("VILLE")+1);
+                principale.getJoueurCourant().getInventaire().getRessource().replace("MINERAI", principale.getJoueurCourant().getInventaire().getRessource().get("MINERAI")-3);
+                principale.getJoueurCourant().getInventaire().getRessource().replace("BLE", principale.getJoueurCourant().getInventaire().getRessource().get("BLE")-2);
                 main.removeAll();
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
-                principale.getInformationJoueur().getBatiment().setQuantité("ville", courant.getNbVille());
-                principale.getInformationJoueur().getRessource().setQuantité("MINERAI", courant.getNbMinerai());
-                principale.getInformationJoueur().getRessource().setQuantité("BLE", courant.getNbBle());
+                principale.getInformationJoueur().getBatiment().setQuantité("ville", principale.getJoueurCourant().getNbVille());
+                principale.getInformationJoueur().getRessource().setQuantité("MINERAI", principale.getJoueurCourant().getNbMinerai());
+                principale.getInformationJoueur().getRessource().setQuantité("BLE", principale.getJoueurCourant().getNbBle());
             });
             content.add(retour);
             retour.addActionListener(event -> {
@@ -245,32 +293,32 @@ public class Actions extends JFrame{
         private JButton retour = new JButton(" Retour ");
         
         public Developpement(){
-            utiliser.setEnabled(courant.getDev().getStock().size() >= 0);
+            utiliser.setEnabled(principale.getJoueurCourant().getDev().getStock().size() >= 0);
             content.add(utiliser);
             utiliser.addActionListener(event -> {
                 main.removeAll();
                 main.add(new CarteDev().getContent());
                 main.revalidate();
             });
-            cree.setEnabled(courant.peutCreeCarteDev() && creationunique == true);
+            cree.setEnabled(principale.getJoueurCourant().peutCreeCarteDev() && creationunique == true);
             content.add(cree);
             cree.addActionListener(event ->{
-                courant.getInventaire().getRessource().replace("MINERAI", courant.getInventaire().getRessource().get("MINERAI")-1);
-				courant.getInventaire().getRessource().replace("LAINE", courant.getInventaire().getRessource().get("LAINE")-1);
-				courant.getInventaire().getRessource().replace("BLE", courant.getInventaire().getRessource().get("BLE")-1);
-				courant.getDev().creationCarteDev(courant.getDev().getCarteDev());
+                principale.getJoueurCourant().getInventaire().getRessource().replace("MINERAI", principale.getJoueurCourant().getInventaire().getRessource().get("MINERAI")-1);
+				principale.getJoueurCourant().getInventaire().getRessource().replace("LAINE", principale.getJoueurCourant().getInventaire().getRessource().get("LAINE")-1);
+				principale.getJoueurCourant().getInventaire().getRessource().replace("BLE", principale.getJoueurCourant().getInventaire().getRessource().get("BLE")-1);
+				principale.getJoueurCourant().getDev().creationCarteDev(principale.getJoueurCourant().getDev().getCarteDev());
                 creationunique = false;
                 main.removeAll();
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
-                principale.getInformationJoueur().getRessource().setQuantité("MINERAI", courant.getInventaire().getRessource().get("MINERAI"));
-                principale.getInformationJoueur().getRessource().setQuantité("LAINE", courant.getInventaire().getRessource().get("LAINE"));
-                principale.getInformationJoueur().getRessource().setQuantité("BLE", courant.getInventaire().getRessource().get("BLE"));
-                principale.getInformationJoueur().getDeveloppement().setQuantité("chevalier", courant.getDev().getNbChevalier());
-                principale.getInformationJoueur().getDeveloppement().setQuantité("invention", courant.getDev().getNbInvention());
-                principale.getInformationJoueur().getDeveloppement().setQuantité("monopole", courant.getDev().getNbMonopole());
-                principale.getInformationJoueur().getDeveloppement().setQuantité("pdv", courant.getDev().compterPtsDeVictoire());
-                principale.getInformationJoueur().getDeveloppement().setQuantité("construction", courant.getDev().getNbConstructiondeRoute());
+                principale.getInformationJoueur().getRessource().setQuantité("MINERAI", principale.getJoueurCourant().getInventaire().getRessource().get("MINERAI"));
+                principale.getInformationJoueur().getRessource().setQuantité("LAINE", principale.getJoueurCourant().getInventaire().getRessource().get("LAINE"));
+                principale.getInformationJoueur().getRessource().setQuantité("BLE", principale.getJoueurCourant().getInventaire().getRessource().get("BLE"));
+                principale.getInformationJoueur().getDeveloppement().setQuantité("chevalier", principale.getJoueurCourant().getDev().getNbChevalier());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("invention", principale.getJoueurCourant().getDev().getNbInvention());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("monopole", principale.getJoueurCourant().getDev().getNbMonopole());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("pdv", principale.getJoueurCourant().getDev().compterPtsDeVictoire());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("construction", principale.getJoueurCourant().getDev().getNbConstructiondeRoute());
             });
             content.add(retour);
             retour.addActionListener(event -> {
@@ -300,23 +348,23 @@ public class Actions extends JFrame{
             JButton consRoute = new JButton(" Utiliser Construction De Route ");
             JButton retour = new JButton(" Retour ");
 
-            chevalier.setEnabled(courant.getDev().getNbChevalier() > 0);
-            invention.setEnabled(courant.getDev().getNbInvention() > 0);
+            chevalier.setEnabled(principale.getJoueurCourant().getDev().getNbChevalier() > 0);
+            invention.setEnabled(principale.getJoueurCourant().getDev().getNbInvention() > 0);
             invention.addActionListener(event -> {
                 main.removeAll();
                 main.add(new InventionPanel().getcontent());
                 main.revalidate();
             });
-            monopole.setEnabled(courant.getDev().getNbMonopole() > 0);
-            consRoute.setEnabled(courant.getDev().getNbConstructiondeRoute() > 0);
+            monopole.setEnabled(principale.getJoueurCourant().getDev().getNbMonopole() > 0);
+            consRoute.setEnabled(principale.getJoueurCourant().getDev().getNbConstructiondeRoute() > 0);
             consRoute.addActionListener(event -> {
-                courant.getInventaire().getBatiment().replace("ROUTE",  courant.getInventaire().getBatiment().get("ROUTE")+2);
-                courant.getDev().supprimer("Construction de route");
+                principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE",  principale.getJoueurCourant().getInventaire().getBatiment().get("ROUTE")+2);
+                principale.getJoueurCourant().getDev().supprimer("Construction de route");
                 main.removeAll();
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
-                principale.getInformationJoueur().getBatiment().setQuantité("route", courant.getNbRoute());
-                principale.getInformationJoueur().getDeveloppement().setQuantité("construction", courant.getDev().getNbConstructiondeRoute());
+                principale.getInformationJoueur().getBatiment().setQuantité("route", principale.getJoueurCourant().getNbRoute());
+                principale.getInformationJoueur().getDeveloppement().setQuantité("construction", principale.getJoueurCourant().getDev().getNbConstructiondeRoute());
             });
             retour.addActionListener(event -> {
                 main.removeAll();
@@ -372,17 +420,17 @@ public class Actions extends JFrame{
 
         public void choixRessrouces(String s){
             if(count == 1){
-                courant.getInventaire().getRessource().replace(s,  courant.getInventaire().getRessource().get(s)+1);
-                principale.getInformationJoueur().getRessource().setQuantité(s, courant.getInventaire().getRessource().get(s));
-                courant.getDev().supprimer("Invention");
-                principale.getInformationJoueur().getDeveloppement().setQuantité("invention", courant.getDev().getNbInvention());
+                principale.getJoueurCourant().getInventaire().getRessource().replace(s,  principale.getJoueurCourant().getInventaire().getRessource().get(s)+1);
+                principale.getInformationJoueur().getRessource().setQuantité(s, principale.getJoueurCourant().getInventaire().getRessource().get(s));
+                principale.getJoueurCourant().getDev().supprimer("Invention");
+                principale.getInformationJoueur().getDeveloppement().setQuantité("invention", principale.getJoueurCourant().getDev().getNbInvention());
                 main.removeAll();
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
             }
             else{
-                courant.getInventaire().getRessource().replace(s,  courant.getInventaire().getRessource().get(s)+1);
-                principale.getInformationJoueur().getRessource().setQuantité(s, courant.getInventaire().getRessource().get(s));
+                principale.getJoueurCourant().getInventaire().getRessource().replace(s,  principale.getJoueurCourant().getInventaire().getRessource().get(s)+1);
+                principale.getInformationJoueur().getRessource().setQuantité(s, principale.getJoueurCourant().getInventaire().getRessource().get(s));
                 count--;
             }
         }
@@ -390,18 +438,6 @@ public class Actions extends JFrame{
         public JPanel getcontent(){
             return content;
         }
-    }
-
-    public void setJoueurcourant(Joueur courant){
-        this.courant = courant;
-    }
-
-    public Joueur getSuivant(Joueur courant, ArrayList<Joueur> listjoueur){
-        for(int i = 0 ; i < listjoueur.size() ;i++){
-            if(courant.equals(listjoueur.get(i)) && i + 1 < listjoueur.size())
-                return listjoueur.get(i+1);
-        }
-        return listjoueur.get(0);
     }
     
     public Poser getPoser(){

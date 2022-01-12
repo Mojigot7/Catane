@@ -25,13 +25,14 @@ public class InformationJoueur extends JFrame{
     private Ressource ressource;
     private Batiment batiment;
     private Developpement dev;
+    private JLabel vide ;
     private Legende leg;
 
-    public InformationJoueur(ArrayList<Joueur> list) {
+    public InformationJoueur(ArrayList<Joueur> list,Joueur courant) {
         this.setSize(1000,600);
         content = new JPanel();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        courant = list.get(0);
+        this.courant = courant;
         j = new Joueurplateau(courant);
         ressource = new Ressource(courant);
         batiment = new Batiment(courant);
@@ -43,13 +44,13 @@ public class InformationJoueur extends JFrame{
         content.add(ressource.getcontent());
         content.add(batiment.getcontent());
         content.add(dev.getcontent());
-        JLabel vide = new JLabel();
+        vide = new JLabel();
         content.add(vide);
         content.add(leg.getcontent());
 
         this.getContentPane().add(content,BorderLayout.NORTH);
     }
-    
+
     public class Joueurplateau{
         private JPanel content;
         private JLabel nom;
@@ -75,6 +76,11 @@ public class InformationJoueur extends JFrame{
 
         public void setpdv(int pdv) {
             this.pdv.setText("Point de Victoire : " + pdv);
+        }
+        
+        public void setnom(String nom,Color c){
+            this.nom.setText(nom);
+            this.nom.setForeground(c);
         }
     }
 
@@ -225,16 +231,16 @@ public class InformationJoueur extends JFrame{
             if(ressource.equals("chevalier")) {
                 chevalier.setText(ressource + " : " + quantite);
             }
-            if(ressource.equals("invention")) {
+            else if(ressource.equals("invention")) {
                 invention.setText(ressource + " : " + quantite);
             }
-            if(ressource.equals("monopole")) {
+            else if(ressource.equals("monopole")) {
                 monopole.setText(ressource + " : " + quantite);
             }
-            if(ressource.equals("pdv")) {
+            else if(ressource.equals("pdv")) {
                 pdv.setText(ressource + " : " + quantite);
             }
-            if(ressource.equals("construction")) {
+            else if(ressource.equals("construction")) {
                 construction.setText(ressource + " : " + quantite);
             }
             else {
@@ -317,5 +323,13 @@ public class InformationJoueur extends JFrame{
 
     public void setActions(Actions a){
         actions = a;
+    }
+
+    public Joueurplateau getJoueurplateau() {
+        return j;
+    }
+
+    public void setDee(String s){
+        this.vide.setText(s);
     }
 }

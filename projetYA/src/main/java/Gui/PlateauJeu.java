@@ -9,10 +9,9 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
+import javax.swing.text.AttributeSet.ColorAttribute;
 
-import Gui.Actions.ChoixActions;
 import plateau.Plateau;
 
 public class PlateauJeu extends JFrame implements MouseListener {
@@ -186,7 +185,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
         int taillecasey = (plateau.getHeight()/9);
         if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0 && principale.getActions().getPoser().getPoserRoute().isEnabled()){
             plateau.remove(x/taillecasex + (y/taillecasey)*11);
-            plateau.add(new RouteHorizontal(), (x/taillecasex + (y/taillecasey)*11 ));
+            plateau.add(new RouteHorizontal(principale.getJoueurCourant().getCouleur()),  (x/taillecasex + (y/taillecasey)*11 ));
             plateau.revalidate();
             principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getNbRoute());
             principale.getActions().getMain().removeAll();
@@ -195,7 +194,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
         }
         else if ((x/taillecasex)%2 == 0 && (y/taillecasey)%2 == 1  && principale.getActions().getPoser().getPoserRoute().isEnabled()){
             plateau.remove(x/taillecasex + (y/taillecasey)*11);
-            plateau.add(new RouteVertical(), (x/taillecasex + (y/taillecasey)*11));
+            plateau.add(new RouteVertical(principale.getJoueurCourant().getCouleur()), (x/taillecasex + (y/taillecasey)*11));
             plateau.revalidate();
             principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getNbRoute());
             principale.getActions().getMain().removeAll();
@@ -229,12 +228,12 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
     public class RouteHorizontal extends JPanel {
 
-        public RouteHorizontal() {
+        public RouteHorizontal(Color c) {
             this.setLayout(new GridLayout(3, 1));
             JPanel r1 = new JPanel();
             r1.setBackground(new Color(255, 127, 0));
             JPanel r2 = new JPanel();
-            r2.setBackground(new Color(220, 220, 220));
+            r2.setBackground(c);
             JPanel r3 = new JPanel();
             r3.setBackground(new Color(255, 127, 0));
             this.add(r1);
@@ -245,12 +244,12 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
     public class RouteVertical extends JPanel {
 
-        public RouteVertical() {
+        public RouteVertical(Color c) {
             this.setLayout(new GridLayout(1, 3));
             JPanel r1 = new JPanel();
             r1.setBackground(new Color(255, 127, 0));
             JPanel r2 = new JPanel();
-            r2.setBackground(new Color(220, 220, 220));
+            r2.setBackground(c);
             JPanel r3 = new JPanel();
             r3.setBackground(new Color(255, 127, 0));
             this.add(r1);
