@@ -10,24 +10,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
-import javax.swing.text.AttributeSet.ColorAttribute;
 
 import plateau.Plateau;
 
 public class PlateauJeu extends JFrame implements MouseListener {
 
     private Gui principale;
-    private Plateau jeu;
     private JPanel plateau;
-    private Actions actions;
+    private int taillecasex;
+    private int taillecasey;
+    private Conteneur [][] stock = new Conteneur[9][11];
 
     public PlateauJeu(Plateau p, Gui principale) {
-        jeu = p;
         this.principale = principale;
         plateau = new JPanel();
         GridLayout size = new GridLayout(9, 11);
         plateau.setLayout(size);
-        Conteneur temp = new Conteneur();
+        Conteneur temp;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 11; j++) {
                 temp = new Conteneur();
@@ -42,6 +41,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                     temp.getVoleur().setBackground(new Color(215, 100, 0));
                     temp.getVoleur().setVisible(false);
                     temp.getConteneur().add(temp.getVoleur(), BorderLayout.CENTER);
+                    stock[i][j] = temp;
                 } else if (p.getPlateau()[i][j].getClass().getName().equals("tuiles.Champs")) {
                     temp.getConteneur().setBackground(new Color(255, 255, 0));
                     temp.getConteneurnom().setBackground(new Color(255, 255, 0));
@@ -51,6 +51,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                     temp.getVoleur().setVisible(false);
                     temp.getConteneur().add(temp.getConteneurnom(), BorderLayout.NORTH);
                     temp.getConteneur().add(temp.getVoleur(), BorderLayout.CENTER);
+                    stock[i][j] = temp;
                 } else if (p.getPlateau()[i][j].getClass().getName().equals("tuiles.Foret")) {
                     temp.getConteneur().setBackground(new Color(0, 172, 62));
                     temp.getConteneurnom().setBackground(new Color(0, 172, 62));
@@ -60,6 +61,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                     temp.getVoleur().setVisible(false);
                     temp.getConteneur().add(temp.getConteneurnom(), BorderLayout.NORTH);
                     temp.getConteneur().add(temp.getVoleur(), BorderLayout.CENTER);
+                    stock[i][j] = temp;
                 } else if (p.getPlateau()[i][j].getClass().getName().equals("tuiles.Pre")) {
                     temp.getConteneur().setBackground(new Color(0, 215, 78));
                     temp.getConteneurnom().setBackground(new Color(0, 215, 78));
@@ -69,6 +71,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                     temp.getVoleur().setVisible(false);
                     temp.getConteneur().add(temp.getConteneurnom(), BorderLayout.NORTH);
                     temp.getConteneur().add(temp.getVoleur(), BorderLayout.CENTER);
+                    stock[i][j] = temp;
                 } else if (p.getPlateau()[i][j].getClass().getName().equals("tuiles.Montagne")) {
                     temp.getConteneur().setBackground(new Color(167, 167, 167));
                     temp.getConteneurnom().setBackground(new Color(167, 167, 167));
@@ -78,6 +81,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                     temp.getVoleur().setVisible(false);
                     temp.getConteneur().add(temp.getConteneurnom(), BorderLayout.NORTH);
                     temp.getConteneur().add(temp.getVoleur(), BorderLayout.CENTER);
+                    stock[i][j] = temp;
                 } else if (p.getPlateau()[i][j].getClass().getName().equals("tuiles.Port")) {
                     temp.getConteneur().setBackground(new Color(119, 181, 254));
                     temp.getConteneurnom().setBackground(new Color(119, 181, 254));
@@ -85,7 +89,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                     temp.getConteneur().addMouseListener(this);
                     temp.getConteneurnom().add(temp.getNom());
                     temp.getConteneur().add(temp.getConteneurnom(), BorderLayout.CENTER);
-
+                    stock[i][j] = temp;
                 } else if (p.getPlateau()[i][j].getClass().getName().equals("tuiles.Desert")) {
                     temp.getConteneur().setBackground(new Color(255, 255, 225));
                     temp.getConteneurnom().setBackground(new Color(255, 255, 225));
@@ -96,10 +100,11 @@ public class PlateauJeu extends JFrame implements MouseListener {
                     temp.getVoleur().setVisible(true);
                     temp.getConteneur().add(temp.getConteneurnom(), BorderLayout.NORTH);
                     temp.getConteneur().add(temp.getVoleur(), BorderLayout.CENTER);
-
+                    stock[i][j] = temp;
                 } else {
                     temp.getConteneur().setBackground(new Color(255, 127, 0));
                     temp.getConteneur().addMouseListener(this);
+                    stock[i][j] = temp;
                 }
                 plateau.add(temp.getConteneur());
             }
@@ -110,7 +115,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
         return plateau;
     }
 
-    public class Conteneur{
+    public class Conteneur {
 
         private JPanel conteneur;
         private JPanel conteneurnom;
@@ -142,6 +147,10 @@ public class PlateauJeu extends JFrame implements MouseListener {
         public JPanel getVoleur() {
             return voleur;
         }
+
+        public void setConteneur(JPanel panel){
+            conteneur = panel;
+        }
     }
 
     public class Voleur extends JPanel implements MouseInputListener {
@@ -154,25 +163,32 @@ public class PlateauJeu extends JFrame implements MouseListener {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {}
+        public void mouseClicked(MouseEvent e) {
+        }
 
         @Override
-        public void mouseEntered(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {
+        }
 
         @Override
-        public void mouseExited(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {
+        }
 
         @Override
-        public void mousePressed(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) {
+        }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) {
+        }
 
         @Override
-        public void mouseDragged(MouseEvent e) {}
+        public void mouseDragged(MouseEvent e) {
+        }
 
         @Override
-        public void mouseMoved(MouseEvent e) {}
+        public void mouseMoved(MouseEvent e) {
+        }
     }
 
     @Override
@@ -181,50 +197,83 @@ public class PlateauJeu extends JFrame implements MouseListener {
         int y = e.getYOnScreen() - principale.getY() -
                 principale.getContentPane().getComponent(1).getY() -
                 principale.getInsets().top;
-        int taillecasex = (plateau.getWidth()/11);
-        int taillecasey = (plateau.getHeight()/9);
-        if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0 && principale.getActions().getPoser().getPoserRoute().isEnabled() && principale.getActions().getPoser().getPoserColonie().isEnabled() == false){
-            plateau.remove(x/taillecasex + (y/taillecasey)*11);
-            plateau.add(new RouteHorizontal(principale.getJoueurCourant().getCouleur()),  (x/taillecasex + (y/taillecasey)*11 ));
+        taillecasex = (plateau.getWidth() / 11);
+        taillecasey = (plateau.getHeight() / 9);
+        if ((x / taillecasex % 2) == 1 && (y / taillecasey) % 2 == 0
+                && principale.getActions().getPoser().getPoserRoute().isEnabled()
+                && principale.getActions().getPoser().getPoserColonie().isEnabled() == false) {
+            plateau.remove(x / taillecasex + (y / taillecasey) * 11);
+            Conteneur temp = new Conteneur();
+            temp.setConteneur(new RouteHorizontal(principale.getJoueurCourant().getCouleur()));
+            stock[x / taillecasex][y / taillecasey] = temp;
+            plateau.add(temp.getConteneur(),(x / taillecasex + (y / taillecasey) * 11));
             plateau.revalidate();
-            principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getNbRoute());
+            principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE",
+                    principale.getJoueurCourant().getNbRoute());
             principale.getActions().getMain().removeAll();
             principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
             principale.getActions().getMain().revalidate();
-        }
-        else if ((x/taillecasex)%2 == 0 && (y/taillecasey)%2 == 1  && principale.getActions().getPoser().getPoserRoute().isEnabled() && principale.getActions().getPoser().getPoserColonie().isEnabled() == false){
-            plateau.remove(x/taillecasex + (y/taillecasey)*11);
-            plateau.add(new RouteVertical(principale.getJoueurCourant().getCouleur()), (x/taillecasex + (y/taillecasey)*11));
+        } else if ((x / taillecasex) % 2 == 0 && (y / taillecasey) % 2 == 1
+                && principale.getActions().getPoser().getPoserRoute().isEnabled()
+                && principale.getActions().getPoser().getPoserColonie().isEnabled() == false) {
+            plateau.remove(x / taillecasex + (y / taillecasey) * 11);
+            Conteneur temp = new Conteneur();
+            temp.setConteneur(new RouteVertical(principale.getJoueurCourant().getCouleur()));
+            stock[x / taillecasex][y / taillecasey] = temp;
+            plateau.add(temp.getConteneur(),(x / taillecasex + (y / taillecasey) * 11));
             plateau.revalidate();
-            principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE", principale.getJoueurCourant().getNbRoute());
+            principale.getJoueurCourant().getInventaire().getBatiment().replace("ROUTE",
+                    principale.getJoueurCourant().getNbRoute());
             principale.getActions().getMain().removeAll();
             principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
             principale.getActions().getMain().revalidate();
-        }
-        else {
-            if(principale.getActions().getPoser().getPoserColonie().isEnabled()){
-                plateau.remove(x/taillecasex + (y/taillecasey)*11);
-                plateau.add(new Colonie(principale.getJoueurCourant().getCouleur()).getColoniePanel(), (x/taillecasex + (y/taillecasey)*11));
+        } else {
+            if (principale.getActions().getPoser().getPoserColonie().isEnabled()) {
+                plateau.remove(x / taillecasex + (y / taillecasey) * 11);
+                Conteneur temp = new Conteneur();
+                temp.setConteneur(new Colonie(principale.getJoueurCourant().getCouleur()).getColoniePanel());
+                stock[x / taillecasex][y / taillecasey] = temp;
+                plateau.add(temp.getConteneur(),(x / taillecasex + (y / taillecasey) * 11));
                 plateau.revalidate();
-                principale.getJoueurCourant().getInventaire().getBatiment().replace(("COLONIE"), principale.getJoueurCourant().getNbColonie());
+                principale.getJoueurCourant().getInventaire().getBatiment().replace(("COLONIE"),
+                        principale.getJoueurCourant().getNbColonie());
                 principale.getActions().getMain().removeAll();
-                principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
+                principale.getActions().getMain()
+                        .add(principale.getActions().new ChoixActions().getChoixActionsContent());
+                principale.getActions().getMain().revalidate();
+            }
+            else{
+                plateau.remove(x / taillecasex + (y / taillecasey) * 11);
+                Conteneur temp = new Conteneur();
+                temp.setConteneur(new Ville(principale.getJoueurCourant().getCouleur()).getVillePanel());
+                stock[x / taillecasex][y / taillecasey] = temp;
+                plateau.add(temp.getConteneur(),(x / taillecasex + (y / taillecasey) * 11));
+                plateau.revalidate();
+                principale.getJoueurCourant().getInventaire().getBatiment().replace(("COLONIE"),
+                        principale.getJoueurCourant().getNbColonie());
+                principale.getActions().getMain().removeAll();
+                principale.getActions().getMain()
+                        .add(principale.getActions().new ChoixActions().getChoixActionsContent());
                 principale.getActions().getMain().revalidate();
             }
         }
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
 
     public class RouteHorizontal extends JPanel {
 
@@ -262,40 +311,48 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
         private JPanel content = new JPanel();
 
-        public Ville(Color c){
-            JLabel ville = new JLabel();
+        public Ville(Color c) {
+            JLabel ville = new JLabel("Ville");
             ville.setText("VILLE");
             ville.setForeground(c);
             content.setBackground(new Color(255, 127, 0));
             content.setLayout(new BorderLayout());
-            content.add(ville,BorderLayout.CENTER);
-            
+            content.add(ville, BorderLayout.CENTER);
+
         }
 
-        public JPanel getVillePanel(){
+        public JPanel getVillePanel() {
             return content;
         }
     }
 
-    public class Colonie{
+    public class Colonie {
 
         private JPanel content = new JPanel();
 
-        public Colonie(Color c){
-            JLabel colonie = new JLabel();
+        public Colonie(Color c) {
+            JLabel colonie = new JLabel("Colonie");
             colonie.setText("COLONIE");
             colonie.setForeground(c);
             content.setBackground(new Color(255, 127, 0));
             content.setLayout(new BorderLayout());
-            content.add(colonie,BorderLayout.CENTER);
+            content.add(colonie, BorderLayout.CENTER);
         }
 
-        public JPanel getColoniePanel(){
+        public JPanel getColoniePanel() {
             return content;
         }
     }
 
-    public void setActions(Actions a){
-        actions = a;
+    public int getTaillecasx(){
+        return taillecasex;
+    }
+
+    public int getTaillecasy(){
+        return taillecasey;
+    }
+
+    public Conteneur[][] gConteneurs(){
+        return stock;
     }
 }

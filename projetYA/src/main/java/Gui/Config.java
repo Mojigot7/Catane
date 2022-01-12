@@ -102,14 +102,21 @@ public class Config extends JFrame {
                 confirmButton1.setVisible(true);
             });
             confirmButton1.addActionListener(event -> {
-                /*listjoueur.add(new Humain(nom1.getText(),Color.BLUE));
-                confirmButton1.setEnabled(false);*/
+                /*
+                 * listjoueur.add(new Humain(nom1.getText(),Color.BLUE));
+                 * confirmButton1.setEnabled(false);
+                 */
                 Humain tempo = new Humain(nom1.getText(), Color.BLUE);
-                tempo.getInventaire().getRessource().replace("MINERAI", tempo.getInventaire().getRessource().get("MINERAI")+50);
-                tempo.getInventaire().getRessource().replace("ARGILE", tempo.getInventaire().getRessource().get("ARGILE")+50);
-                tempo.getInventaire().getRessource().replace("LAINE", tempo.getInventaire().getRessource().get("LAINE")+50);
-                tempo.getInventaire().getRessource().replace("BLE", tempo.getInventaire().getRessource().get("BLE")+50);
-                tempo.getInventaire().getRessource().replace("BOIS", tempo.getInventaire().getRessource().get("BOIS")+50);
+                tempo.getInventaire().getRessource().replace("MINERAI",
+                        tempo.getInventaire().getRessource().get("MINERAI") + 50);
+                tempo.getInventaire().getRessource().replace("ARGILE",
+                        tempo.getInventaire().getRessource().get("ARGILE") + 50);
+                tempo.getInventaire().getRessource().replace("LAINE",
+                        tempo.getInventaire().getRessource().get("LAINE") + 50);
+                tempo.getInventaire().getRessource().replace("BLE",
+                        tempo.getInventaire().getRessource().get("BLE") + 50);
+                tempo.getInventaire().getRessource().replace("BOIS",
+                        tempo.getInventaire().getRessource().get("BOIS") + 50);
                 tempo.CreeCarteDev();
                 tempo.CreeCarteDev();
                 tempo.CreeCarteDev();
@@ -124,7 +131,7 @@ public class Config extends JFrame {
                 System.out.println(tempo.getNbMinerai());
                 listjoueur.add(tempo);
                 confirmButton1.setEnabled(false);
-            }); 
+            });
 
             JButton choixJ21 = new JButton("IA");
             JButton choixJ22 = new JButton("Humain");
@@ -150,9 +157,9 @@ public class Config extends JFrame {
                 confirmButton2.setVisible(true);
             });
             confirmButton2.addActionListener(event -> {
-                listjoueur.add(new Humain(nom2.getText(),Color.RED));
+                listjoueur.add(new Humain(nom2.getText(), Color.RED));
                 confirmButton2.setEnabled(false);
-            }); 
+            });
 
             JButton choixJ31 = new JButton("IA");
             JButton choixJ32 = new JButton("Humain");
@@ -169,8 +176,9 @@ public class Config extends JFrame {
                 listjoueur.add(new IA("BOT3", Color.GREEN));
                 choixJ31.setEnabled(false);
                 choixJ32.setEnabled(false);
-                if ( x == 3 && listjoueur.size() == 3 &&choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false){
-                    Gui jeu = new Gui(listjoueur,listjoueur.get(0));
+                if (x == 3 && listjoueur.size() == 3 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false
+                        && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false) {
+                    Gui jeu = new Gui(listjoueur, listjoueur.get(0));
                 }
 
             });
@@ -181,13 +189,13 @@ public class Config extends JFrame {
                 confirmButton3.setVisible(true);
             });
             confirmButton3.addActionListener(event -> {
-                listjoueur.add(new Humain(nom3.getText(),Color.GREEN));
+                listjoueur.add(new Humain(nom3.getText(), Color.GREEN));
                 confirmButton3.setEnabled(false);
-                if ( x == 3 && listjoueur.size() == 3 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false){
-                    Gui jeu = new Gui(listjoueur,listjoueur.get(0));
+                if (x == 3 && listjoueur.size() == 3 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false
+                        && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false) {
+                    Gui jeu = new Gui(listjoueur, listjoueur.get(0));
                 }
             });
-            
 
             if (x == 4) {
                 JButton choixJ41 = new JButton("IA");
@@ -200,15 +208,17 @@ public class Config extends JFrame {
                 this.add(choixJ42);
                 this.add(nom4);
                 this.add(confirmButton4);
-    
+
                 choixJ41.addActionListener(event -> {
                     listjoueur.add(new IA("BOT4", Color.YELLOW));
                     choixJ41.setEnabled(false);
                     choixJ42.setEnabled(false);
-                    if (x == 4 && listjoueur.size() == 4 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false 
-                    && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false && choixJ32.isEnabled() == false){
+                    if (x == 4 && listjoueur.size() == 4 && choixJ11.isEnabled() == false
+                            && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false
+                            && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false
+                            && choixJ32.isEnabled() == false) {
                         System.out.println("passe IA4");
-                        Gui temp = new Gui(listjoueur,listjoueur.get(0));
+                        Gui temp = new Gui(listjoueur, listjoueur.get(0));
                     }
                 });
                 choixJ42.addActionListener(event -> {
@@ -218,14 +228,16 @@ public class Config extends JFrame {
                     confirmButton4.setVisible(true);
                 });
                 confirmButton4.addActionListener(event -> {
-                    listjoueur.add(new Humain(nom4.getText(),Color.YELLOW));
+                    listjoueur.add(new Humain(nom4.getText(), Color.YELLOW));
                     confirmButton4.setEnabled(false);
-                    if ( x== 4 &&  listjoueur.size() == 4 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false 
-                    && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false && choixJ32.isEnabled() == false){
+                    if (x == 4 && listjoueur.size() == 4 && choixJ11.isEnabled() == false
+                            && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false
+                            && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false
+                            && choixJ32.isEnabled() == false) {
                         System.out.println("passe confirm 4");
-                        Gui temp = new Gui(listjoueur,listjoueur.get(0));
+                        Gui temp = new Gui(listjoueur, listjoueur.get(0));
                     }
-                }); 
+                });
             }
         }
     }
