@@ -3,7 +3,6 @@ package jeu;
 import java.util.Scanner;
 
 import Gui.Config;
-import Gui.Gui;
 import colors.ConsoleColors;
 
 public class Catane {

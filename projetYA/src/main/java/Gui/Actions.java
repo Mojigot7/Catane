@@ -3,13 +3,11 @@ package Gui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
-import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import joueur.Joueur;
 
@@ -20,11 +18,12 @@ public class Actions extends JFrame{
     private Debut debut;
     private ArrayList<Joueur> listjoueur;
     private Joueur courant;
+    private int tour;
     private JPanel deeconteneur;
     private JPanel suivantconteneur;
 
     public Actions(ArrayList<Joueur> list){
-        courant = list.get(0);
+        courant = list.get(tour);
         listjoueur = list;
         main.setLayout(new BorderLayout());
         debut = new Debut();
@@ -32,20 +31,17 @@ public class Actions extends JFrame{
         JLabel actions = new JLabel();
         actions.setText("ACTIONS POSSBILES");
         JPanel actionsconteneur = new JPanel();
+        actionsconteneur.add(actions);
 
         JLabel dee = new JLabel();
-        dee.setText(courant.lancerDees()+"");
+        dee.setText(" Dée obtenu : "+courant.lancerDees());
         deeconteneur = new JPanel();
         deeconteneur.setVisible(false);
-
-        JLabel suivant = new JLabel();
-        suivant.setText(listjoueur.get(1).getNom()+"");
-        suivantconteneur = new JPanel();
+        deeconteneur.add(dee);
 
         main.add(actionsconteneur,BorderLayout.NORTH);
         main.add(debut.getContent(),BorderLayout.CENTER);
         main.add(deeconteneur,BorderLayout.WEST);
-        main.add(suivantconteneur,BorderLayout.EAST);
 
     }
 
@@ -61,10 +57,7 @@ public class Actions extends JFrame{
             content.add(lanceeDee);
             content.add(finDeTour);
             lanceeDee.addActionListener( event -> {
-                /*JLabel dee = new JLabel();
-                dee.setText(courant.lancerDees()+"");
-                main.add(dee,BorderLayout.WEST);
-                */
+                deeconteneur.setVisible(true);
                 main.remove(1);
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
@@ -79,29 +72,32 @@ public class Actions extends JFrame{
     private class ChoixActions extends JPanel{
 
         private JPanel content = new JPanel();
-        private JButton poser = new JButton("Poser Batiment");
-        private JButton construire = new JButton("Construire Batiment");
-        private JButton developpement = new JButton("Developpement");
-        private JButton findeTour = new JButton("Fin De Tour");
+        private JButton poser = new JButton(" Poser Batiment ");
+        private JButton construire = new JButton(" Construire Batiment ");
+        private JButton developpement = new JButton(" Developpement ");
+        private JButton findeTour = new JButton(" Fin De Tour ");
         
 
         public ChoixActions(){
+            poser.setEnabled(courant.possedeColonie() || courant.possedeRoute() || courant.possedeVille());
             content.add(poser);
+            construire.setEnabled(courant.peutAcheterColonie() || courant.peutAcheterRoute() || courant.peutAcheterVille());
             content.add(construire);
+            developpement.setEnabled(courant.peutCreeCarteDev() || courant.getDev().getStock().size()> 0);
             content.add(developpement);
             content.add(findeTour);
             poser.addActionListener(event -> {
-                main.removeAll();
+                main.remove(2);
                 main.add(new Poser().getContent());
                 main.revalidate();
             });
             construire.addActionListener(event ->{
-                main.removeAll();
+                main.remove(2);
                 main.add(new Construire().getContent());
                 main.revalidate();
             });
             developpement.addActionListener(event ->{
-                main.removeAll();
+                main.remove(2);
                 main.add(new Developpement().getContent());
                 main.revalidate();
             });
@@ -115,17 +111,20 @@ public class Actions extends JFrame{
     private class Poser extends JPanel{
 
         private JPanel content = new JPanel();
-        private JButton route = new JButton("Route");
-        private JButton colonie = new JButton("Colonie");
-        private JButton ville = new JButton("Ville");
-        private JButton retour = new JButton("Retour");
+        private JButton route = new JButton(" Poser Route ");
+        private JButton colonie = new JButton(" Poser Colonie ");
+        private JButton ville = new JButton(" Poser Ville ");
+        private JButton retour = new JButton(" Retour ");
 
         public Poser(){
+            route.setEnabled(courant.possedeRoute());
             route.addActionListener(event -> {});
+            colonie.setEnabled(courant.possedeColonie());
             colonie.addActionListener(event -> {});
+            ville.setEnabled(courant.possedeVille());
             ville.addActionListener(event -> {});
             retour.addActionListener(event -> {
-                main.removeAll();
+                main.remove(2);
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
             });
@@ -155,19 +154,21 @@ public class Actions extends JFrame{
     private class Construire extends JPanel{
 
         private JPanel content = new JPanel();
-        private JButton route = new JButton("Route");
-        private JButton colonie = new JButton("Colonie");
-        private JButton ville = new JButton("Ville");
-        private JButton retour = new JButton("Retour");
+        private JButton route = new JButton(" Cree Route ");
+        private JButton colonie = new JButton(" Cree Colonie ");
+        private JButton ville = new JButton(" Cree Ville ");
+        private JButton retour = new JButton(" Retour ");
         
         public Construire(){
-            
+            route.setEnabled(courant.peutAcheterRoute());
             content.add(route);
+            colonie.setEnabled(courant.peutAcheterColonie());
             content.add(colonie);
+            ville.setEnabled(courant.peutAcheterVille());
             content.add(ville);
             content.add(retour);
             retour.addActionListener(event -> {
-                main.removeAll();
+                main.remove(1);
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
             });
@@ -183,9 +184,9 @@ public class Actions extends JFrame{
     private class Developpement extends JPanel{
 
         private JPanel content = new JPanel();
-        private JButton utiliser = new JButton("Utiliser");
-        private JButton cree = new JButton("Creer");
-        private JButton retour = new JButton("Retour");
+        private JButton utiliser = new JButton(" Utiliser Carte Dev ");
+        private JButton cree = new JButton(" Creer Carte Dev ");
+        private JButton retour = new JButton(" Retour ");
         
         public Developpement(){
 
@@ -193,7 +194,7 @@ public class Actions extends JFrame{
             content.add(cree);
             content.add(retour);
             retour.addActionListener(event -> {
-                main.removeAll();
+                main.remove(1);
                 main.add(new ChoixActions().getChoixActionsContent());
                 main.revalidate();
             });
