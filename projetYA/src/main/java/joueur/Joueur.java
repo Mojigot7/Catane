@@ -211,7 +211,7 @@ public abstract class Joueur {
 		public void CreeCarteDev(){
 			if(peutCreeCarteDev()){
 				this.inventaire.getRessource().replace("MINERAI", this.inventaire.getRessource().get("MINERAI")-1);
-				this.inventaire.getRessource().replace("MINERAI", this.inventaire.getRessource().get("LAINE")-1);
+				this.inventaire.getRessource().replace("LAINE", this.inventaire.getRessource().get("LAINE")-1);
 				this.inventaire.getRessource().replace("BLE", this.inventaire.getRessource().get("BLE")-1);
 				dev.creationCarteDev(dev.getCarteDev());
 			}

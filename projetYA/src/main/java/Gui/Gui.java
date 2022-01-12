@@ -16,7 +16,7 @@ public class Gui extends JFrame {
     private Actions actions;
     private ArrayList<Joueur> listjoueur;
 
-    public Gui(ArrayList<Joueur> listjoueur) {
+    public Gui(ArrayList<Joueur> listjoueur,Joueur courant) {
         this.listjoueur = listjoueur;
         plateau = new Plateau();
         setTitle("Jeu");
@@ -24,7 +24,7 @@ public class Gui extends JFrame {
         this.setLocationRelativeTo(null);
         top = new InformationJoueur(listjoueur);
         jeu = new PlateauJeu(plateau,this);
-        actions = new Actions(listjoueur);     
+        actions = new Actions(listjoueur,this,courant);
         this.getContentPane().add(top.getContentPane(),BorderLayout.NORTH);
         this.getContentPane().add(jeu.getContent(),BorderLayout.CENTER);
         this.getContentPane().add(actions.getContent(),BorderLayout.SOUTH);
@@ -32,5 +32,17 @@ public class Gui extends JFrame {
         this.setVisible(true);
         setSize(1000,600);
     }
+
+    public InformationJoueur getInformationJoueur(){
+        return top;
+    }
+
+    public PlateauJeu getPlateauJeu() {
+        return jeu;
+    }
+    public Actions getActions(){
+        return actions;
+    }
+
 }
 

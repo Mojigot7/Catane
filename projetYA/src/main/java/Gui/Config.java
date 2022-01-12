@@ -97,11 +97,32 @@ public class Config extends JFrame {
             });
             choixJ12.addActionListener(event -> {
                 choixJ11.setEnabled(false);
+                choixJ12.setEnabled(false);
                 nom1.setVisible(true);
                 confirmButton1.setVisible(true);
             });
             confirmButton1.addActionListener(event -> {
-                listjoueur.add(new Humain(nom1.getText(),Color.BLUE));
+                /*listjoueur.add(new Humain(nom1.getText(),Color.BLUE));
+                confirmButton1.setEnabled(false);*/
+                Humain tempo = new Humain(nom1.getText(), Color.BLUE);
+                tempo.getInventaire().getRessource().replace("MINERAI", tempo.getInventaire().getRessource().get("MINERAI")+50);
+                tempo.getInventaire().getRessource().replace("ARGILE", tempo.getInventaire().getRessource().get("ARGILE")+50);
+                tempo.getInventaire().getRessource().replace("LAINE", tempo.getInventaire().getRessource().get("LAINE")+50);
+                tempo.getInventaire().getRessource().replace("BLE", tempo.getInventaire().getRessource().get("BLE")+50);
+                tempo.getInventaire().getRessource().replace("BOIS", tempo.getInventaire().getRessource().get("BOIS")+50);
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                tempo.CreeCarteDev();
+                System.out.println(tempo.getNbMinerai());
+                listjoueur.add(tempo);
                 confirmButton1.setEnabled(false);
             }); 
 
@@ -124,6 +145,7 @@ public class Config extends JFrame {
             });
             choixJ22.addActionListener(event -> {
                 choixJ21.setEnabled(false);
+                choixJ22.setEnabled(false);
                 nom2.setVisible(true);
                 confirmButton2.setVisible(true);
             });
@@ -147,17 +169,23 @@ public class Config extends JFrame {
                 listjoueur.add(new IA("BOT3", Color.GREEN));
                 choixJ31.setEnabled(false);
                 choixJ32.setEnabled(false);
+                if ( x == 3 && listjoueur.size() == 3 &&choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false){
+                    Gui jeu = new Gui(listjoueur,listjoueur.get(0));
+                }
 
             });
             choixJ32.addActionListener(event -> {
                 choixJ31.setEnabled(false);
+                choixJ32.setEnabled(false);
                 nom3.setVisible(true);
                 confirmButton3.setVisible(true);
             });
             confirmButton3.addActionListener(event -> {
                 listjoueur.add(new Humain(nom3.getText(),Color.GREEN));
                 confirmButton3.setEnabled(false);
-                Gui jeu = new Gui(listjoueur);
+                if ( x == 3 && listjoueur.size() == 3 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false){
+                    Gui jeu = new Gui(listjoueur,listjoueur.get(0));
+                }
             });
             
 
@@ -177,17 +205,26 @@ public class Config extends JFrame {
                     listjoueur.add(new IA("BOT4", Color.YELLOW));
                     choixJ41.setEnabled(false);
                     choixJ42.setEnabled(false);
-    
+                    if (x == 4 && listjoueur.size() == 4 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false 
+                    && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false && choixJ32.isEnabled() == false){
+                        System.out.println("passe IA4");
+                        Gui temp = new Gui(listjoueur,listjoueur.get(0));
+                    }
                 });
                 choixJ42.addActionListener(event -> {
                     choixJ41.setEnabled(false);
+                    choixJ42.setEnabled(false);
                     nom4.setVisible(true);
                     confirmButton4.setVisible(true);
                 });
                 confirmButton4.addActionListener(event -> {
                     listjoueur.add(new Humain(nom4.getText(),Color.YELLOW));
                     confirmButton4.setEnabled(false);
-                    Gui jeu = new Gui(listjoueur);
+                    if ( x== 4 &&  listjoueur.size() == 4 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false && choixJ21.isEnabled() == false 
+                    && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false && choixJ32.isEnabled() == false){
+                        System.out.println("passe confirm 4");
+                        Gui temp = new Gui(listjoueur,listjoueur.get(0));
+                    }
                 }); 
             }
         }

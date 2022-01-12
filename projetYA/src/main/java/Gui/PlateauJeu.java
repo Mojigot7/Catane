@@ -15,17 +15,18 @@ import plateau.Plateau;
 
 public class PlateauJeu extends JFrame implements MouseListener {
 
-    private Gui fenetre;
+    private Gui principale;
     private Plateau jeu;
     private JPanel plateau;
+    private Actions actions;
 
-    public PlateauJeu(Plateau p, Gui f) {
+    public PlateauJeu(Plateau p, Gui principale) {
         jeu = p;
-        fenetre = f;
+        principale = principale;
         plateau = new JPanel();
         GridLayout size = new GridLayout(9, 11);
         plateau.setLayout(size);
-        Conteneur temp;
+        Conteneur temp = new Conteneur();
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 11; j++) {
                 temp = new Conteneur();
@@ -108,7 +109,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
         return plateau;
     }
 
-    private class Conteneur extends JPanel {
+    public class Conteneur{
 
         private JPanel conteneur;
         private JPanel conteneurnom;
@@ -152,53 +153,33 @@ public class PlateauJeu extends JFrame implements MouseListener {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
-
-        }
+        public void mouseClicked(MouseEvent e) {}
 
         @Override
-        public void mouseEntered(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mouseEntered(MouseEvent e) {}
 
         @Override
-        public void mouseExited(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mouseExited(MouseEvent e) {}
 
         @Override
-        public void mousePressed(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mousePressed(MouseEvent e) {}
 
         @Override
-        public void mouseReleased(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mouseReleased(MouseEvent e) {}
 
         @Override
-        public void mouseDragged(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mouseDragged(MouseEvent e) {}
 
         @Override
-        public void mouseMoved(MouseEvent e) {
-            // TODO Auto-generated method stub
-
-        }
+        public void mouseMoved(MouseEvent e) {}
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getXOnScreen() - fenetre.getX();
-        int y = e.getYOnScreen() - fenetre.getY() -
-                fenetre.getContentPane().getComponent(1).getY() -
-                fenetre.getInsets().top;
+        int x = e.getXOnScreen() - principale.getX();
+        int y = e.getYOnScreen() - principale.getY() -
+                principale.getContentPane().getComponent(1).getY() -
+                principale.getInsets().top;
         int taillecasex = (plateau.getWidth()/11);
         int taillecasey = (plateau.getHeight()/9);
         if((x/taillecasex % 2) == 1 && (y/taillecasey)%2 == 0) {
@@ -215,37 +196,18 @@ public class PlateauJeu extends JFrame implements MouseListener {
 
         }
     }
-    /*
-     * On recupere la position de la souris -
-     * la position de la fenetre par rapport à l'ecran la position de la fenetre par
-     * rapport à l'ecran
-     * - Le top(informationJoueur)
-     * - la barre d'inset de la fenetre
-     */
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
+    public void mouseExited(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     public class RouteHorizontal extends JPanel {
 
@@ -277,5 +239,39 @@ public class PlateauJeu extends JFrame implements MouseListener {
             this.add(r2);
             this.add(r3);
         }
+    }
+
+    public class Ville {
+
+        private JPanel content = new JPanel();
+
+        public Ville(){
+            JLabel ville = new JLabel();
+            ville.setText("VILLE");
+            content.add(ville);
+        }
+
+        public JPanel getVillePanel(){
+            return content;
+        }
+    }
+
+    public class Colonie{
+
+        private JPanel content = new JPanel();
+
+        public Colonie(){
+            JLabel colonie = new JLabel();
+            colonie.setText("COLONIE");
+            content.add(colonie);
+        }
+
+        public JPanel getColoniePanel(){
+            return content;
+        }
+    }
+
+    public void setActions(Actions a){
+        actions = a;
     }
 }

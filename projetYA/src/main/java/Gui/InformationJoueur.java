@@ -15,15 +15,41 @@ public class InformationJoueur extends JFrame{
 
     private static final long serialVersionUID = 1L;
 
+    private JPanel content;
+    
     private ArrayList<Joueur> listjoueur;
     private Joueur courant;
-    private JPanel content;
     private Joueurplateau j;
+    private Actions actions;
+
     private Ressource ressource;
     private Batiment batiment;
     private Developpement dev;
     private Legende leg;
 
+    public InformationJoueur(ArrayList<Joueur> list) {
+        this.setSize(1000,600);
+        content = new JPanel();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        courant = list.get(0);
+        j = new Joueurplateau(courant);
+        ressource = new Ressource(courant);
+        batiment = new Batiment(courant);
+        dev = new Developpement(courant);
+        leg = new Legende();
+        content.setLayout(new GridLayout(1,6));
+
+        content.add(j.getcontent());
+        content.add(ressource.getcontent());
+        content.add(batiment.getcontent());
+        content.add(dev.getcontent());
+        JLabel vide = new JLabel();
+        content.add(vide);
+        content.add(leg.getcontent());
+
+        this.getContentPane().add(content,BorderLayout.NORTH);
+    }
+    
     public class Joueurplateau{
         private JPanel content;
         private JLabel nom;
@@ -52,7 +78,7 @@ public class InformationJoueur extends JFrame{
         }
     }
 
-    private class Ressource{
+    public class Ressource{
 
         private JPanel content;
         private JLabel minerai;
@@ -91,21 +117,20 @@ public class InformationJoueur extends JFrame{
             return this.content;
         }
         
-        @SuppressWarnings("unused")
         public void setQuantité(String ressource,int quantite) {
             if(ressource.equals("MINERAI")) {
                 minerai.setText("Minerai : " + quantite);
             }
-            if(ressource.equals("ARGILE")) {
+            else if(ressource.equals("ARGILE")) {
                 argile.setText("Argile : " + quantite);
             }
-            if(ressource.equals("BOIS")) {
+            else if(ressource.equals("BOIS")) {
                 bois.setText("Bois : " + quantite);
             }
-            if(ressource.equals("BLE")) {
+            else if(ressource.equals("BLE")) {
                 ble.setText("Ble : " + quantite);
             }
-            if(ressource.equals("LAINE")) {
+            else if(ressource.equals("LAINE")) {
                 laine.setText("Laine : " + quantite);
             }
             else {
@@ -114,7 +139,7 @@ public class InformationJoueur extends JFrame{
         }
     }
 
-    private class Batiment{
+    public class Batiment{
 
         private JPanel content;
         private JLabel route;
@@ -142,15 +167,14 @@ public class InformationJoueur extends JFrame{
             return this.content;
         }
 
-        @SuppressWarnings("unused")
         public void setQuantité(String ressource,int quantite) {
             if(ressource.equals("route")) {
                 route.setText("route : " + quantite);
             }
-            if(ressource.equals("colonie")) {
+            else if(ressource.equals("colonie")) {
                 colonie.setText(ressource + " : " + quantite);
             }
-            if(ressource.equals("ville")) {
+            else if(ressource.equals("ville")) {
                 ville.setText(ressource + " : " + quantite);
             }
             else {
@@ -159,7 +183,7 @@ public class InformationJoueur extends JFrame{
         }
 
     }
-    private class Developpement{
+    public class Developpement{
         private JPanel content;
         private JLabel chevalier;
         private JLabel monopole;
@@ -197,7 +221,6 @@ public class InformationJoueur extends JFrame{
             return this.content;
         }
 
-        @SuppressWarnings("unused")
         public void setQuantité(String ressource,int quantite) {
             if(ressource.equals("chevalier")) {
                 chevalier.setText(ressource + " : " + quantite);
@@ -220,7 +243,7 @@ public class InformationJoueur extends JFrame{
         }
     }
 
-    private class Legende{
+    public class Legende{
         private JPanel content;
         private JLabel nom;
 
@@ -276,34 +299,23 @@ public class InformationJoueur extends JFrame{
 
     }
 
-    public InformationJoueur(ArrayList<Joueur> list) {
-        this.setSize(1000,600);
-        content = new JPanel();
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        courant = list.get(0);
-        j = new Joueurplateau(courant);
-        ressource = new Ressource(courant);
-        batiment = new Batiment(courant);
-        dev = new Developpement(courant);
-        leg = new Legende();
-        content.setLayout(new GridLayout(1,6));
-
-        content.add(j.getcontent());
-        content.add(ressource.getcontent());
-        content.add(batiment.getcontent());
-        content.add(dev.getcontent());
-        JLabel vide = new JLabel();
-        content.add(vide);
-        content.add(leg.getcontent());
-
-        this.getContentPane().add(content,BorderLayout.NORTH);
-    }
-
     public Batiment getBatiment() {
         return this.batiment;
     }
 
+    public Developpement getDeveloppement(){
+        return dev;
+    }
+
+    public Ressource getRessource(){
+        return ressource;
+    }
+
     public ArrayList<Joueur> getList(){
         return listjoueur;
+    }
+
+    public void setActions(Actions a){
+        actions = a;
     }
 }
