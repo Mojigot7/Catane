@@ -26,21 +26,7 @@ public class Gui extends JFrame {
         this.setLocationRelativeTo(null);
         top = new InformationJoueur(listjoueur, courant);
         jeu = new PlateauJeu(plateau, this);
-        actions = new Actions(listjoueur, this);
-        this.getContentPane().add(top.getContentPane(), BorderLayout.NORTH);
-        this.getContentPane().add(jeu.getContent(), BorderLayout.CENTER);
-        this.getContentPane().add(actions.getContent(), BorderLayout.SOUTH);
-        this.pack();
-        this.setVisible(true);
-        setSize(1000, 600);
-    }
-
-    public Gui(ArrayList<Joueur> listjoueur, Joueur courant, InformationJoueur info, PlateauJeu pJeu, Actions act) {
-        this.listjoueur = listjoueur;
-        this.courant = courant;
-        this.jeu = pJeu;
-        this.top = info;
-        this.actions = act;
+        actions = new Actions(this);
         this.getContentPane().add(top.getContentPane(), BorderLayout.NORTH);
         this.getContentPane().add(jeu.getContent(), BorderLayout.CENTER);
         this.getContentPane().add(actions.getContent(), BorderLayout.SOUTH);

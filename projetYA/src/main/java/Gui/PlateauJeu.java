@@ -228,7 +228,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
             principale.getActions().getMain().add(principale.getActions().new ChoixActions().getChoixActionsContent());
             principale.getActions().getMain().revalidate();
         } else {
-            if (principale.getActions().getPoser().getPoserColonie().isEnabled()) {
+            if (principale.getActions().getPoser().getPoserColonie().isEnabled() && principale.getActions().getPoser().getPoserRoute().isEnabled() == false){
                 plateau.remove(x / taillecasex + (y / taillecasey) * 11);
                 Conteneur temp = new Conteneur();
                 temp.setConteneur(new Colonie(principale.getJoueurCourant().getCouleur()).getColoniePanel());
@@ -242,8 +242,8 @@ public class PlateauJeu extends JFrame implements MouseListener {
                         .add(principale.getActions().new ChoixActions().getChoixActionsContent());
                 principale.getActions().getMain().revalidate();
             }
-            else{
-                plateau.remove(x / taillecasex + (y / taillecasey) * 11);
+            else if(principale.getActions().getPoser().getPoserRoute().isEnabled() == false && principale.getActions().getPoser().getPoserVille().isEnabled()){
+                plateau.remove(x / taillecasex + (y / taillecasey) * 11 );
                 Conteneur temp = new Conteneur();
                 temp.setConteneur(new Ville(principale.getJoueurCourant().getCouleur()).getVillePanel());
                 stock[x / taillecasex][y / taillecasey] = temp;
@@ -255,6 +255,7 @@ public class PlateauJeu extends JFrame implements MouseListener {
                 principale.getActions().getMain()
                         .add(principale.getActions().new ChoixActions().getChoixActionsContent());
                 principale.getActions().getMain().revalidate();
+            
             }
         }
     }

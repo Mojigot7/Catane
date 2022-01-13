@@ -178,7 +178,7 @@ public class Config extends JFrame {
                 choixJ32.setEnabled(false);
                 if (x == 3 && listjoueur.size() == 3 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false
                         && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false) {
-                    Gui jeu = new Gui(listjoueur, listjoueur.get(0));
+                    new Gui(listjoueur, listjoueur.get(0));
                 }
 
             });
@@ -193,7 +193,7 @@ public class Config extends JFrame {
                 confirmButton3.setEnabled(false);
                 if (x == 3 && listjoueur.size() == 3 && choixJ11.isEnabled() == false && choixJ12.isEnabled() == false
                         && choixJ21.isEnabled() == false && choixJ22.isEnabled() == false) {
-                    Gui jeu = new Gui(listjoueur, listjoueur.get(0));
+                    new Gui(listjoueur, listjoueur.get(0));
                 }
             });
 
@@ -218,7 +218,7 @@ public class Config extends JFrame {
                             && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false
                             && choixJ32.isEnabled() == false) {
                         System.out.println("passe IA4");
-                        Gui temp = new Gui(listjoueur, listjoueur.get(0));
+                        new Gui(listjoueur, listjoueur.get(0));
                     }
                 });
                 choixJ42.addActionListener(event -> {
@@ -235,7 +235,7 @@ public class Config extends JFrame {
                             && choixJ22.isEnabled() == false && choixJ31.isEnabled() == false
                             && choixJ32.isEnabled() == false) {
                         System.out.println("passe confirm 4");
-                        Gui temp = new Gui(listjoueur, listjoueur.get(0));
+                        new Gui(listjoueur, listjoueur.get(0));
                     }
                 });
             }
